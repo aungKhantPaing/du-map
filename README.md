@@ -17,8 +17,8 @@ These are the development tools we used.
 - [Map URLs](https://developers.google.com/maps/documentation/urls/guide)
 
 ## Bootstrap 4.0
-- [Documentation](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
+- [Documentations](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
 - [Download](https://getbootstrap.com/docs/4.3/getting-started/download/)
 
 ## PHP
-- [Documentation](https://www.php.net/)
+- [Documentations](https://www.php.net/)
