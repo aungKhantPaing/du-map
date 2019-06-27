@@ -6,7 +6,7 @@ This is the guide for the group members contributing in **DU MAP** project on Gi
 - Project's process can be see in [project board](https://github.com/aungKhantPaing/aungKhantPaing.github.io/projects/1)
 
 # Refrences and Documentations
-
+These are the development tools we used.
 ## GitHub
 - Download [Git](https://gitforwindows.org/) and [GitHub Desktop](https://desktop.github.com/)
 - [GitHub Glossary](https://help.github.com/en/articles/github-glossary)
