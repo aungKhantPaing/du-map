@@ -7,6 +7,11 @@ This is the guide for the group members contributing in **DU MAP** project on Gi
 
 # Refrences and Documentations
 
-# GitHub
+## GitHub
+- Download [Git](https://gitforwindows.org/) and [GitHub Desktop](https://desktop.github.com/)
 - [GitHub Glossary](https://help.github.com/en/articles/github-glossary)
-- Download [Git](https://gitforwindows.org/)
+- [Git Cheetsheet](https://github.github.com/training-kit/downloads/github-git-cheat-sheet/)
+
+## Google Map Platform
+- [Embed Map](https://developers.google.com/maps/documentation/embed/guide)
+- [Map URLs](https://developers.google.com/maps/documentation/urls/guide)
