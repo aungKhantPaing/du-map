@@ -12,8 +12,7 @@
 
       for(i=0;i<dropdown.length;i++)
       {
-        dropdown[i].addEventListener(
-          "click",function()
+        sidenav[i].addEventListener("click",function()
             {
               this.classList.toggle("active");
               var dropdownContent=this.nextElementSibling;
@@ -30,7 +29,7 @@
 </head>
   <body>
      <div class="sidenav">
-       <a href="index.html">Map</a>
+       <a href="map.html">Map</a>
 
 
         <button class="dropdown-btn">
