@@ -1,0 +1,60 @@
+
+.sidenav
+	{
+		height: 100%;
+		width:150px;
+		position: fixed;
+		z-index: 1;
+		top:0;
+		left:0;
+		overflow-x: hidden; 
+		background-color: rgb(0,255,125);
+		padding-top: 20px;
+	}
+
+.sidenav a, .dropdown-btn
+	{
+		text-decoration: none;
+		text-align: left;
+		font-size: 15px;
+		font-family: arial;
+		color: #818181;
+		display: block;
+		border: none;
+		width: 100%;
+		cursor: pointer;
+		outline: none;
+		padding: 6px 8px 6px 16px;
+
+	}
+.sidenav a:hover, .dropdown-btn:hover
+	{
+		color: #f1f1f1;		
+		display: block;
+		font-size: 20px;
+		background-color: grey;
+	}
+.active
+	{
+		background-color: red;
+		color: white;
+	}
+.dropdown-container
+{
+	display: none;
+	position:absolute;
+	background-color: #262626;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	padding-left: 8px; 
+}
+.show {
+		display : block;
+	}
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
