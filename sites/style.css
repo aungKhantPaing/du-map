@@ -82,7 +82,7 @@
     background-image: -moz-linear-gradient(#599bdc, #3072b3);
     background-image: -o-linear-gradient(#599bdc, #3072b3);
     background-image: linear-gradient(#599bdc, #3072b3);
-    -moz-background-clip: padding; /* for Firefox 3.6 */
+    -moz-background-clip: padding; /* for Firefox 3.6 */    
     background-clip: padding-box;
     border-radius: 0.2em;
     /* IE hacks */
