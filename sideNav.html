@@ -7,14 +7,21 @@
 <!--   connected to fontawsome -->
    <script src="https://kit.fontawesome.com/a04f3e77a8.js"></script>
    <script type="text/javascript">
+     
+        function myFunction() {
+       document.getElementById("myDropdown").classList.toggle("show");}
+
+      window.onclick = function(event) {
+         if (!event.target.matches('.dropdown-btn')){
+
       var dropdown=document.getElementsByClassName("dropdown-btn");
-      var=1;
+      var=i;
 
       for(i=0;i<dropdown.length;i++)
       {
         sidenav[i].addEventListener("click",function()
             {
-              this.classList.toggle("active");
+              this.classList.toggle(".active");
               var dropdownContent=this.nextElementSibling;
               if(dropdownContent.style.display==="block")
               {
