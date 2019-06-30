@@ -4,7 +4,6 @@
 
 .place-title {
     padding: 5px 8px;
-    box-shadow: 0px 0px 10px 0px rgba(90, 91, 95, 1);
 }
 
 .place-title p {
@@ -17,7 +16,8 @@
 
 .place-type {
     font-size: 13px;
-    font-weight: 300;
+    font-weight: 400;
+    color: gray
 }
 
 .place-detail {
@@ -26,4 +26,35 @@
     font-weight: 400;
     padding: 10px;
     border-bottom: 0.1px groove rgba(0, 0, 0, 0.214);
+}
+
+.detail-icon {
+    color: #037Ef3;
+    margin-right: 15px; 
+}
+
+.btn-group {
+    display: block;
+}
+
+.radius-0 {
+    border-radius: 0 !important;
+}
+
+.btn-icon {
+    font-size: 1.5em;
+    margin: 5px 0px;
+    color: white;
+}
+
+.paint-blue {
+    color: #037Ef3;
+}
+
+.bg-blue {
+    background: #037Ef3;
+}
+
+.shadow-bottom {
+    box-shadow: 0px 6px 3px -1px #888888;
 }
