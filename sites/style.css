@@ -73,7 +73,7 @@
     text-align: center;
     text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
     font:11px/normal sans-serif;
-    color: #fff;
+    color: #fff !important;
     white-space: nowrap;
     cursor: pointer;
     outline: none;
