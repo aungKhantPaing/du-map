@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Side nav</title>
+  <link rel="stylesheet" type="text/css" href="sideNav.css">
+  <link rel="stylesheet" href="github.com/aungKhantPaing/aungKhantPaing.github.io/tree/master/bootstrap/css/font-awesome.min.css">
+   <link rel="stylesheet" href="github.com/aungKhantPaing/aungKhantPaing.github.io/tree/master/bootstrap/js/bootstrap.bundle.min.js">
+   <script type="text/javascript">
+      var dropdown=document.getElementsByClassName("dropdown-btn");
+      var=1;
+
+      for(i=0;i<dropdown.length;i++)
+      {
+        dropdown[i].addEventListener(
+          "click",function()
+            {
+              this.classList.toggle("active");
+              var dropdownContent=this.nextElementSibling;
+              if(dropdownContent.style.display==="block")
+              {
+                dropdownContent.style.display="none";
+              }else{
+                    dropdownContent.style.display="block";
+                  }
+            }
+        );
+      }
+    </script>
+</head>
+  <body>
+     <div class="sidenav">
+       <a href="index.html">Map</a>
+
+
+        <button class="dropdown-btn">
+          <i class="fa fa-caret-down">Places</i>
+        </button>
+          <div class="dropdown-container">
+            <a href="#">Departments</a>
+            <a href="#">Canteens</a>
+            <a href="#">Bus-stops</a>
+          </div>
+
+        <button class="dropdown-btn">
+          <i class="fa fa-caret-down">News</i>
+        </button>
+          <div class="dropdown-container">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+
+        <button class="dropdown-btn">
+          <i class="fa fa-caret-down">Community</i>
+        </button>
+          <div class="dropdown-container">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+
+        <button class="dropdown-btn">
+          <i class="fa fa-caret-down">About</i>
+        </button>
+          <div class="dropdown-container">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+    </div>
+  </body>
+</html>
