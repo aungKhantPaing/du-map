@@ -6,32 +6,23 @@
    <link rel="stylesheet" href="../bootstrap/js/bootstrap.bundle.min.js">
 <!--   connected to fontawsome -->
    <script src="https://kit.fontawesome.com/a04f3e77a8.js"></script>
-   <script type="text/javascript">
-     
-        function myFunction() {
-       document.getElementById("myDropdown").classList.toggle("show");}
+    <script type="text/javascript">
 
-      window.onclick = function(event) {
-         if (!event.target.matches('.dropdown-btn')){
-
-      var dropdown=document.getElementsByClassName("dropdown-btn");
-      var=i;
-
-      for(i=0;i<myDropdown.length;i++)
-      {
-        myDropdown[i].addEventListener("click",function()
-            {
-              this.classList.toggle(".active");
-              var dropdownContent=this.nextElementSibling;
-              if(dropdownContent.style.display==="block")
-              {
-                dropdownContent.style.display="none";
-              }else{
-                    dropdownContent.style.display="block";
-                  }
-            }
-        );
+       function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+window.onclick = function(event) {
+  if (!event.target.matches('.dropdown-btn')) {
+    var drop = document.getElementsByClassName("dropdown-container");
+    var i;
+    for (i = 0; i < drop.length; i++) {
+      var openDropdown = drop[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
+    }
+  }
+}
     </script>
 </head>
   <body>
