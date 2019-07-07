@@ -76,7 +76,7 @@ function showUserLocation(){
     var options = {
         enableHighAccuracy: true,
         timeout: 30000,
-        maximumAge: 0
+        maximumAge: 27000
     };
 
     function success(pos) {
