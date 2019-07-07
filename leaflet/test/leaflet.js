@@ -1,3 +1,5 @@
+alert("app version: 0.0.0");
+
 // MAP SETUP ---------------- BGN ----------------
 var map;
 
@@ -128,7 +130,6 @@ function zoomToDU(){
 // to user's location --v
 
 function showUserLocation(){
-    alert("New!");
     navigator.geolocation.getCurrentPosition(success_zoomToUserLocation, error, options);
 }
 // BUTTON EVENTS ---------------- END ----------------
