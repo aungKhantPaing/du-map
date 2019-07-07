@@ -69,34 +69,42 @@ var du_corner1 = L.latLng(16.91902, 96.223776), du_corner2 = L.latLng(16.909276,
 function zoomToDU(){
     map.fitBounds(L.latLngBounds(du_corner1, du_corner2));
 }
-// Show User Location --v
+
+
+// USER LOCATION
+var user_lat, user_lng;
 var userLocation = L.marker();
-function showUserLocation(){
 
-    var options = {
-        enableHighAccuracy: true,
-        timeout: 30000,
-        maximumAge: 27000
-    };
+// Updating user location --v
+var options = {
+    enableHighAccuracy: true,
+    timeout: 30000,
+    maximumAge: 27000
+};
+function success(pos) {
+    var crd = pos.coords;
+  
+    console.log('Your current position is:');
+    console.log(`Latitude : ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+    console.log(`More or less ${crd.accuracy} meters.`);
 
-    function success(pos) {
-        var crd = pos.coords;
-      
-        console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        console.log(`Longitude: ${crd.longitude}`);
-        console.log(`More or less ${crd.accuracy} meters.`);
-        
-        userLocation.setLatLng([crd.latitude, crd.longitude]).addTo(map);
-        map.setView([crd.latitude, crd.longitude], 100);
-    }
-      
-    function error(err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-      
-    navigator.geolocation.watchPosition(success, error, options);
+    userLocation.setLatLng([crd.latitude, crd.longitude]).addTo(map);
+
+    user_lat = crd.latitude;
+    user_lng = crd.longitude;
 }
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+// Show User Location --v
+function showUserLocation(){
+    map.setView([user_lat, user_lng], 100);
+}
+
+
+navigator.geolocation.watchPosition(success, error, options);
 
 geojson = L.geoJson(department_area, {
     style: areaStyle,
