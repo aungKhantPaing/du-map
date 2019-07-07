@@ -94,7 +94,7 @@ function showUserLocation(){
         console.warn(`ERROR(${err.code}): ${err.message}`);
     }
       
-    navigator.geolocation.getCurrentPosition(success, error, options);
+    navigator.geolocation.watchPosition(success, error, options);
 }
 
 geojson = L.geoJson(department_area, {
