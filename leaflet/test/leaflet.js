@@ -70,6 +70,7 @@ function zoomToDU(){
     map.fitBounds(L.latLngBounds(du_corner1, du_corner2));
 }
 // Show User Location --v
+var userLocation = L.marker();
 function showUserLocation(){
 
     var options = {
@@ -86,7 +87,7 @@ function showUserLocation(){
         console.log(`Longitude: ${crd.longitude}`);
         console.log(`More or less ${crd.accuracy} meters.`);
         
-        L.marker([crd.latitude, crd.longitude]).addTo(map);
+        userLocation.setLatLng([crd.latitude, crd.longitude]).addTo(map);
         map.setView([crd.latitude, crd.longitude], 100);
     }
       
