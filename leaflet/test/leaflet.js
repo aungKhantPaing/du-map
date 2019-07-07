@@ -1,27 +1,35 @@
-var geoJson;
+// MAP SETUP ---------------- BGN ----------------
+var map;
+
+// Adding layers --v
 var mapboxAccessToken = 'pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw';
-var map = L.map('mapid').setView([16.911199, 96.212739], 15.5);
+var grayscale_layer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
+    id: 'mapbox.light'}),
+    streets_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
-    id: 'mapbox.light'
-}).addTo(map);
+map = L.map('mapid', {
+    center: [16.911199, 96.212739],
+    zoom: 15.5,
+    layers: grayscale_layer
+});
 
-// L.marker([16.911199, 96.212739]).addTo(mymap)
-//     .bindPopup('DU')
-//     .openPopup();
+// Adding control layers --v
+var basic_layers = {
+    "Grayscale": grayscale_layer,
+    "Streets": streets_layer
+};
 
-// var popup = L.popup()
-//     .setLatLng([16.911199, 96.212739])
-//     .setContent("Dagon University")
-//     .openOn(mymap);
+L.control.layers(basic_layers).addTo(map);
+// MAP SETUP ---------------- END ----------------
 
-// mymap.on('click', onMapClick);
 
-// Event
-function onMapClick(e) {
-    alert(e.latlng);
-}
 
+
+
+// ADD DEPARTMENT AREAS ---------------- BGN ----------------
+var geoJson;
+// area style --v
 function areaStyle(feature) {
     return {
         fillColor: '#3cba54',
@@ -33,7 +41,7 @@ function areaStyle(feature) {
     }
 }
 
-// Interactions
+//areas' event --v
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -54,7 +62,6 @@ function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
 }
 
-
 function setEvents(feature, layer) {
     layer.on({
         mouseover: highlightFeature,
@@ -63,19 +70,23 @@ function setEvents(feature, layer) {
     });
 }
 
-// Button Events
-// To DU --v
-var du_corner1 = L.latLng(16.91902, 96.223776), du_corner2 = L.latLng(16.909276, 96.20009);
-function zoomToDU(){
-    map.fitBounds(L.latLngBounds(du_corner1, du_corner2));
-}
+// areas added to map --v
+geojson = L.geoJson(department_area, {
+    style: areaStyle,
+    onEachFeature: setEvents
+}).addTo(map);
+// ADD DEPARTMENT AREAS ---------------- END ----------------
 
 
-// USER LOCATION
+
+
+
+// USER LOCATION ---------------- BGN ----------------
+// get user's location --v
 var user_lat, user_lng;
 var userLocation = L.marker();
+navigator.geolocation.watchPosition(success, error, options);
 
-// Updating user location --v
 var options = {
     enableHighAccuracy: true,
     timeout: 30000,
@@ -94,19 +105,28 @@ function success(pos) {
     user_lat = crd.latitude;
     user_lng = crd.longitude;
 }
-function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-}
-
-// Show User Location --v
-function showUserLocation(){
+function success_zoomToUserLocation(pos){
+    success(pos);
     map.setView([user_lat, user_lng], 100);
 }
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+    alert('GPS is needed to show user location');
+}
+// USER LOCATION ---------------- END ----------------
 
 
-navigator.geolocation.watchPosition(success, error, options);
 
-geojson = L.geoJson(department_area, {
-    style: areaStyle,
-    onEachFeature: setEvents
-}).addTo(map);
+
+
+// BUTTON EVENTS ---------------- BGN ----------------
+// to DU --v
+function zoomToDU(){
+    map.setView([16.911199, 96.212739], 15.5);
+}
+
+// to user's location --v
+function showUserLocation(){
+    navigator.geolocation.watchPosition(success_zoomToUserLocation, error, options);
+}
+// BUTTON EVENTS ---------------- END ----------------
