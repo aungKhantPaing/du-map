@@ -126,7 +126,9 @@ function zoomToDU(){
 }
 
 // to user's location --v
+
 function showUserLocation(){
-    navigator.geolocation.watchPosition(success_zoomToUserLocation, error, options);
+    navigator.geolocation.getCurrentPosition(success_zoomToUserLocation, error, options);
+    alert("New!");
 }
 // BUTTON EVENTS ---------------- END ----------------
