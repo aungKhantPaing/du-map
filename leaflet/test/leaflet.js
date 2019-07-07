@@ -63,6 +63,13 @@ function setEvents(feature, layer) {
     });
 }
 
+var du_corner1 = L.latLng(16.91902, 96.223776), 
+du_corner2 = L.latLng(16.909276, 96.20009);
+du_bounds = L.latLngBounds(du_corner1, du_corner2);
+function zoomToDU(){
+    map.fitBounds(du_bounds);
+}
+
 geojson = L.geoJson(department_area, {
     style: areaStyle,
     onEachFeature: setEvents

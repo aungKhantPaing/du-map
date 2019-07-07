@@ -6,6 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
+    <!-- FRONT ENDS -->
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../../css3-github-buttons/gh-buttons.css">
+    <link rel="stylesheet" href="../../mdb-bootstrap/css/mdb.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a04f3e77a8.js"></script>
+
     <!-- Leaflet CSS file -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -19,15 +26,29 @@
 
 <style>
     #mapid {
-        height: 90vh;
+        overflow:hidden;overflow-x:hidden;overflow-y:hidden;
+        height:100%;width:100%;
+        position:fixed;top:0px;left:0px;right:0px;bottom:0px;
     }
 </style>
 
 <body>
-    <div id="mapid"></div>
+    
+    
+    <div id="mapid">
+    </div>
+
+    <script src="du-places.js"></script>
+    <script src="leaflet.js"></script>
+
+    <div class="mybutton" onclick="zoomToDU()">
+        <button class="btn aqua-gradient">
+            <i class="fas fa-directions btn-icon"></i>
+        </button>
+    </div>
+    
 </body>
 
-<script src="du-places.js"></script>
-<script src="leaflet.js"></script>
+
 
 </html>
