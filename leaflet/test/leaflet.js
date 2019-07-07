@@ -63,11 +63,38 @@ function setEvents(feature, layer) {
     });
 }
 
-var du_corner1 = L.latLng(16.91902, 96.223776), 
-du_corner2 = L.latLng(16.909276, 96.20009);
-du_bounds = L.latLngBounds(du_corner1, du_corner2);
+// Button Events
+// To DU --v
+var du_corner1 = L.latLng(16.91902, 96.223776), du_corner2 = L.latLng(16.909276, 96.20009);
 function zoomToDU(){
-    map.fitBounds(du_bounds);
+    map.fitBounds(L.latLngBounds(du_corner1, du_corner2));
+}
+// Show User Location --v
+function showUserLocation(){
+
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 30000,
+        maximumAge: 0
+    };
+
+    function success(pos) {
+        var crd = pos.coords;
+      
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`More or less ${crd.accuracy} meters.`);
+        
+        L.marker([crd.latitude, crd.longitude]).addTo(map);
+        map.setView([crd.latitude, crd.longitude], 100);
+    }
+      
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+      
+    navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
 geojson = L.geoJson(department_area, {

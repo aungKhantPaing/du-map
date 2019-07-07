@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Leaflet Test</title>
 
     <!-- FRONT ENDS -->
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
@@ -41,10 +41,12 @@
     <script src="du-places.js"></script>
     <script src="leaflet.js"></script>
 
-    <div class="mybutton" onclick="zoomToDU()">
-        <button class="btn aqua-gradient">
+    <div class="mybutton">
+        <button class="btn aqua-gradient" onclick="zoomToDU()">
             <i class="fas fa-directions btn-icon"></i>
         </button>
+        
+        <button class="btn blue-gradient" onclick="showUserLocation()">My Location</button>
     </div>
     
 </body>
