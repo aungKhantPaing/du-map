@@ -1,4 +1,138 @@
-var department_area = {
+var departments_geoJson = { 
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of Computer Science"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.21133357286452,
+            16.9151906908555
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of Myanmar"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.2116527557373,
+            16.914495258259695
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of Geology"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.21275246143341,
+            16.915088044139377
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of Physics"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.21342301368713,
+            16.916409616334303
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of Zoology"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.2142813205719,
+            16.914854522651837
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of English"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.2101936340332,
+            16.91441827294368
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of Botany"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.21514767408371,
+            16.913266055622206
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "marker-color": "#7e7e7e",
+          "marker-size": "medium",
+          "marker-symbol": "",
+          "name": "Department of Mathematics"
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            96.21612399816513,
+            16.913774161233782
+          ]
+        }
+      }
+    ]
+  };
+
+var department_areas_geoJson = {
     "type": "FeatureCollection",
     "features": [
       {

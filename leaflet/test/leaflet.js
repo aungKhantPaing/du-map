@@ -1,36 +1,19 @@
 alert("app version: 0.0.0");
-
-// MAP SETUP ---------------- BGN ----------------
 var map;
 
-// Adding layers --v
+// SETUP LAYERS ---------------- BGN ----------------
 var mapboxAccessToken = 'pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw';
 var grayscale_layer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
-    id: 'mapbox.light'}),
-    streets_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
-
-map = L.map('mapid', {
-    center: [16.911199, 96.212739],
-    zoom: 15.5,
-    layers: grayscale_layer
-});
-
-// Adding control layers --v
-var basic_layers = {
-    "Grayscale": grayscale_layer,
-    "Streets": streets_layer
-};
-
-L.control.layers(basic_layers).addTo(map);
-// MAP SETUP ---------------- END ----------------
+    id: 'mapbox.light'});
+var streets_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+// SETUP LAYERS ---------------- END ----------------
 
 
 
 
 
-// ADD DEPARTMENT AREAS ---------------- BGN ----------------
-var geoJson;
+// SETUP DEPARTMENT AREAS ---------------- BGN ----------------
+var department_areas;
 // area style --v
 function areaStyle(feature) {
     return {
@@ -57,7 +40,7 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
-    geojson.resetStyle(e.target);
+    department_areas.resetStyle(e.target);
 }
 
 function zoomToFeature(e) {
@@ -73,11 +56,68 @@ function setEvents(feature, layer) {
 }
 
 // areas added to map --v
-geojson = L.geoJson(department_area, {
+department_areas = L.geoJson(department_areas_geoJson, {
     style: areaStyle,
     onEachFeature: setEvents
-}).addTo(map);
-// ADD DEPARTMENT AREAS ---------------- END ----------------
+});
+// SETUP DEPARTMENT AREAS ---------------- END ----------------
+
+
+
+
+
+// SETUP DEPARTMENTS ---------------- BGN ----------------
+var departmentsMarkerStyle = {
+    radius: 6,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var departments = L.geoJson(departments_geoJson, {
+    pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, departmentsMarkerStyle);
+    }
+}).bindPopup(function (layer) {
+        return layer.feature.properties.name;
+});
+// SETUP DEPARTMENTS ---------------- END ----------------
+
+
+
+
+
+// SETUP CONTROL LAYERS ---------------- BGN ----------------
+// Adding control layers --v
+var basic_layers = {
+    "Grayscale": grayscale_layer,
+    "Streets": streets_layer
+};
+
+var places = {
+    "Departments": departments,
+    "Areas": department_areas
+};
+
+function add_controlLayers(target){
+    L.control.layers(basic_layers, places).addTo(target);
+}
+// SETUP CONTROL LAYERS ---------------- END ----------------
+
+
+
+
+
+// ADD TO MAP ---------------- BGN ----------------
+map = L.map('mapid', {
+    center: [16.911199, 96.212739],
+    zoom: 15.5,
+    layers: [grayscale_layer, departments]
+});
+add_controlLayers(map);
+// ADD TO MAP ---------------- END ----------------
 
 
 
