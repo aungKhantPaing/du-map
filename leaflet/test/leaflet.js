@@ -1,4 +1,4 @@
-alert("app version: 0.0.0");
+alert("app version: 0.0.1");
 var map;
 
 // SETUP LAYERS ---------------- BGN ----------------
