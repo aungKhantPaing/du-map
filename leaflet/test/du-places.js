@@ -372,3 +372,126 @@ var otherPlaces_geoJson = {
     }
   ]
 };
+
+var busStops_geoJson = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "အဝိုင်း မှတ်တိုင်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21342,
+          16.91036
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "(၁၀)မိုင် မှတ်တိုင်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21259,
+          16.91189
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ရုံးရှေ့ မှတ်တိုင်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21118,
+          16.91441
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ရုံးရှေ့ မှတ်တိုင်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21118,
+          16.91606
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "(၃၇) မှတ်တိုင်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21314,
+          16.91606
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "(၃၆) မှတ်တိုင်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21417,
+          16.9141
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "(၃၅) မှတ်တိုင်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21506,
+          16.91266
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ဒဂုံတက္ကသိုလ် ယာဉ်ရပ်နားကွင်း"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21457,
+          16.91132
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "YBS (၂၅) ယဉ်ရပ်နားကွင်း"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21721,
+          16.91146
+        ]
+      }
+    }
+  ]
+};

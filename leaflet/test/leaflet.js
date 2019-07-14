@@ -69,12 +69,11 @@ department_areas = L.geoJson(department_areas_geoJson, {
 // SETUP DEPARTMENTS ---------------- BGN ----------------
 var departmentsIcon = L.icon({
     iconUrl: 'img/bank.svg',
-
     iconSize:     [34, 34], // size of the icon
-    // shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+    // shadowSize:   [34, 34], // size of the shadow
+    iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
     // shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
+    popupAnchor:  [0, -25] // point from which the popup should open relative to the iconAnchor
 });
 
 var departments = L.geoJson(departments_geoJson, {
@@ -90,6 +89,30 @@ var departments = L.geoJson(departments_geoJson, {
 
 
 
+// SETUP BUSSTOPS ---------------- BGN ----------------
+var busStopIcon = L.icon({
+    iconUrl: 'img/busstop.svg',
+    iconSize:     [34, 34], // size of the icon
+    // shadowSize:   [34, 34], // size of the shadow
+    iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [0, -25] // point from which the popup should open relative to the iconAnchor
+});
+
+var busStops = L.geoJson(busStops_geoJson, {
+    pointToLayer: function (feature, latlng){
+        return L.marker(latlng, {icon: busStopIcon});
+    }
+}).bindPopup(function (layer) {
+        var name = layer.feature.properties.name;
+        return `<b>${name}</b>`;
+});
+// SETUP BUSSTOPS ---------------- END ----------------
+
+
+
+
+
 
 // SETUP OTHER PLACES ---------------- BGN ----------------
 var clanicIcon = L.icon({
@@ -97,7 +120,7 @@ var clanicIcon = L.icon({
 
     iconSize:     [34, 34], // size of the icon
     // shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+    iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
     // shadowAnchor: [4, 62],  // the same for the shadow
     popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
 }),
@@ -106,7 +129,7 @@ var clanicIcon = L.icon({
     
         iconSize:     [34, 34], // size of the icon
         // shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+        iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
         // shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
     }),
@@ -115,7 +138,7 @@ var clanicIcon = L.icon({
     
         iconSize:     [34, 34], // size of the icon
         // shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+        iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
         // shadowAnchor: [4, 62],  // the same for the shadow
         popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
     });
@@ -129,7 +152,8 @@ var otherPlaces = L.geoJson(otherPlaces_geoJson, {
         }
     }
 }).bindPopup(function (layer) {
-        return layer.feature.properties.name;
+    var name = layer.feature.properties.name;
+    return `<b>${name}</b>`;
 });
 // SETUP OTHER PLACES ---------------- END ----------------
 
@@ -147,6 +171,7 @@ var basic_layers = {
 var places = {
     "Departments": departments,
     "Areas": department_areas,
+    "Bus Stops": busStops,
     "Other Places": otherPlaces
 };
 
@@ -168,6 +193,12 @@ map = L.map('mapid', {
 add_controlLayers(map);
 // ADD TO MAP ---------------- END ----------------
 
+// TEST for iconAnchor
+// L.geoJson(departments_geoJson, {
+//     pointToLayer: function (feature, latlng){
+//         return L.circleMarker(latlng, {radius: 1});
+//     }
+// }).addTo(map);
 
 
 
