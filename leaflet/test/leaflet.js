@@ -206,7 +206,7 @@ add_controlLayers(map);
 // USER LOCATION ---------------- BGN ----------------
 // get user's location --v
 var user_lat, user_lng;
-var userLocation = L.marker();
+var userLocation = L.circleMarker();
 navigator.geolocation.watchPosition(success, error, options);
 
 var options = {
