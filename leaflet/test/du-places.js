@@ -315,3 +315,60 @@ var department_areas_geoJson = {
       }
     ]
   };
+
+var otherPlaces_geoJson = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7e7e7e",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "id": "clanic",
+        "name": "တက္ကသိုလ် ဆေးခန်း"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21036,
+          16.91177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7e7e7e",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "id": "mailbox",
+        "name": "ဒဂုံတက္ကသိုလ် စာတိုက်"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.20989,
+          16.91153
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7e7e7e",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "name": "Library",
+        "id": "library"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.21144,
+          16.91729
+        ]
+      }
+    }
+  ]
+};

@@ -1,4 +1,4 @@
-alert("app version: 0.0.1");
+alert("app version: 0.0.2");
 var map;
 
 // SETUP LAYERS ---------------- BGN ----------------
@@ -67,23 +67,71 @@ department_areas = L.geoJson(department_areas_geoJson, {
 
 
 // SETUP DEPARTMENTS ---------------- BGN ----------------
-var departmentsMarkerStyle = {
-    radius: 6,
-    fillColor: "#ff7800",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
-};
+var departmentsIcon = L.icon({
+    iconUrl: 'img/bank.svg',
+
+    iconSize:     [34, 34], // size of the icon
+    // shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
+});
 
 var departments = L.geoJson(departments_geoJson, {
-    pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, departmentsMarkerStyle);
+    pointToLayer: function (feature, latlng){
+        return L.marker(latlng, {icon: departmentsIcon});
+    }
+}).bindPopup(function (layer) {
+        var name = layer.feature.properties.name;
+        return `<b>${name}</b>`;
+});
+// SETUP DEPARTMENTS ---------------- END ----------------
+
+
+
+
+
+// SETUP OTHER PLACES ---------------- BGN ----------------
+var clanicIcon = L.icon({
+    iconUrl: 'img/clanic.svg',
+
+    iconSize:     [34, 34], // size of the icon
+    // shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
+}),
+    libraryIcon = L.icon({
+        iconUrl: 'img/library.svg',
+    
+        iconSize:     [34, 34], // size of the icon
+        // shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+        // shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
+    }),
+    mailboxIcon = L.icon({
+        iconUrl: 'img/mailbox.svg',
+    
+        iconSize:     [34, 34], // size of the icon
+        // shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [25, 38], // point of the icon which will correspond to marker's location
+        // shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor:  [-7.55, -30] // point from which the popup should open relative to the iconAnchor
+    });
+
+var otherPlaces = L.geoJson(otherPlaces_geoJson, {
+    pointToLayer: function (feature, latlng){
+        switch (feature.properties.id) {
+            case 'clanic': return L.marker(latlng, {icon: clanicIcon});
+            case 'library': return L.marker(latlng, {icon: libraryIcon});
+            case 'mailbox': return L.marker(latlng, {icon: mailboxIcon});
+        }
     }
 }).bindPopup(function (layer) {
         return layer.feature.properties.name;
 });
-// SETUP DEPARTMENTS ---------------- END ----------------
+// SETUP OTHER PLACES ---------------- END ----------------
 
 
 
@@ -98,7 +146,8 @@ var basic_layers = {
 
 var places = {
     "Departments": departments,
-    "Areas": department_areas
+    "Areas": department_areas,
+    "Other Places": otherPlaces
 };
 
 function add_controlLayers(target){
@@ -114,7 +163,7 @@ function add_controlLayers(target){
 map = L.map('mapid', {
     center: [16.911199, 96.212739],
     zoom: 15.5,
-    layers: [grayscale_layer, departments]
+    layers: [grayscale_layer, departments, otherPlaces]
 });
 add_controlLayers(map);
 // ADD TO MAP ---------------- END ----------------
