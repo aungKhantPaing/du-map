@@ -1,70 +1,123 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Side nav</title>
-  <link rel="stylesheet" type="text/css" href="sideNav.css">
-   <link rel="stylesheet" href="../bootstrap/js/bootstrap.bundle.min.js">
-<!--   connected to fontawsome -->
-   <script src="https://kit.fontawesome.com/a04f3e77a8.js"></script>
-    <script type="text/javascript">
+	<title>Collapse Side Nav Module</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+  <style>
+  	.container
+  	{
+  		height: 100%;
+  		width: 20%;
+  		top: 20;
+  		left: 0;
+  		position: fixed;
+  		z-index: -1;
+  		opacity: 0.9;
+  	}
+  	.navbar-collapse
+  	{
 
-       function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-window.onclick = function(event) {
-  if (!event.target.matches('.dropdown-btn')) {
-    var drop = document.getElementsByClassName("dropdown-container");
-    var i;
-    for (i = 0; i < drop.length; i++) {
-      var openDropdown = drop[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-    </script>
+  		background-color: white;
+  		width:100%;
+  	}
+
+  
+  	.navbar-brand
+  	{
+  		background-color: lightblue;
+  		width:100%;
+  	}
+  	 .dropdown-menu a:hover
+  	{
+  		font-size: 18px;
+  		text-decoration: none;
+  		background-color: lightblue;
+  	}
+  	.dropdown-menu
+  	{
+  		
+  		transition: 1.4s;
+		background-color: grey;
+  		width: 100%;
+  	}	
+  	.dropdown-menu a{
+  		
+  		font-size: 15px;
+  		color: red;
+  	}
+  	.dropdown a
+  	{
+  		padding:8px 8px 8px 32px;
+  		display: block;
+  	}
+  	a
+  	{
+  		color: white;
+  		font-size: 15px;
+  		font-weight: bold;
+  	}
+  	body
+  	{
+  		margin-left: 17px;
+  	}
+  	button{
+  		border:none;
+
+  	}
+
+  </style>
 </head>
-  <body>
-     <div class="sidenav">
-       <a href="https://aungkhantpaing.github.io/sites/map.html">Map</a>
 
+<body>
+	<header>
+		<a class="navbar-brand" href="About.html"><font color="Green" size="5px">&nbsp;<cite>DU MAP INFO</cite></font></a>
+	</header>
+	<div class="container">
 
-        <button onClick="myFunction()" class="dropdown-btn">
-          <i class="fa fa-caret-down">Places</i>
-        </button>
-          <div id="myDropdown" class="dropdown-container">
-            <a href="#">Departments</a>
-            <a href="#">Canteens</a>
-            <a href="#">Bus-stops</a>
-          </div>
+      <button type="dropdown" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">&#9776;
+      </button>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+       
+        <li class="dropdown">
+          <a type="dropdown" class="dropdown-toggle" data-toggle="dropdown">Places</a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Departments</a></li><hr>
+            <li><a href="#">Canteens</a></li><hr>
+            <li><a href="#">Bus-stops</a></li>
+          </ul>
+        </li>
 
-        <button onClick="myFunction()" class="dropdown-btn">
-          <i class="fa fa-caret-down">News</i>
-        </button>
-          <div id="myDropdown" class="dropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
+       <li class="dropdown">
+          <a type="dropdown" class="dropdown-toggle" data-toggle="dropdown">News<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Events</a></li><hr>
+            <li><a href="#">YBS News</a></li><hr>
+            <li><a href="#">Sports</a></li>
+            </ul>
+        </li>
 
-        <button onClick="myFunction()" class="dropdown-btn">
-          <i class="fa fa-caret-down">Community</i>
-        </button>
-          <div id="myDropdown" class="dropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
+        <li class="dropdown">
+          <a type="dropdown" class="dropdown-toggle" data-toggle="dropdown">Community<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Activities</a></li><hr>
+            <li><a href="#">Student Union</a></li><hr>
+            <li><a href="#">Breaking News</a></li>
+          </ul>
+        </li>
 
-        <button onClick="myFunction()" class="dropdown-btn">
-          <i class="fa fa-caret-down">About</i>
-        </button>
-          <div id="myDropdown" class="dropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span><font color="black">Sign Up</font></a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span><font color="black">Login</font></a></li>
+      </ul>
     </div>
-  </body>
+  </div>
+  
+</body>
 </html>
