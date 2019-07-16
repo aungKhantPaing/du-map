@@ -1,0 +1,15 @@
+.mybutton {
+  position: fixed;
+  bottom: -4px;
+  right: 10px; }
+  .mybutton li {
+    padding: 10px; }
+
+.adjest {
+  padding-left: 70px !important; }
+
+.bg-teal {
+  background-color: rgba(0, 150, 136, 0.7); }
+
+.btn-topcorner {
+  margin: 10px; }
