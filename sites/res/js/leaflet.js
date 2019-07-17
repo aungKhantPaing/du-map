@@ -1,11 +1,13 @@
-
 var map;
 
 // SETUP LAYERS ---------------- BGN ----------------
 var mapboxAccessToken = 'pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw';
 var grayscale_layer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
-    id: 'mapbox.light'});
-var streets_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+    id: 'mapbox.light'
+});
+var streets_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
 // SETUP LAYERS ---------------- END ----------------
 
 
@@ -66,23 +68,25 @@ department_areas = L.geoJson(department_areas_geoJson, {
 
 
 
-function setupPlace(iconUrl, place_geoJson){
+function setupPlace(iconUrl, place_geoJson) {
     var placeIcon = L.icon({
         iconUrl: iconUrl,
-        iconSize:     [34, 34], // size of the icon
+        iconSize: [34, 34], // size of the icon
         // shadowSize:   [34, 34], // size of the shadow
-        iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
+        iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
         // shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor:  [1, -25] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [1, -25] // point from which the popup should open relative to the iconAnchor
     });
-    
+
     return place = L.geoJson(place_geoJson, {
-        pointToLayer: function (feature, latlng){
-            return L.marker(latlng, {icon: placeIcon});
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+                icon: placeIcon
+            });
         }
     }).bindPopup(function (layer) {
-            var name = layer.feature.properties.name;
-            return `<b>${name}</b>`;
+        var name = layer.feature.properties.name;
+        return `<b>${name}</b>`;
     });
 }
 
@@ -98,7 +102,7 @@ var departments = setupPlace('res/img/department.svg', departments_geoJson);
 
 
 // SETUP BUSSTOPS ---------------- BGN ----------------
-var busStops = setupPlace('res/img/busstop', busStops_geoJson);
+var busStops = setupPlace('res/img/busstop.svg', busStops_geoJson);
 // SETUP BUSSTOPS ---------------- END ----------------
 
 
@@ -108,39 +112,48 @@ var busStops = setupPlace('res/img/busstop', busStops_geoJson);
 
 // SETUP OTHER PLACES ---------------- BGN ----------------
 var clanicIcon = L.icon({
-    iconUrl: 'res/img/clanic.svg',
+        iconUrl: 'res/img/clanic.svg',
 
-    iconSize:     [34, 34], // size of the icon
-    // shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
-    // shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:   [1, -25] // point from which the popup should open relative to the iconAnchor
-}),
+        iconSize: [34, 34], // size of the icon
+        // shadowSize:   [50, 64], // size of the shadow
+        iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
+        // shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor: [1, -25] // point from which the popup should open relative to the iconAnchor
+    }),
     libraryIcon = L.icon({
         iconUrl: 'res/img/library.svg',
-    
-        iconSize:     [34, 34], // size of the icon
+
+        iconSize: [34, 34], // size of the icon
         // shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
+        iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
         // shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor:   [1, -25] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [1, -25] // point from which the popup should open relative to the iconAnchor
     }),
     mailboxIcon = L.icon({
         iconUrl: 'res/img/mailbox.svg',
-    
-        iconSize:     [34, 34], // size of the icon
+
+        iconSize: [34, 34], // size of the icon
         // shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [17, 32], // point of the icon which will correspond to marker's location
+        iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
         // shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor:   [1, -25] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [1, -25] // point from which the popup should open relative to the iconAnchor
     });
 
 var otherPlaces = L.geoJson(otherPlaces_geoJson, {
-    pointToLayer: function ({properties:{id}}, latlng){
+    pointToLayer: function ({ properties:{id} }, latlng) {
         switch (id) {
-            case 'clanic': return L.marker(latlng, {icon: clanicIcon});
-            case 'library': return L.marker(latlng, {icon: libraryIcon});
-            case 'mailbox': return L.marker(latlng, {icon: mailboxIcon});
+            case 'clanic':
+                return L.marker(latlng, {
+                    icon: clanicIcon
+                });
+            case 'library':
+                return L.marker(latlng, {
+                    icon: libraryIcon
+                });
+            case 'mailbox':
+                return L.marker(latlng, {
+                    icon: mailboxIcon
+                });
         }
     }
 }).bindPopup(function (layer) {
@@ -167,7 +180,7 @@ var places = {
     "Other Places": otherPlaces
 };
 
-function addControlLayers(target){
+function addControlLayers(target) {
     L.control.layers(basic_layers, places).addTo(target);
 }
 // SETUP CONTROL LAYERS ---------------- END ----------------
@@ -207,9 +220,10 @@ var options = {
     timeout: 30000,
     maximumAge: 27000
 };
+
 function success(pos) {
     var crd = pos.coords;
-  
+
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
@@ -220,10 +234,12 @@ function success(pos) {
     user_lat = crd.latitude;
     user_lng = crd.longitude;
 }
-function success_zoomToUserLocation(pos){
+
+function success_zoomToUserLocation(pos) {
     success(pos);
     map.setView([user_lat, user_lng], 100);
 }
+
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
     alert('GPS is needed to show user location');
@@ -236,13 +252,13 @@ function error(err) {
 
 // BUTTON EVENTS ---------------- BGN ----------------
 // to DU --v
-function zoomToDU(){
+function zoomToDU() {
     map.setView([16.911199, 96.212739], 15.5);
 }
 
 // to user's location --v
 
-function showUserLocation(){
+function showUserLocation() {
     navigator.geolocation.getCurrentPosition(success_zoomToUserLocation, error, options);
 }
 // BUTTON EVENTS ---------------- END ----------------

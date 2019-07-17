@@ -41,69 +41,97 @@
 </style>
 
 <body>
-    <div id="mapid">
+    <div id="myVue">
+        <div id="mapid">
+        </div>
+    
+        <ul id="slide-out" class="sidenav">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                    <img src="res/img/bg.jpeg">
+                    </div>
+                    <a href="#user"><img class="circle" src="res/img/yuna.jpg"></a>
+                    <a href="#name"><span class="white-text name">John Doe</span></a>
+                    <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                </div>
+            </li>
+
+            <li><a class="subheader">Places</a></li>
+            <ul class="collapsible main">
+                <!-- Departments -->
+                <place-group :placelist="departments" inline-template>
+                    <li>
+                        <div class="collapsible-header waves-effect waves-teal">
+                            <i class="material-icons">business</i>{{placelist.properties.name}}
+                            <div id="dropdown-3" class="dropdown"></div>
+                        </div>
+                        <div class="collapsible-body ">
+                            <ul class="bg-teal">
+                                <li v-for="place in placelist.features" class="adjest waves-effect waves-block">{{place.properties.name}}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </place-group>
+
+                <place-group :placelist="busStops" inline-template>
+                    <li>
+                        <div class="collapsible-header waves-effect waves-teal">
+                            <i class="material-icons">business</i>{{placelist.properties.name}}
+                            <div id="dropdown-3" class="dropdown"></div>
+                        </div>
+                        <div class="collapsible-body ">
+                            <ul class="bg-teal">
+                                <li v-for="place in placelist.features" class="adjest waves-effect waves-block">{{place.properties.name}}</li>
+                            </ul>
+                        </div>
+                    </li>
+                </place-group>
+
+                <place-group :placelist="otherPlaces" inline-template>
+                        <li>
+                            <div class="collapsible-header waves-effect waves-teal">
+                                <i class="material-icons">business</i>{{placelist.properties.name}}
+                                <div id="dropdown-3" class="dropdown"></div>
+                            </div>
+                            <div class="collapsible-body ">
+                                <ul class="bg-teal">
+                                    <li v-for="place in placelist.features" class="adjest waves-effect waves-block">{{place.properties.name}}</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </place-group>
+            </ul>
+        </ul>
+    
+        <a href="#" data-target="slide-out" class="btn-topcorner sidenav-trigger btn-floating btn-large pulse"><i class="material-icons">menu</i></a>
+    
+        <ul class="mybutton">
+            <li><button class="btn-floating btn-large" onclick="zoomToDU()">
+            <i class="fas fa-directions btn-icon"></i>
+        </button></li>
+            <li><button class="btn-floating btn-large" onclick="showUserLocation()"><i class="fas fa-map-marked-alt"></i></button></li>
+        </ul>
     </div>
 
-    <ul id="slide-out" class="sidenav">
-        <li><div class="user-view">
-            <div class="background">
-            <img src="res/img/bg.jpeg">
-            </div>
-            <a href="#user"><img class="circle" src="res/img/yuna.jpg"></a>
-            <a href="#name"><span class="white-text name">John Doe</span></a>
-            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-        </div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <ul class="collapsible collapsible-accordion main">
-            <li>
-                <div class="collapsible-header waves-effect waves-teal" id="icon-3">
-                    <i class="material-icons">business</i>Departments
-                    <div id="dropdown-3" class="dropdown"></div>
-                </div>
-                <div class="collapsible-body ">
-                    <ul class="bg-teal">
-                        <li class="adjest waves-effect waves-block">Computer Science</li>
-                        <li class="adjest waves-effect waves-block">Myanmar</li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="collapsible-header waves-effect waves-yellow"><i class="material-icons">place</i>Second</div>
-                <div class="collapsible-body center-align"><span>Lorem ipsum dolor sit amet.</span></div>
-            </li>
-            <li><div class="divider"></div></li>
-            <li>
-                <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-                <div class="collapsible-body center-align"><span>Lorem ipsum dolor sit amet.</span></div>
-            </li>
-        </ul>
-        
-    </ul>
 
-    <a href="#" data-target="slide-out" class="btn-topcorner sidenav-trigger btn-floating btn-large pulse"><i class="material-icons">menu</i></a>
-
-    <ul class="mybutton">
-        <li><button class="btn-floating btn-large" onclick="zoomToDU()">
-        <i class="fas fa-directions btn-icon"></i>
-    </button></li>
-        <li><button class="btn-floating btn-large" onclick="showUserLocation()"><i class="fas fa-map-marked-alt"></i></button></li>
-    </ul>
-
-    <!-- Custom JS for Leaflet -->
+    <!-- GeoJson Data  -->
     <script src="res/js/du-places.js"></script>
-    <script src="res/js/leaflet.js"></script>
-
+    
     <!-- JS for Sidebar & Collapses events -->
     <script src="res/js/sidebar.js"></script>
-
+    
     <!-- JS for dropdown animation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/classie/1.0.1/classie.min.js"></script>
     <script type="text/javascript" src="res/js/dropdown.js"></script>
-
-    <!--JavaScript at end of body for optimized loading-->
+    
+    <!-- Materialize JS -->
     <script type="text/javascript" src="res/materialize-src/js/bin/materialize.js"></script>
+    
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="res/js/myVue.js"></script>
+
+    <!-- Custom JS for Leaflet -->
+    <script src="res/js/leaflet.js"></script>
 </body>
-
-
-
 </html>

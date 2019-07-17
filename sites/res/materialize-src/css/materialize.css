@@ -2629,6 +2629,7 @@ table span.badge {
 
 /* This is needed for some mobile phones to display the Google Icon font properly */
 .material-icons {
+  pointer-events: none;
   text-rendering: optimizeLegibility;
   -webkit-font-feature-settings: 'liga';
   font-feature-settings: 'liga'; }

@@ -92,7 +92,7 @@ $border: 1px solid $color;
 
 .dropdown {
 
-
+  pointer-events: none;
   position: relative;
   margin: 23px;
   margin-left: auto !important;
