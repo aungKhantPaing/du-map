@@ -60,47 +60,19 @@
             <li><a class="subheader">Places</a></li>
             <ul class="collapsible main">
                 <!-- Departments -->
-                <place-group :placelist="departments" inline-template>
+                <place-group v-for="placelist in placelistGroup" : :placelist="placelist" inline-template>
                     <li>
                         <div class="collapsible-header waves-effect waves-teal">
                             <i class="material-icons">business</i>{{placelist.properties.name}}
                             <div id="dropdown-3" class="dropdown"></div>
                         </div>
                         <div class="collapsible-body ">
-                            <ul class="bg-teal">
+                            <ul class="bg-gray">
                                 <li v-for="place in placelist.features" class="adjest waves-effect waves-block">{{place.properties.name}}</li>
                             </ul>
                         </div>
                     </li>
                 </place-group>
-
-                <place-group :placelist="busStops" inline-template>
-                    <li>
-                        <div class="collapsible-header waves-effect waves-teal">
-                            <i class="material-icons">business</i>{{placelist.properties.name}}
-                            <div id="dropdown-3" class="dropdown"></div>
-                        </div>
-                        <div class="collapsible-body ">
-                            <ul class="bg-teal">
-                                <li v-for="place in placelist.features" class="adjest waves-effect waves-block">{{place.properties.name}}</li>
-                            </ul>
-                        </div>
-                    </li>
-                </place-group>
-
-                <place-group :placelist="otherPlaces" inline-template>
-                        <li>
-                            <div class="collapsible-header waves-effect waves-teal">
-                                <i class="material-icons">business</i>{{placelist.properties.name}}
-                                <div id="dropdown-3" class="dropdown"></div>
-                            </div>
-                            <div class="collapsible-body ">
-                                <ul class="bg-teal">
-                                    <li v-for="place in placelist.features" class="adjest waves-effect waves-block">{{place.properties.name}}</li>
-                                </ul>
-                            </div>
-                        </li>
-                    </place-group>
             </ul>
         </ul>
     

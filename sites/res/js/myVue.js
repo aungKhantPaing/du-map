@@ -13,5 +13,10 @@ var myVue = new Vue({
         departments: departments_geoJson,
         busStops: busStops_geoJson,
         otherPlaces: otherPlaces_geoJson
+    },
+    computed: {
+        placelistGroup(){
+            return [this.departments, this.busStops, this.otherPlaces]
+        }
     }
 })

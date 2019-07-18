@@ -1,6 +1,7 @@
 var departments_geoJson = {
   "type": "FeatureCollection",
   "properties": {
+    "id": "departments_fc",
     "name": "Departments"
   },
   "features": [
@@ -114,6 +115,7 @@ var departments_geoJson = {
 var department_areas_geoJson = {
     "type": "FeatureCollection",
     "properties": {
+      "id": "departmentareas_fc",
       "name": "Departments Areas"
     },
     "features": [
@@ -301,6 +303,7 @@ var department_areas_geoJson = {
 var otherPlaces_geoJson = {
   "type": "FeatureCollection",
   "properties": {
+    "id": "otherplaces_fc",
     "name": "Other Places"
   },
   "features": [
@@ -361,6 +364,7 @@ var otherPlaces_geoJson = {
 var busStops_geoJson = {
   "type": "FeatureCollection",
   "properties": {
+    "id": "busstops_fc",
     "name": "Bus Stops"
   },
   "features": [
