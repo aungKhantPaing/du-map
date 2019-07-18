@@ -60,7 +60,7 @@
             <li><a class="subheader">Places</a></li>
             <ul class="collapsible main">
                 <!-- Departments -->
-                <place-group v-for="placelist in placelistGroup" : :placelist="placelist" inline-template>
+                <place-group v-for="placelist in placelistGroup" :placelist="placelist" inline-template>
                     <li>
                         <div class="collapsible-header waves-effect waves-teal">
                             <i class="material-icons">business</i>{{placelist.properties.name}}

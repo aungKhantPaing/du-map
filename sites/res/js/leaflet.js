@@ -190,7 +190,7 @@ function addControlLayers(target) {
 
 
 // ADD TO MAP ---------------- BGN ----------------
-map = L.map('mapid', {
+map = L.map("mapid", {
     center: [16.911199, 96.212739],
     zoom: 15.5,
     layers: [grayscale_layer, departments, otherPlaces],
