@@ -59,21 +59,38 @@
 
             <li><a class="subheader">Places</a></li>
             <ul class="collapsible main">
-                <!-- Departments -->
-                <place-group v-for="placelist in placelistGroup" :placelist="placelist" inline-template>
+                <!-- Sidebar Place Group -->
+                <!-- Departments, Other Places, Bus Stops  -->
+                <placegroup inline-template
+                    v-for="placelist in placelistGroup" 
+                    :placelist="placelist"
+                    :key="placelist.properties.id">
                     <li>
                         <div class="collapsible-header waves-effect waves-teal">
-                            <i class="material-icons">business</i>{{placelist.properties.name}}
+                            <i class="material-icons">{{get_materialIconName(placelistID)}}</i>
+                            {{placelist.properties.name}}
                             <div id="dropdown-3" class="dropdown"></div>
                         </div>
                         <div class="collapsible-body ">
                             <ul class="bg-gray">
-                                <li v-for="place in placelist.features" class="adjest waves-effect waves-block">{{place.properties.name}}</li>
+                                <li class="adjest waves-effect waves-block"
+                                    v-for="place in placelist.features">
+                                    {{place.properties.name}}
+                                </li>
                             </ul>
                         </div>
                     </li>
-                </place-group>
+                </placegroup>
             </ul>
+
+            <li class="divider"></li>
+
+            <li><a class="subheader">About</a></li>
+            <li>
+                <div class="collapsible-header waves-effect">
+                    <i class="material-icons">info</i> About Us
+                </div>
+            </li>
         </ul>
     
         <a href="#" data-target="slide-out" class="btn-topcorner sidenav-trigger btn-floating btn-large pulse"><i class="material-icons">menu</i></a>

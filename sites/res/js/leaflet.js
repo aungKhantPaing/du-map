@@ -14,6 +14,23 @@ var streets_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.
 
 
 
+// SETUP HIGHLIGHTER ---------------- BGN ----------------
+var highlightIcon = L.icon({
+    iconUrl: 'res/img/gps.svg',
+    iconSize: [36, 36], // size of the icon
+    // shadowSize:   [34, 34], // size of the shadow
+    iconAnchor: [17, 32], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor: [1, -25]
+})
+var pointerHighlighter = L.marker({icon: highlightIcon});
+
+// SETUP HIGHLIGHTER ---------------- END ----------------
+
+
+
+
+
 // SETUP DEPARTMENT AREAS ---------------- BGN ----------------
 var department_areas;
 // area style --v
@@ -67,7 +84,7 @@ department_areas = L.geoJson(department_areas_geoJson, {
 
 
 
-
+// HELPER
 function setupPlace(iconUrl, place_geoJson) {
     var placeIcon = L.icon({
         iconUrl: iconUrl,
@@ -89,11 +106,6 @@ function setupPlace(iconUrl, place_geoJson) {
         return `<b>${name}</b>`;
     });
 }
-
-
-
-
-
 // SETUP DEPARTMENTS ---------------- BGN ----------------
 var departments = setupPlace('res/img/department.svg', departments_geoJson);
 // SETUP DEPARTMENTS ---------------- END ----------------
@@ -224,10 +236,7 @@ var options = {
 function success(pos) {
     var crd = pos.coords;
 
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
+    console.log(`current position: ${crd.latitude}, ${crd.longitude}(accu:${crd.accuracy}m)`)
 
     userLocation.setLatLng([crd.latitude, crd.longitude]).addTo(map);
 

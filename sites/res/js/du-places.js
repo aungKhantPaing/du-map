@@ -1,14 +1,15 @@
 var departments_geoJson = {
   "type": "FeatureCollection",
   "properties": {
-    "id": "departments_fc",
+    "id": "fc-departments",
     "name": "Departments"
   },
   "features": [
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of Computer Science"
+        "id": "d-cs",
+        "name": "Computer Science"
       },
       "geometry": {
         "type": "Point",
@@ -21,7 +22,8 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of Myanmar"
+        "id": "d-myanmar",
+        "name": "Myanmar"
       },
       "geometry": {
         "type": "Point",
@@ -34,7 +36,8 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of Geology"
+        "id": "d-geology",
+        "name": "Geology"
       },
       "geometry": {
         "type": "Point",
@@ -47,7 +50,8 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of Physics"
+        "id": "d-physics",
+        "name": "Physics"
       },
       "geometry": {
         "type": "Point",
@@ -60,7 +64,8 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of Zoology"
+        "id": "d-zoology",
+        "name": "Zoology"
       },
       "geometry": {
         "type": "Point",
@@ -73,7 +78,8 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of English"
+        "id": "d-english",
+        "name": "English"
       },
       "geometry": {
         "type": "Point",
@@ -86,7 +92,8 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of Botany"
+        "id": "d-botany",
+        "name": "Botany"
       },
       "geometry": {
         "type": "Point",
@@ -99,7 +106,8 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Department of Mathematics"
+        "id": "d-math",
+        "name": "Mathematics"
       },
       "geometry": {
         "type": "Point",
@@ -115,7 +123,7 @@ var departments_geoJson = {
 var department_areas_geoJson = {
     "type": "FeatureCollection",
     "properties": {
-      "id": "departmentareas_fc",
+      "id": "fc-departmentareas",
       "name": "Departments Areas"
     },
     "features": [
@@ -303,7 +311,7 @@ var department_areas_geoJson = {
 var otherPlaces_geoJson = {
   "type": "FeatureCollection",
   "properties": {
-    "id": "otherplaces_fc",
+    "id": "fc-otherplaces",
     "name": "Other Places"
   },
   "features": [
@@ -364,7 +372,7 @@ var otherPlaces_geoJson = {
 var busStops_geoJson = {
   "type": "FeatureCollection",
   "properties": {
-    "id": "busstops_fc",
+    "id": "fc-busstops",
     "name": "Bus Stops"
   },
   "features": [
