@@ -6,38 +6,25 @@ Vue.component('placegroup', {
         }
     },
     methods: {
-        get_materialIconName(placelistID) {
-            switch (placelistID) {
-                case departments_geoJson.properties.id:
-                    return 'account_balance';
-                case otherPlaces_geoJson.properties.id:
-                    return 'business';
-                case busStops_geoJson.properties.id:
-                    return 'directions_bus';
-                default: 
-                    return 'business';
-            }
-        }
     },
     computed: {
         placelistID() {
             return this.placelist.properties.id
         },
-        wavescolor() {
-            return {
-                'waves-green': this.isDepartments,
-                'waves-teal': this.isBusstops,
-                'waves-orange': this.isOtherplaces
-            }
-        },
         isDepartments() {
-            return this.placelistID == departments_geoJson.properties.id
+            return this.placelistID == constants.id.departments.fc
         },
         isBusstops() {
-            return this.placelistID == busStops_geoJson.properties.id
+            return this.placelistID == constants.id.busStops.fc
         },
-        isOtherplaces(){
-            return this.placelistID == otherPlaces_geoJson.properties.id
+        isOtherplaces() {
+            return this.placelistID == constants.id.otherPlaces.fc
+        },
+        getMaterialIcon() {
+            // ternary operator
+            return  this.isDepartments  ? constants.materialized.icons.departments
+                :   this.isBusstops     ? constants.materialized.icons.busStops
+                :   constants.materialized.icons.otherPlaces;
         }
     }
 })

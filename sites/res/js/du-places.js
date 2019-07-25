@@ -1,14 +1,14 @@
 var departments_geoJson = {
   "type": "FeatureCollection",
   "properties": {
-    "id": "fc-departments",
+    "id": constants.id.departments.fc,
     "name": "Departments"
   },
   "features": [
     {
       "type": "Feature",
       "properties": {
-        "id": "d-cs",
+        "id": constants.id.departments.cs,
         "name": "Computer Science"
       },
       "geometry": {
@@ -22,7 +22,7 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "id": "d-myanmar",
+        "id": constants.id.departments.myanmar,
         "name": "Myanmar"
       },
       "geometry": {
@@ -36,7 +36,7 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "id": "d-geology",
+        "id": constants.id.departments.geology,
         "name": "Geology"
       },
       "geometry": {
@@ -50,7 +50,7 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "id": "d-physics",
+        "id": constants.id.departments.physics,
         "name": "Physics"
       },
       "geometry": {
@@ -64,7 +64,7 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "id": "d-zoology",
+        "id": constants.id.departments.zoology,
         "name": "Zoology"
       },
       "geometry": {
@@ -78,7 +78,7 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "id": "d-english",
+        "id": constants.id.departments.english,
         "name": "English"
       },
       "geometry": {
@@ -92,7 +92,7 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "id": "d-botany",
+        "id": constants.id.departments.botany,
         "name": "Botany"
       },
       "geometry": {
@@ -106,7 +106,7 @@ var departments_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "id": "d-math",
+        "id": constants.id.departments.maths,
         "name": "Mathematics"
       },
       "geometry": {
@@ -311,17 +311,14 @@ var department_areas_geoJson = {
 var otherPlaces_geoJson = {
   "type": "FeatureCollection",
   "properties": {
-    "id": "fc-otherplaces",
+    "id": constants.id.otherPlaces.fc,
     "name": "Other Places"
   },
   "features": [
     {
       "type": "Feature",
       "properties": {
-        "marker-color": "#7e7e7e",
-        "marker-size": "medium",
-        "marker-symbol": "",
-        "id": "clanic",
+        "id": constants.id.otherPlaces.clanic,
         "name": "တက္ကသိုလ် ဆေးခန်း"
       },
       "geometry": {
@@ -335,10 +332,7 @@ var otherPlaces_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "marker-color": "#7e7e7e",
-        "marker-size": "medium",
-        "marker-symbol": "",
-        "id": "mailbox",
+        "id": constants.id.otherPlaces.mailbox,
         "name": "ဒဂုံတက္ကသိုလ် စာတိုက်"
       },
       "geometry": {
@@ -352,11 +346,8 @@ var otherPlaces_geoJson = {
     {
       "type": "Feature",
       "properties": {
-        "marker-color": "#7e7e7e",
-        "marker-size": "medium",
-        "marker-symbol": "",
-        "name": "Library",
-        "id": "library"
+        "id": constants.id.otherPlaces.library,
+        "name": "Library"
       },
       "geometry": {
         "type": "Point",
@@ -372,7 +363,7 @@ var otherPlaces_geoJson = {
 var busStops_geoJson = {
   "type": "FeatureCollection",
   "properties": {
-    "id": "fc-busstops",
+    "id": constants.id.busStops.fc,
     "name": "Bus Stops"
   },
   "features": [

@@ -16,3 +16,8 @@
 
 .divider {
   margin: 0px !important; }
+
+.user-view-custom {
+  font-size: 49px; }
+  .user-view-custom img {
+    width: 17%; }

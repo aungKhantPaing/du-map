@@ -2,16 +2,17 @@
     position: fixed;
     bottom: -4px;
     right: 10px;
+
     li {
         padding: 10px;
     }
 }
 
-.adjest{
+.adjest {
     padding-left: 70px !important;
 }
 
-.bg-gray{
+.bg-gray {
     background-color: rgb(230, 230, 230);
 }
 
@@ -21,4 +22,12 @@
 
 .divider {
     margin: 0px !important;
+}
+
+.user-view-custom {
+    font-size: 49px;
+
+    img {
+        width: 17%;
+    }
 }
