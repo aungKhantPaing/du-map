@@ -1,7 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
+    style: 'mapbox://styles/akp101/cjxkkxwpc01x11cnur0aepitf/draft',
     center: [96.212739, 16.911199],
     zoom: 14.8,
     // bearing: -27.5 // rotation
@@ -23,9 +23,8 @@ var locationControl = new mapboxgl.GeolocateControl({
     }
 });
 
-map.addControl(zoomControl).addControl(locationControl, 'bottom-right');
+map.addControl(zoomControl).addControl(locationControl);
 
 function locate() {
     locationControl.trigger()
-    map.zoomTo(10)
 }

@@ -6,4 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var collapsibleInstance = M.Collapsible.init(collapsibleElem, function onOpenStart(){
         
     });
+    var tabs = document.querySelectorAll('.tabs');
+    var instance = M.Tabs.init(tabs, {
+        swipable: true
+    });
 });

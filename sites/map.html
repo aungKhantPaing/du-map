@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>DU Map (demo)</title>
+
+  <!-- FRAME WORKS -->
+  <!-- import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- import FontAwsome -->
+  <link rel="stylesheet" href="res/fontawesome/css/all.css" />
+  <!-- import Materialize -->
+  <link rel="stylesheet" href="res/materialize-src/css/materialize.css" />
+  <!-- CSS for dropdown -->
+  <link rel="stylesheet" href="res/css/dropdown.css" />
+  <!-- import Leaflet CSS -->
+  <!-- <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    /> -->
+  <!-- import Leaflet JS -->
+  <!-- <script
+      src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+      integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+      crossorigin=""
+    ></script> -->
+
+  <!-- MapBox -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
+
+
+  <!-- CUSTOM CSS -->
+  <link rel="stylesheet" href="res/css/style.css" />
+
+  <!-- JS & jQuery-->
+  <script src="res/js/jquery-3.4.1.js"></script>
+  <script src="res/bootstrap/js/bootstrap.js"></script>
+</head>
+
+<body>
+  <div id="myVue">
+    <div id='map'></div>
+
+    <ul id="slide-out" class="sidenav">
+      <li>
+        <div class="user-view user-view-custom">
+          <img src="res/img/maps.svg" /> DU Map
+          <!-- 
+            <a href="#user"><img class="circle" src="res/img/yuna.jpg"/></a>
+            <a href="#name"><span class="white-text name">John Doe</span></a>
+            <a href="#email"
+              ><span class="white-text email">jdandturk@gmail.com</span></a
+            > -->
+        </div>
+      </li>
+
+      <li><a class="subheader">Places</a></li>
+      <ul class="collapsible main">
+        <!-- Sidebar Place Group -->
+        <!-- Departments, Other Places, Bus Stops  -->
+        <placegroup inline-template v-for="placelist in placelistGroup" :placelist="placelist"
+          :key="placelist.properties.id">
+          <li>
+            <div class="collapsible-header waves-effect waves-teal">
+              <i class="material-icons">{{ getMaterialIcon }}</i>
+              {{ placelist.properties.name }}
+              <div id="dropdown-3" class="dropdown"></div>
+            </div>
+            <div class="collapsible-body ">
+              <ul class="bg-gray">
+                <li class="adjest waves-effect waves-block" v-for="place in placelist.features">
+                  {{ place.properties.name }}
+                </li>
+              </ul>
+            </div>
+          </li>
+        </placegroup>
+      </ul>
+
+      <li class="divider"></li>
+
+      <li><a class="subheader">About</a></li>
+      <li>
+        <div class="collapsible-header waves-effect">
+          <i class="material-icons">info</i> About Us
+        </div>
+      </li>
+    </ul>
+
+    <a href="#" data-target="slide-out" class="btn-topcorner sidenav-trigger btn pulse"><i
+        class="material-icons">menu</i></a>
+
+    <ul class="mybutton">
+      <!-- <li>
+                <button class="btn-floating btn-large" onclick="zoomToDU()">
+                  <i class="fas fa-directions btn-icon"></i>
+                </button>
+              </li> -->
+      <li>
+        <button class="btn-floating" onclick="locate()">
+          <i class="material-icons">
+            gps_fixed
+          </i>
+        </button>
+      </li>
+    </ul>
+
+    <ul id="tabs-swipe-demo" class="tabs tabs-fixed-width custom-tabs">
+      <li class="tab"><a href="#map">Map</a></li>
+      <li class="tab"><a href="#test2">Places</a></li>
+    </ul>
+
+    <div id="test2">
+      <div class="container">
+        <h3>Places go here --v</h3>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- String Literials -->
+  <script src="res/js/const.js"></script>
+
+  <!-- GeoJson Data  -->
+  <script src="res/js/du-places.js"></script>
+
+  <!-- JS for Sidebar & Collapses events -->
+  <script src="res/js/sidebar.js"></script>
+
+  <!-- JS for dropdown animation -->
+  <script type="text/javascript" src="res/js/dropdown.js"></script>
+
+  <!-- Materialize JS -->
+  <script type="text/javascript" src="res/materialize-src/js/bin/materialize.js"></script>
+
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="res/js/myVue.js"></script>
+
+  <!-- Custom JS for Leaflet -->
+  <!-- <script src="res/js/leaflet.js"></script> -->
+
+  <!-- Custom Mapbox JS -->
+  <script src="res/js/mapbox.js"></script>
+</body>
+
+</html>
