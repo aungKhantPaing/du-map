@@ -13,12 +13,33 @@
 
 .custom-tabs {
     position: fixed;
-    bottom: 0px;
+    height: 65px !important;
+    bottom: 1px;
+    text-transform: none;
     box-shadow: 0 6px 25px 2px #9e9e9e;
+
+    .tab {
+        height: 100%;
+    }
 
     a {
         color: teal !important;
-        background-color: transparent !important;
+        padding-top: 12px !important;
+        line-height: 14px;
+        font-size: 12px;
+
+        .tab-label {
+            display: block;
+        }
+
+        &:active, &:focus{
+            background-color: transparent !important;
+        }
+    }
+
+    .indicator {
+        height: 3px;
+        background-color: teal;
     }
 }
 

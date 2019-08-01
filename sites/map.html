@@ -45,7 +45,18 @@
 
 <body>
   <div id="myVue">
-    <div id='map'></div>
+    <div id="mapDiv">
+      <div id='map'></div>
+      <ul class="mybutton">
+        <li>
+          <button class="btn-floating" onclick="locate()">
+            <i class="material-icons">
+              gps_fixed
+            </i>
+          </button>
+        </li>
+      </ul>
+    </div>
 
     <ul id="slide-out" class="sidenav">
       <li>
@@ -96,27 +107,23 @@
     <a href="#" data-target="slide-out" class="btn-topcorner sidenav-trigger btn pulse"><i
         class="material-icons">menu</i></a>
 
-    <ul class="mybutton">
-      <!-- <li>
-                <button class="btn-floating btn-large" onclick="zoomToDU()">
-                  <i class="fas fa-directions btn-icon"></i>
-                </button>
-              </li> -->
-      <li>
-        <button class="btn-floating" onclick="locate()">
-          <i class="material-icons">
-            gps_fixed
-          </i>
-        </button>
+
+
+    <ul class="tabs tabs-fixed-width custom-tabs">
+      <li class="tab">
+        <a href="#mapDiv">
+          <i class="material-icons"> place</i>
+          <span class="tab-label">Map</span>
+        </a>
+      </li>
+      <li class="tab">
+        <a href="#placeList"><i class="material-icons"> list_alt </i>
+          <span class="tab-label">List</span>
+        </a>
       </li>
     </ul>
 
-    <ul id="tabs-swipe-demo" class="tabs tabs-fixed-width custom-tabs">
-      <li class="tab"><a href="#map">Map</a></li>
-      <li class="tab"><a href="#test2">Places</a></li>
-    </ul>
-
-    <div id="test2">
+    <div id="placeList">
       <div class="container">
         <h3>Places go here --v</h3>
       </div>
