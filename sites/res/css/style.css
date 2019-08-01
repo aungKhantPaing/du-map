@@ -29,7 +29,7 @@
     .custom-tabs a:active, .custom-tabs a:focus {
       background-color: transparent !important; }
   .custom-tabs .indicator {
-    height: 3px;
+    height: 10px;
     background-color: teal; }
 
 .mybutton {
