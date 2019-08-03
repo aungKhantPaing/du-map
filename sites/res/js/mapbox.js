@@ -1,9 +1,10 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw';
+mapboxgl.accessToken =
+    "pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw";
 var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/akp101/cjxkkxwpc01x11cnur0aepitf/draft',
+    container: "map",
+    style: "mapbox://styles/akp101/cjxkkxwpc01x11cnur0aepitf/draft",
     center: [96.212739, 16.911199],
-    zoom: 14.8,
+    zoom: 14.8
     // bearing: -27.5 // rotation
 });
 map.touchZoomRotate.enable();
@@ -27,23 +28,51 @@ var locationControl = new mapboxgl.GeolocateControl({
 
 map.addControl(zoomControl).addControl(locationControl);
 
+var marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+
+// Events
+map.on("click", function (e) {
+    marker.remove();
+});
+
+add_onClickEventTo('poi-label-places')
+
 function locate() {
-    locationControl.trigger()
+    locationControl.trigger();
 }
 
-// Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
-map.on('click', 'poi-label', function (e) {
-    map.flyTo({
-        center: e.features[0].geometry.coordinates
+function add_onClickEventTo(layer) {
+    map.on("click", layer, function (e) {
+        marker.remove();
+        var coordinates = e.features[0].geometry.coordinates;
+        map.flyTo({
+            center: coordinates,
+            zoom: 18
+        });
+        marker.setLngLat(coordinates).addTo(map);
+        console.log(e.id);
     });
-});
 
-// Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
-map.on('mouseenter', 'poi-label', function () {
-    map.getCanvas().style.cursor = 'pointer';
-});
+    map.on("mouseenter", layer, function () {
+        // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+        map.getCanvas().style.cursor = "pointer";
+    });
+    map.on("mouseleave", layer, function () {
+        // Change it back to a pointer when it leaves.
+        map.getCanvas().style.cursor = "";
+    });
+}
 
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'poi-label', function () {
-    map.getCanvas().style.cursor = '';
-});
+function playCamera (){
+    rotateCamera(0)
+}
+
+function rotateCamera(timestamp) {
+    // clamp the rotation between 0 -360 degrees
+    // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
+    map.rotateTo((timestamp / 100) % 360, {
+        duration: 0
+    });
+    // Request the next frame of the animation.
+    requestAnimationFrame(rotateCamera);
+}

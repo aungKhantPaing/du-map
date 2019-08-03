@@ -31,9 +31,8 @@
     ></script> -->
 
   <!-- MapBox -->
-  <script src='https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css' rel='stylesheet' />
-
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css" rel="stylesheet" />
 
   <!-- CUSTOM CSS -->
   <link rel="stylesheet" href="res/css/style.css" />
@@ -44,20 +43,26 @@
 </head>
 
 <body>
+  <div id="mapDiv">
+    <div id="map"></div>
+    <ul class="mybutton">
+      <li>
+        <button class="btn-floating" onclick="locate()">
+          <i class="material-icons">
+            gps_fixed
+          </i>
+        </button>
+      </li>
+      <li>
+        <button class="btn-floating" onclick="playCamera()">
+          <i class="material-icons">
+            panorama_horizontal
+          </i>
+        </button>
+      </li>
+    </ul>
+  </div>
   <div id="myVue">
-    <div id="mapDiv">
-      <div id='map'></div>
-      <ul class="mybutton">
-        <li>
-          <button class="btn-floating" onclick="locate()">
-            <i class="material-icons">
-              gps_fixed
-            </i>
-          </button>
-        </li>
-      </ul>
-    </div>
-
     <ul id="slide-out" class="sidenav">
       <li>
         <div class="user-view user-view-custom">
@@ -107,8 +112,6 @@
     <a href="#" data-target="slide-out" class="btn-topcorner sidenav-trigger btn pulse"><i
         class="material-icons">menu</i></a>
 
-
-
     <ul class="tabs tabs-fixed-width custom-tabs">
       <li class="indicator"></li>
       <li class="tab">
@@ -129,8 +132,6 @@
         <h3>Places go here --v</h3>
       </div>
     </div>
-
-
   </div>
 
   <!-- String Literials -->
@@ -148,15 +149,15 @@
   <!-- Materialize JS -->
   <script type="text/javascript" src="res/materialize-src/js/bin/materialize.js"></script>
 
+  <!-- Custom Mapbox JS -->
+  <script src="res/js/mapbox.js"></script>
+
   <!-- Vue -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="res/js/myVue.js"></script>
 
   <!-- Custom JS for Leaflet -->
   <!-- <script src="res/js/leaflet.js"></script> -->
-
-  <!-- Custom Mapbox JS -->
-  <script src="res/js/mapbox.js"></script>
 </body>
 
 </html>

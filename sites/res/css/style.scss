@@ -1,79 +1,89 @@
-#map {
-    overflow: hidden;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+#map, .hero {
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.hero {
+  text-align: center;
+  background-color: #00808075;
+  a {
+    text-transform: none !important;
+  }
 }
 
 .custom-tabs {
-    position: fixed;
-    height: 65px !important;
-    bottom: 1px;
+  position: fixed;
+  height: 65px !important;
+  bottom: 1px;
+  text-transform: none;
+  box-shadow: 0 6px 25px 2px #9e9e9e;
+
+  .tab {
+    height: 100%;
+  }
+
+  a {
+    color: teal !important;
+    padding-top: 12px !important;
+    line-height: 14px;
+    font-size: 12px;
     text-transform: none;
-    box-shadow: 0 6px 25px 2px #9e9e9e;
 
-    .tab {
-        height: 100%;
+    .tab-label {
+      display: block;
     }
 
-    a {
-        color: teal !important;
-        padding-top: 12px !important;
-        line-height: 14px;
-        font-size: 12px;
-
-        .tab-label {
-            display: block;
-        }
-
-        &:active, &:focus{
-            background-color: transparent !important;
-        }
+    &:active,
+    &:focus {
+      background-color: transparent !important;
     }
+  }
 
-    .indicator {
-        height: 8px;
-        border-radius: 10px;
-        background-color: teal;
-    }
+  .indicator {
+    height: 8px;
+    border-radius: 10px;
+    background-color: teal;
+  }
 }
 
 .mybutton {
-    position: fixed;
-    bottom: 10vh;
-    right: 10px;
+  position: fixed;
+  bottom: 10vh;
+  right: 10px;
 
-    li {
-        padding: 10px;
-    }
+  li {
+    padding: 10px;
+  }
 }
 
 .adjest {
-    padding-left: 70px !important;
+  padding-left: 70px !important;
 }
 
 .bg-gray {
-    background-color: rgb(230, 230, 230);
+  background-color: rgb(230, 230, 230);
 }
 
 .btn-topcorner {
-    margin: 10px;
+  margin: 10px;
 }
 
 .divider {
-    margin: 0px !important;
+  margin: 0px !important;
 }
 
 .user-view-custom {
-    font-size: 46px;
+  font-size: 46px;
 
-    img {
-        width: 6vh;
-    }
+  img {
+    width: 6vh;
+  }
 }

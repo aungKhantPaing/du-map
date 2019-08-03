@@ -1,4 +1,4 @@
-#map {
+#map, .hero {
   overflow: hidden;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -9,6 +9,12 @@
   left: 0px;
   right: 0px;
   bottom: 0px; }
+
+.hero {
+  text-align: center;
+  background-color: #00808075; }
+  .hero a {
+    text-transform: none !important; }
 
 .custom-tabs {
   position: fixed;
@@ -23,7 +29,8 @@
     color: teal !important;
     padding-top: 12px !important;
     line-height: 14px;
-    font-size: 12px; }
+    font-size: 12px;
+    text-transform: none; }
     .custom-tabs a .tab-label {
       display: block; }
     .custom-tabs a:active, .custom-tabs a:focus {
