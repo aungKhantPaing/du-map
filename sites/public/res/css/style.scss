@@ -14,7 +14,20 @@
 .hero {
   text-align: center;
   background-color: #00808075;
+  padding-top: 30px;
+
+  img {
+    height: 15vh;
+  }
+
+  h1 {
+    margin: 30px 0px;
+
+  }
+
   a {
+    font-weight: bold;
+    border-radius: 30px !important;
     text-transform: none !important;
   }
 }
@@ -86,4 +99,22 @@
   img {
     width: 6vh;
   }
+}
+
+.mapboxgl-ctrl-geocoder{
+  left: 60px !important;
+  .mapboxgl-ctrl-geocoder--input {
+    margin-top: 7px !important;
+    margin-left: 38px !important;
+    width: 201px !important;
+    height: 5vh !important;
+  }
+}
+
+.dock {
+  width: 100%;
+  padding: 0px 10px 9px 10px;
+  background-color: white;
+  position: fixed;
+  bottom: 0px;
 }

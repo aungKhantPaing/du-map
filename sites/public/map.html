@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DU Map (demo)</title>
+
+    <!-- FRAME WORKS -->
+    <!-- import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- import FontAwsome -->
+    <link rel="stylesheet" href="res/fontawesome/css/all.css" />
+    <!-- import Materialize -->
+    <link rel="stylesheet" href="res/materialize-src/css/materialize.css" />
+    <!-- CSS for dropdown -->
+    <link rel="stylesheet" href="res/css/dropdown.css" />
+
+    <!-- MapBox -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <!-- MapBox Plugin -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="res/css/style.css" />
+
+    <!-- JS & jQuery-->
+    <script src="res/js/jquery-3.4.1.js"></script>
+    <script src="res/bootstrap/js/bootstrap.js"></script>
+  </head>
+
+  <body>
+    <div id="mapDiv">
+      <div id="map"></div>
+      <ul class="mybutton">
+        <!-- <li>
+          <button class="btn-floating" onclick="locate()">
+            <i class="material-icons">
+              gps_fixed
+            </i>
+          </button>
+        </li> -->
+      </ul>
+    </div>
+
+    <div id="myVue">
+      <ul id="slide-out" class="sidenav">
+        <li>
+          <div class="user-view user-view-custom">
+            <img src="res/img/maps.svg" /> DU Map
+          </div>
+        </li>
+
+        <li><a class="subheader">Places</a></li>
+        <ul class="collapsible main">
+          <!-- Sidebar Place Group -->
+          <!-- Departments, Other Places, Bus Stops  -->
+          <placegroup
+            inline-template
+            v-for="placelist in placeListGroup"
+            :placelist="placelist"
+            :key="placelist.id"
+          >
+            <li>
+              <div class="collapsible-header waves-effect waves-teal">
+                <i class="material-icons">{{ getMaterialIcon }}</i>
+                {{ placelist.name }}
+                <div id="dropdown-3" class="dropdown"></div>
+              </div>
+
+              <div class="collapsible-body ">
+                <ul class="bg-gray">
+                  <li
+                    class="adjest waves-effect waves-block sidenav-close"
+                    v-for="place in placelist.places"
+                    @click="showPlaceInfo(place)"
+                  >
+                    {{ place.name }}
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </placegroup>
+        </ul>
+
+        <li class="divider"></li>
+
+        <li><a class="subheader">About</a></li>
+        <li>
+          <div class="collapsible-header waves-effect">
+            <i class="material-icons">info</i> About Us
+          </div>
+        </li>
+      </ul>
+
+      <a
+        href="#"
+        data-target="slide-out"
+        class="btn-topcorner sidenav-trigger btn pulse"
+        ><i class="material-icons">menu</i></a
+      >
+
+      <dock 
+      inline-template
+      >
+        <div v-show="visible" class="container dock">
+          <h4>{{ title }}</h4>
+          <h5>{{ type }}</h5>
+        </div>
+      </dock>
+
+      <div id="placeList">
+        <div class="container">
+          <h3>Places go here --v</h3>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <!-- String Literials -->
+  <script src="res/js/const.js"></script>
+
+  <!-- GeoJson Data  -->
+  <script src="res/js/du-places.js"></script>
+
+  <!-- JS for Sidebar & Collapses events -->
+  <script src="res/js/sidebar.js"></script>
+
+  <!-- JS for dropdown animation -->
+  <script type="text/javascript" src="res/js/dropdown.js"></script>
+
+  <!-- Materialize JS -->
+  <script
+    type="text/javascript"
+    src="res/materialize-src/js/bin/materialize.js"
+  ></script>
+
+  <!-- Custom Mapbox JS -->
+  <script src="res/js/mapbox.js"></script>
+  <script src="res/js/mapbox-data.js"></script>
+
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="res/js/myVue.js"></script>
+</html>

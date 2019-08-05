@@ -25,45 +25,48 @@ var locationControl = new mapboxgl.GeolocateControl({
         zoom: 15
     }
 });
+var geoCoderControl = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    marker: marker,
+})
 
-map.addControl(zoomControl).addControl(locationControl);
+map.addControl(zoomControl).addControl(locationControl).addControl(geoCoderControl, 'top-left');
 
 var marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
 
+// Bioler Plates
+function highlightPlace(id, coordinates) {
+    marker.remove()
+    
+    marker.setLngLat(coordinates).addTo(map)
+
+    map.flyTo({
+        center: coordinates,
+        zoom: 18
+    })
+
+    // NOTE: layer.source = 'composite'
+
+    map.setFilter('building-3d-highlighted', ['in', 'id', id]) // highlight the 3d structure with same id
+}
+
 // Events
-map.on("click", function (e) {
-    marker.remove();
-});
-
-add_onClickEventTo('poi-label-places')
-
 function locate() {
     locationControl.trigger();
 }
 
-function add_onClickEventTo(layer) {
-    map.on("click", layer, function (e) {
-        marker.remove();
-        var coordinates = e.features[0].geometry.coordinates;
-        map.flyTo({
-            center: coordinates,
-            zoom: 18
-        });
-        marker.setLngLat(coordinates).addTo(map);
-        console.log(e.id);
-    });
+map.on("mouseenter", 'poi-label-places', function () {
+    // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+    map.getCanvas().style.cursor = "pointer";
+});
 
-    map.on("mouseenter", layer, function () {
-        // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
-        map.getCanvas().style.cursor = "pointer";
-    });
-    map.on("mouseleave", layer, function () {
-        // Change it back to a pointer when it leaves.
-        map.getCanvas().style.cursor = "";
-    });
-}
+map.on("mouseleave", 'poi-label-places', function () {
+    // Change it back to a pointer when it leaves.
+    map.getCanvas().style.cursor = "";
+});
 
-function playCamera (){
+function playCamera() {
     rotateCamera(0)
 }
 
