@@ -25,13 +25,8 @@ var locationControl = new mapboxgl.GeolocateControl({
         zoom: 15
     }
 });
-var geoCoderControl = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    marker: marker,
-})
 
-map.addControl(zoomControl).addControl(locationControl).addControl(geoCoderControl, 'top-left');
+map.addControl(zoomControl).addControl(locationControl)
 
 var marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
 

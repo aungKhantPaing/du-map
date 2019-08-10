@@ -25,13 +25,16 @@
       href="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css"
       rel="stylesheet"
     />
-    <!-- MapBox Plugin -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js"></script>
+    <!-- GeoCoder -->
+    <!-- <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js"></script>
     <link
       rel="stylesheet"
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css"
       type="text/css"
-    />
+    /> -->
+
+    <!-- Search Bar -->
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="res/css/style.css" />
@@ -56,6 +59,7 @@
     </div>
 
     <div id="myVue">
+      <!-- Sidebar -->
       <ul id="slide-out" class="sidenav">
         <li>
           <div class="user-view user-view-custom">
@@ -69,14 +73,14 @@
           <!-- Departments, Other Places, Bus Stops  -->
           <placegroup
             inline-template
-            v-for="placelist in placeListGroup"
-            :placelist="placelist"
-            :key="placelist.id"
+            v-for="placegroup in placegroups"
+            :placegroup="placegroup"
+            :key="placegroup.id"
           >
             <li>
               <div class="collapsible-header waves-effect waves-teal">
                 <i class="material-icons">{{ getMaterialIcon }}</i>
-                {{ placelist.name }}
+                {{ placegroup.name }}
                 <div id="dropdown-3" class="dropdown"></div>
               </div>
 
@@ -84,7 +88,7 @@
                 <ul class="bg-gray">
                   <li
                     class="adjest waves-effect waves-block sidenav-close"
-                    v-for="place in placelist.places"
+                    v-for="place in placegroup.places"
                     @click="showPlaceInfo(place)"
                   >
                     {{ place.name }}
@@ -112,20 +116,21 @@
         ><i class="material-icons">menu</i></a
       >
 
-      <dock 
-      inline-template
-      >
+      <div id="autocomplete" class="autocomplete">
+        <input
+          class="autocomplete-input"
+          placeholder="Search for a country"
+          aria-label="Search for a country"
+        />
+        <ul class="autocomplete-result-list"></ul>
+      </div>
+
+      <dock inline-template>
         <div v-show="visible" class="container dock">
           <h4>{{ title }}</h4>
           <h5>{{ type }}</h5>
         </div>
       </dock>
-
-      <div id="placeList">
-        <div class="container">
-          <h3>Places go here --v</h3>
-        </div>
-      </div>
     </div>
   </body>
 

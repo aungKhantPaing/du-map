@@ -1,8 +1,25 @@
 var eventBus = new Vue()
 
+class Place {
+    constructor(id, name, coordinates, type) {
+        this.id = id
+        this.name = name
+        this.coordinates = coordinates
+        this.type = type
+    }
+}
+
+class PlaceGroup {
+    constructor(id, name) {
+        this.id = id
+        this.name = name
+        this.places = []
+    }
+}
+
 Vue.component('placegroup', {
     props: {
-        placelist: {
+        placegroup: {
             type: Object,
             required: true
         }
@@ -14,17 +31,17 @@ Vue.component('placegroup', {
         }
     },
     computed: {
-        placelistID() {
-            return this.placelist.id
+        placegroupID() {
+            return this.placegroup.id
         },
         isDepartments() {
-            return this.placelistID == 'pl-department'
+            return this.placegroupID == 'pl-department'
         },
         isBusstops() {
-            return this.placelistID == 'pl-busstop'
+            return this.placegroupID == 'pl-busstop'
         },
         isOtherplaces() {
-            return this.placelistID == 'pl-other'
+            return this.placegroupID == 'pl-other'
         },
         getMaterialIcon() {
             // ternary operator
@@ -69,16 +86,8 @@ Vue.component('dock', {
 var myVue = new Vue({
     el: "#myVue",
     data: {
-        placeData: '',
+        placegroups: '',
         sideNav: '',
-    },
-    methods: {
-
-    },
-    computed: {
-        placeListGroup() {
-            return this.placeData
-        }
     },
     mounted() {
         map.on("click", e => {
@@ -108,55 +117,48 @@ map.on('load', function () {
     console.log('DU_Places --v')
     console.log(sourceFeatures)
 
-    myVue.placeData = returnPlaceData(sourceFeatures) // put data to Vue
+    myVue.placegroups = returnPlaceData(sourceFeatures) // put data to Vue
+
+    // Search Bar
+    new Autocomplete(document.getElementById('autocomplete'), {
+        search: input => {
+            if (input.length < 1) {
+                return []
+            }
+            return returnPlaceData(sourceFeatures)[0].places.filter(place => {
+                return place.name.toLowerCase()
+                .startsWith(input.toLowerCase())
+            })
+        },
+        getResultValue: result => result.name
+    })
 })
 
 function returnPlaceData(sourceFeatures) {
-    var departments = {
-            id: 'pl-department',
-            name: 'Departments',
-            places: []
-        },
-        busStops = {
-            id: 'pl-busstop',
-            name: 'Bus Stops',
-            places: []
-        },
-        otherPlaces = {
-            id: 'pl-other',
-            name: 'Other Places',
-            places: []
-        }
 
-    sourceFeatures.forEach(element => {
-        var place = {
-            id: element.properties.id,
-            coordinates: element.geometry.coordinates,
-            name: element.properties.name_en,
-            type: element.properties.type, // to display in sidebar
-        }
+    var departments = new PlaceGroup('pl-department', 'Departments'),
+        busStops = new PlaceGroup('pl-busstop', 'Bus Stops'),
+        otherPlaces = new PlaceGroup('pl-other', 'Other Places'),
+        place
 
-        if (element.properties.type == 'department') {
-            departments.places.push(place)
-        } else if (element.properties.type == 'busstop') {
-            busStops.places.push(place)
-        } else {
-            otherPlaces.places.push(place)
+    sourceFeatures.forEach(feature => {
+        place = new Place(
+            feature.properties.id,
+            feature.properties.name_en,
+            feature.geometry.coordinates,
+            feature.properties.type
+        )
+
+        switch (place.type) {
+            case 'department':
+                departments.places.push(place)
+                break
+            case 'busstop':
+                busStops.places.push(place)
+                break
+            default:
+                otherPlaces.places.push(place)
         }
-    });
+    })
     return [departments, busStops, otherPlaces]
 }
-
-// Materialized Sidebar and Collapsibles 
-document.addEventListener('DOMContentLoaded', function () {
-    var sideNavElem = document.querySelector('.sidenav');
-    M.Sidenav.init(sideNavElem);
-
-    var collapsibleElem = document.querySelector('.collapsible');
-    var collapsibleInstance = M.Collapsible.init(collapsibleElem, function onOpenStart() {
-        // added custom code for dropdown animation
-    });
-
-    var tabs = document.querySelectorAll('.tabs');
-    var tabInstance = M.Tabs.init(tabs, {});
-});

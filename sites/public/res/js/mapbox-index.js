@@ -1,3 +1,5 @@
+alert("Last Update: Aug 10, 21:51")
+
 mapboxgl.accessToken =
     "pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw";
 var map = new mapboxgl.Map({

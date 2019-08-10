@@ -1,4 +1,5 @@
-#map, .hero {
+#map,
+.hero {
   overflow: hidden;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -101,8 +102,9 @@
   }
 }
 
-.mapboxgl-ctrl-geocoder{
+.mapboxgl-ctrl-geocoder {
   left: 60px !important;
+
   .mapboxgl-ctrl-geocoder--input {
     margin-top: 7px !important;
     margin-left: 38px !important;
@@ -117,4 +119,33 @@
   background-color: white;
   position: fixed;
   bottom: 0px;
+}
+
+.autocomplete {
+  top: 3px;
+  display: inline-flex;
+  background-color: white;
+  position: fixed;
+
+  input {
+    width: 32vh;
+    margin: 0;
+    padding-left: 10px;
+    border-radius: 10px;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  ul {
+    z-index: 1;
+    background: white;
+    margin: 0px;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    visibility: visible;
+    pointer-events: auto;
+    top: 100%;
+    padding-left: 12px;
+  }
 }
