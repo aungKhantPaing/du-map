@@ -17,20 +17,24 @@ class PlaceGroup {
     }
 }
 
-Vue.component('placegroup', {
+Vue.component('v-placegroup', {
+    template: '#v-placegroup',
     props: {
         placegroup: {
             type: Object,
-            required: true
+            required: true,
         }
     },
     methods: {
         showPlaceInfo(place) {
             highlightPlace(place.id, place.coordinates)
             eventBus.$emit('show-dock', place)
-        }
+        },
     },
     computed: {
+        places() {
+            return this.placegroup.places
+        },
         placegroupID() {
             return this.placegroup.id
         },
@@ -49,7 +53,7 @@ Vue.component('placegroup', {
                 this.isBusstops ? constants.materialized.icons.busStops :
                 constants.materialized.icons.otherPlaces;
         }
-    }
+    },
 })
 
 Vue.component('dock', {
@@ -69,6 +73,9 @@ Vue.component('dock', {
         hide() {
             this.visible = false
         },
+        goToPage() {
+            router.push('/page')
+        }
     },
     mounted() {
         eventBus.$on('show-dock', place => {
@@ -83,12 +90,80 @@ Vue.component('dock', {
     }
 })
 
+var vWelcome = Vue.component('v-welcome', {
+    template: '#v-welcome'
+})
+
+var vMap = Vue.component('v-map', {
+    template: '#v-map',
+    data() {
+        return {
+            placegroups: []
+        }
+    },
+    mounted() {
+        try {
+            this.placegroups = myVue.placegroups
+        } catch (e) {
+            eventBus.$on('load-data', e => {
+                this.placegroups = myVue.placegroups
+            })
+        }
+
+        // Material JS config for Sidebar and Collapses
+        var sideNavElem = document.querySelector('.sidenav');
+        M.Sidenav.init(sideNavElem);
+        var collapsibleElem = document.querySelector('.collapsible');
+        var collapsibleInstance = M.Collapsible.init(collapsibleElem, function onOpenStart() {
+            // added custom code (at line 2180 )for dropdown animation
+        });
+        var tabs = document.querySelectorAll('.tabs');
+        var tabInstance = M.Tabs.init(tabs, {});
+
+        // Search Bar
+        new Autocomplete(document.getElementById('autocomplete'), {
+            search: input => {
+                if (input.length < 1) {
+                    return []
+                }
+                return returnPlaceData(sourceFeatures)[0].places.filter(place => {
+                    return place.name.toLowerCase()
+                        .startsWith(input.toLowerCase())
+                })
+            },
+            getResultValue: result => result.name
+        })
+    }
+})
+
+var vPlacePage = Vue.component('v-place-page', {
+    template: '#v-place-page'
+})
+
+const routes = [{
+        path: '/',
+        component: vMap
+    },
+    {
+        path: '/welcome',
+        component: vWelcome
+    },
+    {
+        path: '/page',
+        component: vPlacePage
+    }
+]
+
+const router = new VueRouter({
+    routes // short for `routes: routes`
+})
+
 var myVue = new Vue({
     el: "#myVue",
     data: {
-        placegroups: '',
-        sideNav: '',
+        placegroups: []
     },
+    router: router,
     mounted() {
         map.on("click", e => {
             marker.remove();
@@ -110,28 +185,25 @@ var myVue = new Vue({
     }
 })
 
+
 map.on('load', function () {
-    var sourceFeatures = map.querySourceFeatures('composite', { // retrieving from map 
+    // var sourceFeatures = map.querySourceFeatures('composite', { // retrieving from map 
+    //     sourceLayer: 'DU_Places' // required if sourceLayer is a vector_tileset
+    // })
+    // console.log('DU_Places --v')
+    // console.log(sourceFeatures)
+    // console.log(myVue.placegroups)
+    // myVue.placegroups = returnPlaceData(sourceFeatures) // put data to Vue
+    // console.log(myVue.placegroups)
+    // Search Bar
+
+    var sourceFeatures = map.querySourceFeatures('composite', {
         sourceLayer: 'DU_Places' // required if sourceLayer is a vector_tileset
     })
     console.log('DU_Places --v')
     console.log(sourceFeatures)
-
     myVue.placegroups = returnPlaceData(sourceFeatures) // put data to Vue
-
-    // Search Bar
-    new Autocomplete(document.getElementById('autocomplete'), {
-        search: input => {
-            if (input.length < 1) {
-                return []
-            }
-            return returnPlaceData(sourceFeatures)[0].places.filter(place => {
-                return place.name.toLowerCase()
-                .startsWith(input.toLowerCase())
-            })
-        },
-        getResultValue: result => result.name
-    })
+    eventBus.$emit('load-data', myVue.placegroups)
 })
 
 function returnPlaceData(sourceFeatures) {
@@ -153,7 +225,7 @@ function returnPlaceData(sourceFeatures) {
             case 'department':
                 departments.places.push(place)
                 break
-            case 'busstop':
+            case 'bus stop':
                 busStops.places.push(place)
                 break
             default:

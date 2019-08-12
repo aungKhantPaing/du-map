@@ -4,11 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Welcome</title>
+    <title>DU Map (demo)</title>
 
-    <link rel="stylesheet" href="res/materialize-src/css/materialize.css">
+    <!-- FRAME WORKS -->
+    <!-- Font -->
+    <link rel="font" href="res/font/Pyidaungsu-2.5_Regular.ttf" />
 
-    <link rel="stylesheet" href="res/css/style.css">
+    <!-- import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- import Materialize -->
+    <link rel="stylesheet" href="res/css/materialize.css" />
+    <!-- CSS for dropdown -->
+    <link rel="stylesheet" href="res/css/dropdown.css" />
 
     <!-- MapBox -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js"></script>
@@ -16,20 +26,164 @@
       href="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css"
       rel="stylesheet"
     />
+
+    <!-- Search Bar -->
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="res/css/style.css" />
+
+    <!-- jQuery-->
+    <script src="res/js/jquery-3.4.1.js"></script>
+
+    <!-- Vue & Router -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   </head>
 
+
   <body>
-    <div id="map"></div>
-    <div class="hero">
-      <img src="res/img/maps.svg" />
-      <h1>Hello Map</h1>
-      <a class="waves-effect btn" href="map.html">To Map</a>
+    <div id="mapDiv">
+      <div id="map"></div>
+      <ul class="mybutton">
+        <!-- <li>
+          <button class="btn-floating" onclick="locate()">
+            <i class="material-icons">
+              gps_fixed
+            </i>
+          </button>
+        </li> -->
+      </ul>
+    </div>
+
+    <div id="myVue">
+      <router-view></router-view>
     </div>
   </body>
 
+
+  <!-- Welcome -->
+  <script type="text/x-template" id="v-welcome">
+    <div>
+      <div class="hero">
+        <img src="res/img/maps.svg" />
+        <h1>Hello Map</h1>
+        <router-link to="/" class="btn">To Map</router-link>
+      </div>
+    </div>
+  </script>
+
+  <!-- Map -->
+  <script type="text/x-template" id="v-map">
+    <div>
+        <!-- Sidebar -->
+        <ul id="slide-out" class="sidenav">
+            <li>
+              <div class="user-view user-view-custom">
+                <img src="res/img/maps.svg" /> DU Map
+              </div>
+            </li>
+
+            <li><a class="subheader">Places</a></li>
+            <ul class="collapsible main">
+              <!-- Sidebar Place Group -->
+              <!-- Departments, Other Places, Bus Stops  -->
+              <v-placegroup
+                v-for="placegroup in placegroups"
+                :placegroup="placegroup"
+                :key="placegroup.id"
+              ></v-placegroup>
+            </ul>
+
+            <li class="divider"></li>
+
+            <li><a class="subheader">About</a></li>
+            <li>
+              <div class="collapsible-header waves-effect">
+                <i class="material-icons">info</i> About Us
+              </div>
+            </li>
+          </ul>
+
+          <a
+            href="#"
+            data-target="slide-out"
+            class="btn-topcorner sidenav-trigger btn pulse"
+            >
+            <i class="material-icons">menu</i>
+          </a>
+
+          <div id="autocomplete" class="autocomplete">
+            <input
+              class="autocomplete-input"
+              placeholder="Search for a country"
+              aria-label="Search for a country"
+            />
+            <ul class="autocomplete-result-list"></ul>
+          </div>
+
+          <dock inline-template>
+            <div 
+              v-show="visible" 
+              @click="goToPage()"
+              class="container dock">
+              <h4>{{ title }}</h4>
+              <h5>{{ type }}</h5>
+            </div>
+          </dock>
+      </div>
+  </script>
+
+  <script type="text/x-template" id="v-placegroup">
+    <li>
+      <div class="collapsible-header waves-effect waves-teal">
+        <i class="material-icons">{{ getMaterialIcon }}</i>
+        {{ placegroup.name }}
+        <div id="dropdown-3" class="dropdown"></div>
+      </div>
+
+      <div class="collapsible-body ">
+        <ul class="bg-gray">
+          <li
+            class="adjest waves-effect waves-block sidenav-close"
+            v-for="place in placegroup.places"
+            @click="showPlaceInfo(place)"
+          >
+            {{ place.name }}
+          </li>
+        </ul>
+      </div>
+    </li>
+  </script>
+
+  <!-- Place Page -->
+  <script type="text/x-template" id="v-place-page">
+    <div class="center" style="position: sticky; background: white; height: 100vh;">
+      <router-link to="/" class="btn">Go Back</router-link>
+    </div>
+  </script>
+
+
+  <!-- JSs  -->
+  <!-- String Literials -->
+  <script src="res/js/const.js"></script>
+
+  <!-- GeoJson Data  -->
+  <script src="res/js/du-places.js"></script>
+
+  <!-- JS for Sidebar & Collapses events -->
+  <script src="res/js/sidebar.js"></script>
+
+  <!-- JS for dropdown animation -->
+  <script type="text/javascript" src="res/js/dropdown.js"></script>
+
   <!-- Materialize JS -->
-  <script type="text/javascript" src="res/materialize-src/js/bin/materialize.js"></script>
+  <script type="text/javascript" src="res/js/materialize.js"></script>
 
   <!-- Custom Mapbox JS -->
-  <script src="res/js/mapbox-index.js"></script>
+  <script src="res/js/mapbox.js"></script>
+  <script src="res/js/mapbox-data.js"></script>
+
+  <!-- Vue -->
+  <script src="res/js/myVue.js"></script>
 </html>
