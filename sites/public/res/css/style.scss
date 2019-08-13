@@ -1,5 +1,6 @@
 html, body {
   font-family: Pyidaungsu-2.5_Regular;
+  transition: 2s;
 }
 
 #map,
@@ -119,10 +120,23 @@ html, body {
 
 .dock {
   width: 100%;
-  padding: 0px 10px 9px 10px;
+  height: auto;
+  padding: 0px 10px 0px 10px;
   background-color: white;
   position: fixed;
   bottom: 0px;
+  transition: 1s;
+  .place-name {
+    font-size: 2em !important;
+  }
+  .place-type {
+    font-size: 1.5rem !important;
+    color: gray !important;
+  }
+}
+
+.expand-height {
+  height: 100vh;
 }
 
 .autocomplete {
@@ -151,5 +165,24 @@ html, body {
     pointer-events: auto;
     top: 100%;
     padding-left: 12px;
+  }
+}
+
+.place-page {
+  position: sticky; 
+  background: white; 
+  height: 100vh;
+
+  .img-group {
+    overflow-x: auto;
+    white-space: nowrap;
+    .place-img {
+      height: 28vh;
+      width: auto;
+    }
+  }
+
+  .place-type {
+    color: gray !important;
   }
 }

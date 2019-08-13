@@ -1,5 +1,6 @@
 var eventBus = new Vue()
 
+
 class Place {
     constructor(id, name, coordinates, type) {
         this.id = id
@@ -56,31 +57,31 @@ Vue.component('v-placegroup', {
     },
 })
 
-Vue.component('dock', {
+Vue.component('v-dock', {
+    template: '#v-dock',
     data() {
         return {
-            id: '',
-            title: 'Place Title',
-            type: 'Place Type',
-            coordinates: [],
-            visible: false,
+            place: new Place('', 'title', 'type', []),
+            isExpanded: false,
+            visible: true,
+            height: '0vh',
         }
     },
     methods: {
         show() {
-            this.visible = true
+            this.height = '16vh'
         },
         hide() {
-            this.visible = false
+            this.height = '0vh'
         },
-        goToPage() {
-            router.push('/page')
+        routeToPage() {
+            this.hide()
+            router.push({name: 'place', params: this.place})
         }
     },
     mounted() {
         eventBus.$on('show-dock', place => {
-            this.title = place.name
-            this.type = place.type
+            this.place = place
             this.show()
         })
 
@@ -94,8 +95,8 @@ var vWelcome = Vue.component('v-welcome', {
     template: '#v-welcome'
 })
 
-var vMap = Vue.component('v-map', {
-    template: '#v-map',
+var vSidebar = Vue.component('v-sidebar', {
+    template: '#v-sidebar',
     data() {
         return {
             placegroups: []
@@ -121,37 +122,36 @@ var vMap = Vue.component('v-map', {
         var tabInstance = M.Tabs.init(tabs, {});
 
         // Search Bar
-        new Autocomplete(document.getElementById('autocomplete'), {
-            search: input => {
-                if (input.length < 1) {
-                    return []
-                }
-                return returnPlaceData(sourceFeatures)[0].places.filter(place => {
-                    return place.name.toLowerCase()
-                        .startsWith(input.toLowerCase())
-                })
-            },
-            getResultValue: result => result.name
-        })
+        // new Autocomplete(document.getElementById('autocomplete'), {
+        //     search: input => {
+        //         if (input.length < 1) {
+        //             return []
+        //         }
+        //         return returnPlaceData(sourceFeatures)[0].places.filter(place => {
+        //             return place.name.toLowerCase()
+        //                 .startsWith(input.toLowerCase())
+        //         })
+        //     },
+        //     getResultValue: result => result.name
+        // })
     }
 })
 
 var vPlacePage = Vue.component('v-place-page', {
-    template: '#v-place-page'
+    template: '#v-place-page',
 })
 
-const routes = [{
-        path: '/',
-        component: vMap
-    },
+const routes = [
     {
         path: '/welcome',
         component: vWelcome
     },
     {
-        path: '/page',
-        component: vPlacePage
-    }
+        path: '/place',
+        name: 'place',
+        component: vPlacePage,
+        props: true,
+    },
 ]
 
 const router = new VueRouter({
@@ -172,14 +172,16 @@ var myVue = new Vue({
         })
 
         map.on('click', 'poi-label-places', e => {
-            var pointer_id = e.features[0].properties.id
-            var pointer_coordinates = e.features[0].geometry.coordinates
+            var place_id = e.features[0].properties.id
+            var place_coordinates = e.features[0].geometry.coordinates
+            var place_name = e.features[0].properties.name_en
+            var place_type = e.features[0].properties.type
 
-            highlightPlace(pointer_id, pointer_coordinates)
+            highlightPlace(place_id, place_coordinates)
 
             eventBus.$emit('show-dock', {
-                name: e.features[0].properties.name_en, // passed place object
-                type: e.features[0].properties.type,
+                name: place_name, // passed place object
+                type: place_type,
             })
         })
     }
@@ -187,16 +189,6 @@ var myVue = new Vue({
 
 
 map.on('load', function () {
-    // var sourceFeatures = map.querySourceFeatures('composite', { // retrieving from map 
-    //     sourceLayer: 'DU_Places' // required if sourceLayer is a vector_tileset
-    // })
-    // console.log('DU_Places --v')
-    // console.log(sourceFeatures)
-    // console.log(myVue.placegroups)
-    // myVue.placegroups = returnPlaceData(sourceFeatures) // put data to Vue
-    // console.log(myVue.placegroups)
-    // Search Bar
-
     var sourceFeatures = map.querySourceFeatures('composite', {
         sourceLayer: 'DU_Places' // required if sourceLayer is a vector_tileset
     })

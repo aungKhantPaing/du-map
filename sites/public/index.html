@@ -6,6 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>DU Map (demo)</title>
 
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/6.3.4/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/6.3.4/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
     <!-- FRAME WORKS -->
     <!-- Font -->
     <link rel="font" href="res/font/Pyidaungsu-2.5_Regular.ttf" />
@@ -41,7 +48,6 @@
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   </head>
 
-
   <body>
     <div id="mapDiv">
       <div id="map"></div>
@@ -57,10 +63,13 @@
     </div>
 
     <div id="myVue">
-      <router-view></router-view>
+      <v-sidebar></v-sidebar>
+      <v-dock></v-dock>
+      <transition>
+        <router-view></router-view>
+      </transition>
     </div>
   </body>
-
 
   <!-- Welcome -->
   <script type="text/x-template" id="v-welcome">
@@ -73,9 +82,9 @@
     </div>
   </script>
 
-  <!-- Map -->
-  <script type="text/x-template" id="v-map">
-    <div>
+  <!-- Sidebar -->
+  <script type="text/x-template" id="v-sidebar">
+    <div style="position: absolute">
         <!-- Sidebar -->
         <ul id="slide-out" class="sidenav">
             <li>
@@ -113,25 +122,26 @@
             <i class="material-icons">menu</i>
           </a>
 
-          <div id="autocomplete" class="autocomplete">
+          <!-- <div id="autocomplete" class="autocomplete">
             <input
               class="autocomplete-input"
               placeholder="Search for a country"
               aria-label="Search for a country"
             />
             <ul class="autocomplete-result-list"></ul>
-          </div>
-
-          <dock inline-template>
-            <div 
-              v-show="visible" 
-              @click="goToPage()"
-              class="container dock">
-              <h4>{{ title }}</h4>
-              <h5>{{ type }}</h5>
-            </div>
-          </dock>
+          </div> -->
       </div>
+  </script>
+
+  <script type="text/x-template" id="v-dock">
+    <div
+      class="container dock waves-effect"
+      :class="{ 'expand-height': isExpanded }"
+      :style="{ height: height }"
+      @click="routeToPage()">
+      <h4 class="place-name">{{ place.name }}</h4>
+      <h5 class="place-type">{{ place.type }}</h5>
+    </div>
   </script>
 
   <script type="text/x-template" id="v-placegroup">
@@ -158,11 +168,24 @@
 
   <!-- Place Page -->
   <script type="text/x-template" id="v-place-page">
-    <div class="center" style="position: sticky; background: white; height: 100vh;">
-      <router-link to="/" class="btn">Go Back</router-link>
-    </div>
+    <transition name="slide">
+      <div class="place-page">
+        <div class="img-group">
+          <img class="place-img" src="res/img/d-cs/bg.png">
+          <img class="place-img" src="res/img/d-cs/img1.png">
+          <img class="place-img" src="res/img/d-cs/img2.jpg">
+          <img class="place-img" src="res/img/d-cs/img3.jpg">
+        </div>
+        <div class="container">
+          <h3>{{ $attrs.name }}</h3>
+          <h5 style="color: gray;">{{ $attrs.type }}</h5>
+          <router-link to="/" replace class="btn">Go Back</router-link>
+        </div>
+      </div>
+    </transition>
   </script>
 
+  <script defer src="res/js/firebase.js"></script>
 
   <!-- JSs  -->
   <!-- String Literials -->
@@ -170,9 +193,6 @@
 
   <!-- GeoJson Data  -->
   <script src="res/js/du-places.js"></script>
-
-  <!-- JS for Sidebar & Collapses events -->
-  <script src="res/js/sidebar.js"></script>
 
   <!-- JS for dropdown animation -->
   <script type="text/javascript" src="res/js/dropdown.js"></script>
@@ -182,7 +202,6 @@
 
   <!-- Custom Mapbox JS -->
   <script src="res/js/mapbox.js"></script>
-  <script src="res/js/mapbox-data.js"></script>
 
   <!-- Vue -->
   <script src="res/js/myVue.js"></script>

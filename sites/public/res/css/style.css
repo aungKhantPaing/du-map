@@ -1,5 +1,8 @@
 html, body {
-  font-family: Pyidaungsu-2 0.5_Regular; }
+  font-family: Pyidaungsu-2 0.5_Regular;
+  -webkit-transition: 2s;
+  -o-transition: 2s;
+  transition: 2s; }
 
 #map,
 .hero {
@@ -85,10 +88,22 @@ html, body {
 
 .dock {
   width: 100%;
-  padding: 0px 10px 9px 10px;
+  height: auto;
+  padding: 0px 10px 0px 10px;
   background-color: white;
   position: fixed;
-  bottom: 0px; }
+  bottom: 0px;
+  -webkit-transition: 1s;
+  -o-transition: 1s;
+  transition: 1s; }
+  .dock .place-name {
+    font-size: 2em !important; }
+  .dock .place-type {
+    font-size: 1.5rem !important;
+    color: gray !important; }
+
+.expand-height {
+  height: 100vh; }
 
 .autocomplete {
   top: 3px;
@@ -117,3 +132,17 @@ html, body {
     pointer-events: auto;
     top: 100%;
     padding-left: 12px; }
+
+.place-page {
+  position: -webkit-sticky;
+  position: sticky;
+  background: white;
+  height: 100vh; }
+  .place-page .img-group {
+    overflow-x: auto;
+    white-space: nowrap; }
+    .place-page .img-group .place-img {
+      height: 28vh;
+      width: auto; }
+  .place-page .place-type {
+    color: gray !important; }
