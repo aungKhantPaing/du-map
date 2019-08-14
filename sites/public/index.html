@@ -64,6 +64,7 @@
 
     <div id="myVue">
       <v-sidebar></v-sidebar>
+      <v-searchbar></v-searchbar>
       <v-dock></v-dock>
       <transition>
         <router-view></router-view>
@@ -79,6 +80,14 @@
         <h1>Hello Map</h1>
         <router-link to="/" class="btn">To Map</router-link>
       </div>
+    </div>
+  </script>
+
+  <!-- Searchbar -->
+  <script type="text/x-template" id="v-searchbar">
+    <div style="position: absolute; left: 82px; top: 3px;">
+      <input id="searchInput" type="text">
+      <li v-for="result in results">{{ result.item.properties.name_en }}</li>
     </div>
   </script>
 
@@ -139,8 +148,8 @@
       :class="{ 'expand-height': isExpanded }"
       :style="{ height: height }"
       @click="routeToPage()">
-      <h4 class="place-name">{{ place.name }}</h4>
-      <h5 class="place-type">{{ place.type }}</h5>
+      <h4 class="place-name">{{ place.properties.name_en }}</h4>
+      <h5 class="place-type">{{ place.properties.type }}</h5>
     </div>
   </script>
 
@@ -159,7 +168,7 @@
             v-for="place in placegroup.places"
             @click="showPlaceInfo(place)"
           >
-            {{ place.name }}
+            {{ place.properties.name_en }}
           </li>
         </ul>
       </div>
@@ -168,34 +177,35 @@
 
   <!-- Place Page -->
   <script type="text/x-template" id="v-place-page">
-    <transition name="slide">
-      <div class="place-page">
-        <div class="img-group">
-          <img class="place-img" src="res/img/d-cs/bg.png">
-          <img class="place-img" src="res/img/d-cs/img1.png">
-          <img class="place-img" src="res/img/d-cs/img2.jpg">
-          <img class="place-img" src="res/img/d-cs/img3.jpg">
-        </div>
-        <div class="container">
-          <h3>{{ $attrs.name }}</h3>
-          <h5 style="color: gray;">{{ $attrs.type }}</h5>
-          <router-link to="/" replace class="btn">Go Back</router-link>
-        </div>
+    <div class="place-page">
+      <div class="img-group">
+        <img 
+          v-for="imgSrc in imgSrcs" 
+          class="place-img" 
+          :src="imgSrc">
       </div>
-    </transition>
+      <div class="container">
+        <h3>{{ properties.name_en }}</h3>
+        <h5 style="color: gray;">{{ properties.type }}</h5>
+        <router-link to="/" replace class="btn">Go Back</router-link>
+      </div>
+    </div>
   </script>
 
   <script defer src="res/js/firebase.js"></script>
 
   <!-- JSs  -->
   <!-- String Literials -->
-  <script src="res/js/const.js"></script>
+  <script src="res/js/constants.js"></script>
 
   <!-- GeoJson Data  -->
   <script src="res/js/du-places.js"></script>
 
   <!-- JS for dropdown animation -->
   <script type="text/javascript" src="res/js/dropdown.js"></script>
+
+  <!-- Fuse.js -->
+  <script src="res/js/fuse.js"></script>
 
   <!-- Materialize JS -->
   <script type="text/javascript" src="res/js/materialize.js"></script>

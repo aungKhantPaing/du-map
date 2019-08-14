@@ -1,5 +1,6 @@
-html, body {
-  font-family: Pyidaungsu-2 0.5_Regular;
+html,
+body {
+  font-family: "Pyidaungsu-2.5_Regular";
   -webkit-transition: 2s;
   -o-transition: 2s;
   transition: 2s; }
@@ -146,3 +147,8 @@ html, body {
       width: auto; }
   .place-page .place-type {
     color: gray !important; }
+
+.searchbar {
+  position: absolute;
+  left: 82px;
+  top: 3px; }

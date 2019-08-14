@@ -2,11 +2,12 @@ var eventBus = new Vue()
 
 
 class Place {
-    constructor(id, name, coordinates, type) {
-        this.id = id
-        this.name = name
+    constructor({
+        properties,
+        coordinates
+    }) {
+        this.properties = properties
         this.coordinates = coordinates
-        this.type = type
     }
 }
 
@@ -28,7 +29,7 @@ Vue.component('v-placegroup', {
     },
     methods: {
         showPlaceInfo(place) {
-            highlightPlace(place.id, place.coordinates)
+            highlightPlace(place.properties.id, place.coordinates)
             eventBus.$emit('show-dock', place)
         },
     },
@@ -39,19 +40,20 @@ Vue.component('v-placegroup', {
         placegroupID() {
             return this.placegroup.id
         },
-        isDepartments() {
+        isDepartment() {
             return this.placegroupID == 'pl-department'
         },
-        isBusstops() {
+        isBusstop() {
             return this.placegroupID == 'pl-busstop'
         },
-        isOtherplaces() {
-            return this.placegroupID == 'pl-other'
+        isCanteen() {
+            return this.placegroupID == 'pl-canteen'
         },
         getMaterialIcon() {
             // ternary operator
-            return this.isDepartments ? constants.materialized.icons.departments :
-                this.isBusstops ? constants.materialized.icons.busStops :
+            return this.isDepartment ? constants.materialized.icons.departments :
+                this.isBusstop ? constants.materialized.icons.busStops :
+                this.isCanteen ? constants.materialized.icons.canteens :
                 constants.materialized.icons.otherPlaces;
         }
     },
@@ -61,7 +63,10 @@ Vue.component('v-dock', {
     template: '#v-dock',
     data() {
         return {
-            place: new Place('', 'title', 'type', []),
+            place: new Place({
+                properties: {},
+                coordinates: [],
+            }),
             isExpanded: false,
             visible: true,
             height: '0vh',
@@ -76,7 +81,10 @@ Vue.component('v-dock', {
         },
         routeToPage() {
             this.hide()
-            router.push({name: 'place', params: this.place})
+            router.push({
+                name: 'place',
+                params: this.place
+            })
         }
     },
     mounted() {
@@ -108,6 +116,19 @@ var vSidebar = Vue.component('v-sidebar', {
         } catch (e) {
             eventBus.$on('load-data', e => {
                 this.placegroups = myVue.placegroups
+
+                // new Autocomplete(document.getElementById('autocomplete'), {
+                //     search: input => {
+                //         if (input.length < 1) {
+                //             return []
+                //         }
+                //         return this.placegroups[0].places.filter(place => {
+                //             return place.properties.name_en.toLowerCase()
+                //                 .startsWith(input.toLowerCase())
+                //         })
+                //     },
+                //     getResultValue: result => result.properties.name_en
+                // })
             })
         }
 
@@ -118,31 +139,92 @@ var vSidebar = Vue.component('v-sidebar', {
         var collapsibleInstance = M.Collapsible.init(collapsibleElem, function onOpenStart() {
             // added custom code (at line 2180 )for dropdown animation
         });
-        var tabs = document.querySelectorAll('.tabs');
-        var tabInstance = M.Tabs.init(tabs, {});
-
-        // Search Bar
-        // new Autocomplete(document.getElementById('autocomplete'), {
-        //     search: input => {
-        //         if (input.length < 1) {
-        //             return []
-        //         }
-        //         return returnPlaceData(sourceFeatures)[0].places.filter(place => {
-        //             return place.name.toLowerCase()
-        //                 .startsWith(input.toLowerCase())
-        //         })
-        //     },
-        //     getResultValue: result => result.name
-        // })
     }
 })
 
 var vPlacePage = Vue.component('v-place-page', {
     template: '#v-place-page',
+    props: {
+        properties: {
+            type: Object,
+            required: true,
+        }
+    },
+    data() {
+        return {
+            imgSrcs: []
+        }
+    },
+    methods: {
+        // get image srcs from firebase storage and push to `imgSrcs[]` array
+        retrieveSrcs(placegroupRef) {
+            placegroupRef.child(this.properties.id).listAll().then(res => {
+                res.items.forEach(itemRef => {
+                    itemRef.getDownloadURL().then(url => {
+                        this.imgSrcs.push(url)
+                    })
+                })
+            })
+        }
+    },
+    mounted() {
+        switch (this.properties.type) {
+            case 'department':
+                this.retrieveSrcs(departmentsRef)
+                break
+            case 'bus stop':
+                this.retrieveSrcs(busstopsRef)
+                break
+            case 'canteen':
+                this.retrieveSrcs(canteensRef)
+                break
+            default:
+                this.retrieveSrcs(otherplacesRef)
+        }
+    }
 })
 
-const routes = [
-    {
+Vue.component('v-searchbar', {
+    template: '#v-searchbar',
+    data() {
+        return {
+            inputString: '',
+            results: []
+        }
+    },
+    mounted() {
+        var fuse
+
+        eventBus.$on('load-data', e => {
+            var options = {
+                shouldSort: true,
+                includeMatches: true,
+                threshold: 0.6,
+                location: 0,
+                distance: 100,
+                maxPatternLength: 32,
+                minMatchCharLength: 1,
+                keys: [
+                    "properties.name_en",
+                    "properties.type"
+                ]
+            };
+            var list = myVue.placegroups[0].places
+            fuse = new Fuse(list, options); // "list" is the item array
+        })
+
+        $('#searchInput').on('input', function() {
+            eventBus.$emit('dataInput', $(this).val())
+        });
+
+        eventBus.$on('dataInput', input => {
+            this.results = fuse.search(input)
+            console.log(this.results)  // get the current value of the input field.
+        })
+    }
+})
+
+const routes = [{
         path: '/welcome',
         component: vWelcome
     },
@@ -174,15 +256,14 @@ var myVue = new Vue({
         map.on('click', 'poi-label-places', e => {
             var place_id = e.features[0].properties.id
             var place_coordinates = e.features[0].geometry.coordinates
-            var place_name = e.features[0].properties.name_en
-            var place_type = e.features[0].properties.type
+            var place = new Place({
+                properties: e.features[0].properties,
+                coordinates: e.features[0].geometry.coordinates,
+            })
 
             highlightPlace(place_id, place_coordinates)
 
-            eventBus.$emit('show-dock', {
-                name: place_name, // passed place object
-                type: place_type,
-            })
+            eventBus.$emit('show-dock', place)
         })
     }
 })
@@ -202,27 +283,29 @@ function returnPlaceData(sourceFeatures) {
 
     var departments = new PlaceGroup('pl-department', 'Departments'),
         busStops = new PlaceGroup('pl-busstop', 'Bus Stops'),
+        canteens = new PlaceGroup('pl-canteen', 'Canteens'),
         otherPlaces = new PlaceGroup('pl-other', 'Other Places'),
         place
 
     sourceFeatures.forEach(feature => {
-        place = new Place(
-            feature.properties.id,
-            feature.properties.name_en,
-            feature.geometry.coordinates,
-            feature.properties.type
-        )
+        place = new Place({
+            properties: feature.properties,
+            coordinates: feature.geometry.coordinates,
+        })
 
-        switch (place.type) {
+        switch (place.properties.type) {
             case 'department':
                 departments.places.push(place)
                 break
             case 'bus stop':
                 busStops.places.push(place)
                 break
+            case 'canteen':
+                canteens.places.push(place)
+                break
             default:
                 otherPlaces.places.push(place)
         }
     })
-    return [departments, busStops, otherPlaces]
+    return [departments, busStops, canteens, otherPlaces]
 }

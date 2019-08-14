@@ -1,5 +1,6 @@
-html, body {
-  font-family: Pyidaungsu-2.5_Regular;
+html,
+body {
+  font-family: "Pyidaungsu-2.5_Regular";
   transition: 2s;
 }
 
@@ -28,7 +29,6 @@ html, body {
 
   h1 {
     margin: 30px 0px;
-
   }
 
   a {
@@ -169,8 +169,8 @@ html, body {
 }
 
 .place-page {
-  position: sticky; 
-  background: white; 
+  position: sticky;
+  background: white;
   height: 100vh;
 
   .img-group {
@@ -185,4 +185,11 @@ html, body {
   .place-type {
     color: gray !important;
   }
+}
+
+
+.searchbar {
+  position: absolute;
+  left: 82px;
+  top: 3px;
 }
