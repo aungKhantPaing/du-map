@@ -1,24 +1,5 @@
 var eventBus = new Vue()
 
-
-class Place {
-    constructor({
-        properties,
-        coordinates
-    }) {
-        this.properties = properties
-        this.coordinates = coordinates
-    }
-}
-
-class PlaceGroup {
-    constructor(id, name) {
-        this.id = id
-        this.name = name
-        this.places = []
-    }
-}
-
 Vue.component('v-placegroup', {
     template: '#v-placegroup',
     props: {
@@ -29,8 +10,7 @@ Vue.component('v-placegroup', {
     },
     methods: {
         showPlaceInfo(place) {
-            highlightPlace(place.properties.id, place.coordinates)
-            eventBus.$emit('show-dock', place)
+            highlightPlace(place)
         },
     },
     computed: {
@@ -49,11 +29,15 @@ Vue.component('v-placegroup', {
         isCanteen() {
             return this.placegroupID == 'pl-canteen'
         },
+        isCopier() {
+            return this.placegroupID == 'pl-copier'
+        },
         getMaterialIcon() {
             // ternary operator
             return this.isDepartment ? constants.materialized.icons.departments :
                 this.isBusstop ? constants.materialized.icons.busStops :
                 this.isCanteen ? constants.materialized.icons.canteens :
+                this.isCopier ? constants.materialized.icons.copiers :
                 constants.materialized.icons.otherPlaces;
         }
     },
@@ -103,7 +87,7 @@ var vWelcome = Vue.component('v-welcome', {
     template: '#v-welcome'
 })
 
-var vSidebar = Vue.component('v-sidebar', {
+Vue.component('v-sidebar', {
     template: '#v-sidebar',
     data() {
         return {
@@ -111,31 +95,14 @@ var vSidebar = Vue.component('v-sidebar', {
         }
     },
     mounted() {
-        try {
+        eventBus.$on('load-data', e => {
             this.placegroups = myVue.placegroups
-        } catch (e) {
-            eventBus.$on('load-data', e => {
-                this.placegroups = myVue.placegroups
-
-                // new Autocomplete(document.getElementById('autocomplete'), {
-                //     search: input => {
-                //         if (input.length < 1) {
-                //             return []
-                //         }
-                //         return this.placegroups[0].places.filter(place => {
-                //             return place.properties.name_en.toLowerCase()
-                //                 .startsWith(input.toLowerCase())
-                //         })
-                //     },
-                //     getResultValue: result => result.properties.name_en
-                // })
-            })
-        }
+        })
 
         // Material JS config for Sidebar and Collapses
         var sideNavElem = document.querySelector('.sidenav');
         M.Sidenav.init(sideNavElem);
-        var collapsibleElem = document.querySelector('.collapsible');
+        var collapsibleElem = document.querySelectorAll('.collapsible');
         var collapsibleInstance = M.Collapsible.init(collapsibleElem, function onOpenStart() {
             // added custom code (at line 2180 )for dropdown animation
         });
@@ -148,38 +115,88 @@ var vPlacePage = Vue.component('v-place-page', {
         properties: {
             type: Object,
             required: true,
+        },
+        coordinates: {
+            type: Array,
+            required: true,
         }
     },
     data() {
         return {
-            imgSrcs: []
+            imgSrcs: [],
+            height: '24vh',
+            position: 'fixed',
+            expanded: false,
         }
     },
     methods: {
         // get image srcs from firebase storage and push to `imgSrcs[]` array
-        retrieveSrcs(placegroupRef) {
-            placegroupRef.child(this.properties.id).listAll().then(res => {
-                res.items.forEach(itemRef => {
-                    itemRef.getDownloadURL().then(url => {
-                        this.imgSrcs.push(url)
+        toggle() {
+            if (this.expanded) {
+                this.shrink()
+            } else {
+                this.expand()
+            }
+        },
+        expand() {
+            this.height = '100%'
+            this.expanded = true
+        },
+        shrink() {
+            this.height = '24vh'
+            this.position = 'fixed'
+            this.expanded = false
+        },
+        retrieveSrcs() {
+            console.log(`old imgSrcs: ${this.imgSrcs.length}`)
+            console.log('retrieving srcs...')
+            
+            var placegroupRef
+
+            switch (this.properties.type) {
+                case 'department':
+                case 'bus stop':
+                case 'canteen':
+                    placegroupRef = placesRef
+                    break
+                default:
+                    placegroupRef = otherplacesRef
+            }
+
+            try {
+                var srcArray = []
+                placegroupRef.child(this.properties.id).listAll().then(res => {
+                    res.items.forEach(itemRef => {
+                        itemRef.getDownloadURL().then(url => {
+                            srcArray.push(url)
+                            console.log(url)
+                        })
                     })
                 })
-            })
+                this.imgSrcs = srcArray
+            } catch (e) {
+                if (!(e instanceof TypeError)) {
+                    throw e
+                }
+            }
+            console.log('retieved srcs!')
+            console.log(this.imgSrcs)
+        },
+        goBack() {
+            this.shrink()
         }
     },
+    created() {
+        console.log(`component created!`)
+        this.retrieveSrcs()
+    },
     mounted() {
-        switch (this.properties.type) {
-            case 'department':
-                this.retrieveSrcs(departmentsRef)
-                break
-            case 'bus stop':
-                this.retrieveSrcs(busstopsRef)
-                break
-            case 'canteen':
-                this.retrieveSrcs(canteensRef)
-                break
-            default:
-                this.retrieveSrcs(otherplacesRef)
+        console.log(`component mounted!`)
+    },
+    watch: {
+        '$route'(to, from) {
+            // react to route changes...
+            this.retrieveSrcs()
         }
     }
 })
@@ -192,10 +209,26 @@ Vue.component('v-searchbar', {
             results: []
         }
     },
+    methods: {
+        showPlaceInfo(result) {
+            highlightPlace(result.item)
+
+            // manually clearing search results
+            $('#searchInput').val('')
+            this.results = []
+        },
+    },
     mounted() {
         var fuse
 
         eventBus.$on('load-data', e => {
+            var list = []
+            myVue.placegroups.forEach(placegroup => {
+                placegroup.places.forEach(place => {
+                    list.push(place)
+                })
+            })
+
             var options = {
                 shouldSort: true,
                 includeMatches: true,
@@ -208,18 +241,19 @@ Vue.component('v-searchbar', {
                     "properties.name_en",
                     "properties.type"
                 ]
-            };
-            var list = myVue.placegroups[0].places
-            fuse = new Fuse(list, options); // "list" is the item array
+            }
+
+            fuse = new Fuse(list, options);
         })
 
-        $('#searchInput').on('input', function() {
+        $('#searchInput').on('input', function () {
             eventBus.$emit('dataInput', $(this).val())
         });
 
+
         eventBus.$on('dataInput', input => {
             this.results = fuse.search(input)
-            console.log(this.results)  // get the current value of the input field.
+            console.log(this.results) // get the current value of the input field.
         })
     }
 })
@@ -248,64 +282,53 @@ var myVue = new Vue({
     router: router,
     mounted() {
         map.on("click", e => {
-            marker.remove();
-            map.setFilter('building-3d-highlighted', ['in', 'id', '']) // remove highlight
-            eventBus.$emit('hide-dock') // remove dock
+            removeHighlight()
         })
 
         map.on('click', 'poi-label-places', e => {
-            var place_id = e.features[0].properties.id
-            var place_coordinates = e.features[0].geometry.coordinates
             var place = new Place({
                 properties: e.features[0].properties,
                 coordinates: e.features[0].geometry.coordinates,
             })
-
-            highlightPlace(place_id, place_coordinates)
-
-            eventBus.$emit('show-dock', place)
+            highlightPlace(place)
         })
     }
 })
 
-
+// assign place data to Vue when the map finish loading
 map.on('load', function () {
-    var sourceFeatures = map.querySourceFeatures('composite', {
-        sourceLayer: 'DU_Places' // required if sourceLayer is a vector_tileset
-    })
-    console.log('DU_Places --v')
-    console.log(sourceFeatures)
-    myVue.placegroups = returnPlaceData(sourceFeatures) // put data to Vue
+    myVue.placegroups = returnPlaceData() // put data to Vue
     eventBus.$emit('load-data', myVue.placegroups)
 })
 
-function returnPlaceData(sourceFeatures) {
+// Bioler Plates
+function highlightPlace(place) {
+    var id = place.properties.id
+    var coordinates = place.coordinates
 
-    var departments = new PlaceGroup('pl-department', 'Departments'),
-        busStops = new PlaceGroup('pl-busstop', 'Bus Stops'),
-        canteens = new PlaceGroup('pl-canteen', 'Canteens'),
-        otherPlaces = new PlaceGroup('pl-other', 'Other Places'),
-        place
-
-    sourceFeatures.forEach(feature => {
-        place = new Place({
-            properties: feature.properties,
-            coordinates: feature.geometry.coordinates,
-        })
-
-        switch (place.properties.type) {
-            case 'department':
-                departments.places.push(place)
-                break
-            case 'bus stop':
-                busStops.places.push(place)
-                break
-            case 'canteen':
-                canteens.places.push(place)
-                break
-            default:
-                otherPlaces.places.push(place)
-        }
+    // pin the marker
+    marker.remove() // marker from mapbox.js
+    marker.setLngLat(coordinates).addTo(map)
+    map.flyTo({
+        center: coordinates,
+        zoom: 18
     })
-    return [departments, busStops, canteens, otherPlaces]
+
+    // highlight the respective building
+    map.setFilter('building-3d-highlighted', ['in', 'id', id]) // highlight the 3d structure with same id
+
+    // route to place-page with the 'place params' in it
+
+    router.push({
+        name: 'place',
+        params: place,
+    })
+
+    // eventBus.$emit('show-dock', place)
+}
+
+function removeHighlight() {
+    marker.remove();
+    map.setFilter('building-3d-highlighted', ['in', 'id', '']) // remove highlight
+    router.replace('/')
 }

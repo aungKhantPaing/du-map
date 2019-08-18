@@ -1,7 +1,11 @@
-var storage = firebase.storage()
-var storageRef = storage.ref()
+try {
+  var storage = firebase.storage()
+  var storageRef = storage.ref()
 
-var departmentsRef = storageRef.child('departments')
-var canteensRef = storageRef.child('canteens')
-var busstopsRef = storageRef.child('busstops')
-var otherplacesRef = storageRef.child('otherplaces')
+  var placesRef = storageRef.child('departments')
+  var otherplacesRef = storageRef.child('otherplaces')
+} catch (error) {
+  if (!(error instanceof ReferenceError)) {
+    throw error
+  }
+}

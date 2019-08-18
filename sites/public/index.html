@@ -34,9 +34,6 @@
       rel="stylesheet"
     />
 
-    <!-- Search Bar -->
-    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
-
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="res/css/style.css" />
 
@@ -76,7 +73,7 @@
   <script type="text/x-template" id="v-welcome">
     <div>
       <div class="hero">
-        <img src="res/img/maps.svg" />
+        <img src="res/img/myLogo.svg" />
         <h1>Hello Map</h1>
         <router-link to="/" class="btn">To Map</router-link>
       </div>
@@ -85,9 +82,11 @@
 
   <!-- Searchbar -->
   <script type="text/x-template" id="v-searchbar">
-    <div style="position: absolute; left: 82px; top: 3px;">
+    <div class="searchbar">
       <input id="searchInput" type="text">
-      <li v-for="result in results">{{ result.item.properties.name_en }}</li>
+      <li
+        v-for="result in results"
+        @click="showPlaceInfo(result)">{{ result.item.properties.name_en }}</li>
     </div>
   </script>
 
@@ -177,17 +176,40 @@
 
   <!-- Place Page -->
   <script type="text/x-template" id="v-place-page">
-    <div class="place-page">
-      <div class="img-group">
-        <img 
-          v-for="imgSrc in imgSrcs" 
-          class="place-img" 
-          :src="imgSrc">
+    <div
+      class="place-page"
+      :style="{ height: height, position: position }">
+      <div class="hero">
+        <div class="bg-img" v-if="expanded"></div>
+        <h3
+          class="hero-text"
+          :class="{ textexpand: expanded }">
+          {{ properties.name_en }}
+        </h3>
       </div>
+
       <div class="container">
-        <h3>{{ properties.name_en }}</h3>
         <h5 style="color: gray;">{{ properties.type }}</h5>
-        <router-link to="/" replace class="btn">Go Back</router-link>
+        <a @click="toggle()" replace class="btn">Toggle</a>
+
+        <div class="carousel">
+          <a 
+            class="carousel-item">
+            <img src="res/img/d-cs/bg.png">
+          </a>
+          <a 
+            class="carousel-item">
+            <img src="res/img/d-cs/img1.png">
+          </a>
+          <a 
+            class="carousel-item">
+            <img src="res/img/d-cs/img2.jpg">
+          </a>
+          <a 
+            class="carousel-item">
+            <img src="res/img/d-cs/img3.jpg">
+          </a>
+        </div>
       </div>
     </div>
   </script>

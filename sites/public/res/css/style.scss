@@ -1,11 +1,10 @@
 html,
 body {
-  font-family: "Pyidaungsu-2.5_Regular";
   transition: 2s;
 }
 
 #map,
-.hero {
+.index-hero {
   overflow: hidden;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -18,7 +17,7 @@ body {
   bottom: 0px;
 }
 
-.hero {
+.index-hero {
   text-align: center;
   background-color: #00808075;
   padding-top: 30px;
@@ -169,9 +168,10 @@ body {
 }
 
 .place-page {
-  position: sticky;
   background: white;
-  height: 100vh;
+  width: 100%;
+  bottom: 0px;
+  transition: 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 
   .img-group {
     overflow-x: auto;
@@ -187,9 +187,36 @@ body {
   }
 }
 
-
 .searchbar {
   position: absolute;
   left: 82px;
   top: 3px;
+  li {
+    background-color: white;
+    list-style: none;
+    padding: 10px;
+    border-bottom: solid 0.5px;
+  }
+}
+
+.hero {
+  .bg-img {
+    transition: 1s;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/du-map.appspot.com/o/otherplaces%2Fconvo-hall%2Fa-main.jpg?alt=media&token=62b2d867-c02d-46ca-8b99-2001a65f2ed3);
+    font-size: 3em;
+    color: grey;
+    height: 27vh;
+    background-size: cover;
+    background-position: center;
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+  }
+  .hero-text {
+    top: 40px;
+    padding-left: 1pc;
+  }
+  .textexpand {
+    color: white;
+    position: absolute;
+  }
 }
