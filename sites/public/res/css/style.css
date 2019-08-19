@@ -149,15 +149,55 @@ body {
   .place-page .place-type {
     color: gray !important; }
 
-.searchbar {
-  position: absolute;
-  left: 82px;
-  top: 3px; }
-  .searchbar li {
+.searchbar-group {
+  position: fixed;
+  min-width: 60vh;
+  background: white;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+  .searchbar-group .searchbar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 42px; }
+    .searchbar-group .searchbar .btn-sidenav {
+      height: 42px;
+      border-radius: 2px 0px 0px 2px !important;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      .searchbar-group .searchbar .btn-sidenav i {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center; }
+    .searchbar-group .searchbar input {
+      padding-left: 10px;
+      border-bottom: none !important;
+      margin: 0 !important; }
+      .searchbar-group .searchbar input:focus {
+        border-bottom: none !important;
+        box-shadow: none !important;
+        -webkit-box-shadow: none !important; }
+  .searchbar-group .result-group li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
     background-color: white;
     list-style: none;
     padding: 10px;
-    border-bottom: solid 0.5px; }
+    border-bottom: solid 0.5px lightgray; }
 
 .hero .bg-img {
   -webkit-transition: 1s;

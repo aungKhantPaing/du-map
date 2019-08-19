@@ -91,12 +91,64 @@ Vue.component('v-sidebar', {
     template: '#v-sidebar',
     data() {
         return {
-            placegroups: []
+            placegroups: [],
+            inputString: '',
+            results: [],
+            resultGroupHeight: '0vh',
+        }
+    },
+    methods: {
+        showPlaceInfo(result) {
+            highlightPlace(result.item)
+
+            // manually clearing search results
+            $('#searchInput').val('')
+            this.results = []
+            this.resultGroupHeight = '0vh'
+        },
+        getMaterialIcon(type) {
+            return getMaterialIcon(type)
+        },
+        indexOf(result) {
+            return this.results.indexOf(result)
         }
     },
     mounted() {
+        var fuse
+
         eventBus.$on('load-data', e => {
             this.placegroups = myVue.placegroups
+
+            var list = []
+            this.placegroups.forEach(placegroup => {
+                placegroup.places.forEach(place => {
+                    list.push(place)
+                })
+            })
+
+            var options = {
+                shouldSort: true,
+                includeMatches: true,
+                threshold: 0.6,
+                location: 0,
+                distance: 100,
+                maxPatternLength: 32,
+                minMatchCharLength: 1,
+                keys: [
+                    "properties.name_en",
+                    "properties.type"
+                ]
+            }
+
+            fuse = new Fuse(list, options);
+        })
+
+        $('#searchInput').on('input', function () {
+            eventBus.$emit('dataInput', $(this).val())
+        });
+
+        eventBus.$on('dataInput', input => {
+            this.results = fuse.search(input) // get the current value of the input field.
         })
 
         // Material JS config for Sidebar and Collapses
@@ -106,98 +158,6 @@ Vue.component('v-sidebar', {
         var collapsibleInstance = M.Collapsible.init(collapsibleElem, function onOpenStart() {
             // added custom code (at line 2180 )for dropdown animation
         });
-    }
-})
-
-var vPlacePage = Vue.component('v-place-page', {
-    template: '#v-place-page',
-    props: {
-        properties: {
-            type: Object,
-            required: true,
-        },
-        coordinates: {
-            type: Array,
-            required: true,
-        }
-    },
-    data() {
-        return {
-            imgSrcs: [],
-            height: '24vh',
-            position: 'fixed',
-            expanded: false,
-        }
-    },
-    methods: {
-        // get image srcs from firebase storage and push to `imgSrcs[]` array
-        toggle() {
-            if (this.expanded) {
-                this.shrink()
-            } else {
-                this.expand()
-            }
-        },
-        expand() {
-            this.height = '100%'
-            this.expanded = true
-        },
-        shrink() {
-            this.height = '24vh'
-            this.position = 'fixed'
-            this.expanded = false
-        },
-        retrieveSrcs() {
-            console.log(`old imgSrcs: ${this.imgSrcs.length}`)
-            console.log('retrieving srcs...')
-            
-            var placegroupRef
-
-            switch (this.properties.type) {
-                case 'department':
-                case 'bus stop':
-                case 'canteen':
-                    placegroupRef = placesRef
-                    break
-                default:
-                    placegroupRef = otherplacesRef
-            }
-
-            try {
-                var srcArray = []
-                placegroupRef.child(this.properties.id).listAll().then(res => {
-                    res.items.forEach(itemRef => {
-                        itemRef.getDownloadURL().then(url => {
-                            srcArray.push(url)
-                            console.log(url)
-                        })
-                    })
-                })
-                this.imgSrcs = srcArray
-            } catch (e) {
-                if (!(e instanceof TypeError)) {
-                    throw e
-                }
-            }
-            console.log('retieved srcs!')
-            console.log(this.imgSrcs)
-        },
-        goBack() {
-            this.shrink()
-        }
-    },
-    created() {
-        console.log(`component created!`)
-        this.retrieveSrcs()
-    },
-    mounted() {
-        console.log(`component mounted!`)
-    },
-    watch: {
-        '$route'(to, from) {
-            // react to route changes...
-            this.retrieveSrcs()
-        }
     }
 })
 
@@ -258,6 +218,103 @@ Vue.component('v-searchbar', {
     }
 })
 
+var vPlacePage = Vue.component('v-place-page', {
+    template: '#v-place-page',
+    props: {
+        properties: {
+            type: Object,
+            required: true,
+        },
+        coordinates: {
+            type: Array,
+            required: true,
+        }
+    },
+    data() {
+        return {
+            imgSrcs: [],
+            height: '24vh',
+            position: 'fixed',
+            expanded: false,
+        }
+    },
+    methods: {
+        // get image srcs from firebase storage and push to `imgSrcs[]` array
+        toggle() {
+            if (this.expanded) {
+                this.shrink()
+            } else {
+                this.expand()
+            }
+        },
+        expand() {
+            this.height = '100%'
+            this.expanded = true
+        },
+        shrink() {
+            this.height = '24vh'
+            this.position = 'fixed'
+            this.expanded = false
+        },
+        retrieveSrcs() {
+            console.log(`old imgSrcs: ${this.imgSrcs.length}`)
+            console.log('retrieving srcs...')
+
+            var placegroupRef
+
+            switch (this.properties.type) {
+                case 'department':
+                case 'bus stop':
+                case 'canteen':
+                    placegroupRef = placesRef
+                    break
+                default:
+                    placegroupRef = otherplacesRef
+            }
+
+            try {
+                var srcArray = []
+                placegroupRef.child(this.properties.id).listAll().then(res => {
+                    res.items.forEach(itemRef => {
+                        itemRef.getDownloadURL().then(url => {
+                            srcArray.push(url)
+                            console.log(url)
+                        })
+                    })
+                })
+                this.imgSrcs = srcArray
+            } catch (e) {
+                if (!(e instanceof TypeError)) {
+                    throw e
+                }
+            }
+            console.log('retieved srcs!')
+            console.log(this.imgSrcs)
+        },
+        goBack() {
+            this.shrink()
+        },
+        getMaterialIcon(type) {
+            return getMaterialIcon(type)
+        },
+    },
+    created() {
+        console.log(`component created!`)
+        this.retrieveSrcs()
+    },
+    mounted() {
+        console.log(`component mounted!`)
+        var collapsibleElems = document.querySelectorAll('.collapsible');
+        M.Collapsible.init(collapsibleElems);
+    },
+    watch: {
+        '$route'(to, from) {
+            // react to route changes...
+            this.retrieveSrcs()
+        }
+    }
+})
+
 const routes = [{
         path: '/welcome',
         component: vWelcome
@@ -277,7 +334,8 @@ const router = new VueRouter({
 var myVue = new Vue({
     el: "#myVue",
     data: {
-        placegroups: []
+        placegroups: [],
+        dataLoaded: false
     },
     router: router,
     mounted() {
@@ -298,6 +356,7 @@ var myVue = new Vue({
 // assign place data to Vue when the map finish loading
 map.on('load', function () {
     myVue.placegroups = returnPlaceData() // put data to Vue
+    myVue.dataLoaded = true
     eventBus.$emit('load-data', myVue.placegroups)
 })
 
@@ -331,4 +390,19 @@ function removeHighlight() {
     marker.remove();
     map.setFilter('building-3d-highlighted', ['in', 'id', '']) // remove highlight
     router.replace('/')
+}
+
+function getMaterialIcon(type) {
+    switch (type) {
+        case 'department':
+            return constants.materialized.icons.departments
+        case 'bus stop':
+            return constants.materialized.icons.busStops
+        case 'canteen':
+            return constants.materialized.icons.canteens
+        case 'copier':
+            return constants.materialized.icons.copiers
+        default:
+            return constants.materialized.icons.otherPlaces
+    }
 }

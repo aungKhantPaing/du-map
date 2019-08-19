@@ -22,6 +22,11 @@ var vPlaceGroup = Vue.component('v-placegroup', {
       required: true,
     }
   },
+  methods: {
+    print(place) {
+      console.log(place)
+    },
+  }
 })
 
 var vDashboard = Vue.component('v-dashboard', {
@@ -100,6 +105,7 @@ var myVue = new Vue({
 })
 
 map.on('load', function () {
+  analyseData()
   myVue.placeGroups = returnPlaceData()
   myVue.analyseObjs.push(analyseObj)
   console.log(myVue.placeGroups)

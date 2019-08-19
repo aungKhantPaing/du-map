@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="res/css/materialize.css" />
     <!-- CSS for dropdown -->
     <link rel="stylesheet" href="res/css/dropdown.css" />
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="res/css/animate.css" />
 
     <!-- MapBox -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js"></script>
@@ -48,20 +50,18 @@
   <body>
     <div id="mapDiv">
       <div id="map"></div>
-      <ul class="mybutton">
-        <!-- <li>
-          <button class="btn-floating" onclick="locate()">
-            <i class="material-icons">
-              gps_fixed
-            </i>
-          </button>
-        </li> -->
-      </ul>
     </div>
+    
 
     <div id="myVue">
+      <div style="height: 100vh;" v-if="dataLoaded == false">
+        <div 
+          class="progress" 
+          style="position: fixed; top: 50vh;">
+          <div class="indeterminate" style="width: 70%"></div>
+        </div>
+      </div>
       <v-sidebar></v-sidebar>
-      <v-searchbar></v-searchbar>
       <v-dock></v-dock>
       <transition>
         <router-view></router-view>
@@ -80,78 +80,68 @@
     </div>
   </script>
 
-  <!-- Searchbar -->
-  <script type="text/x-template" id="v-searchbar">
-    <div class="searchbar">
-      <input id="searchInput" type="text">
-      <li
-        v-for="result in results"
-        @click="showPlaceInfo(result)">{{ result.item.properties.name_en }}</li>
-    </div>
-  </script>
-
   <!-- Sidebar -->
   <script type="text/x-template" id="v-sidebar">
     <div style="position: absolute">
         <!-- Sidebar -->
         <ul id="slide-out" class="sidenav">
-            <li>
-              <div class="user-view user-view-custom">
-                <img src="res/img/maps.svg" /> DU Map
-              </div>
-            </li>
+          <li>
+            <div class="user-view user-view-custom">
+              <img src="res/img/maps.svg" /> DU Map
+            </div>
+          </li>
 
-            <li><a class="subheader">Places</a></li>
-            <ul class="collapsible main">
-              <!-- Sidebar Place Group -->
-              <!-- Departments, Other Places, Bus Stops  -->
-              <v-placegroup
-                v-for="placegroup in placegroups"
-                :placegroup="placegroup"
-                :key="placegroup.id"
-              ></v-placegroup>
-            </ul>
-
-            <li class="divider"></li>
-
-            <li><a class="subheader">About</a></li>
-            <li>
-              <div class="collapsible-header waves-effect">
-                <i class="material-icons">info</i> About Us
-              </div>
-            </li>
+          <li><a class="subheader">Places</a></li>
+          <ul class="collapsible main">
+            <!-- Sidebar Place Group -->
+            <!-- Departments, Other Places, Bus Stops  -->
+            <v-placegroup
+              v-for="placegroup in placegroups"
+              :placegroup="placegroup"
+              :key="placegroup.id"
+            ></v-placegroup>
           </ul>
 
-          <a
+          <li class="divider"></li>
+
+          <li><a class="subheader">About</a></li>
+          <li>
+            <div class="collapsible-header waves-effect">
+              <i class="material-icons">info</i> About Us
+            </div>
+          </li>
+        </ul>
+
+
+        <!-- Searchbar -->
+        <div class="searchbar-group animated fadeInUp">
+          <div class="searchbar">
+            <a
             href="#"
             data-target="slide-out"
-            class="btn-topcorner sidenav-trigger btn pulse"
+            class="btn-sidenav sidenav-trigger btn"
             >
-            <i class="material-icons">menu</i>
-          </a>
+              <i class="material-icons">menu</i>
+            </a>
+            <input id="searchInput" placeholder="Search" type="text">
+          </div>
 
-          <!-- <div id="autocomplete" class="autocomplete">
-            <input
-              class="autocomplete-input"
-              placeholder="Search for a country"
-              aria-label="Search for a country"
-            />
-            <ul class="autocomplete-result-list"></ul>
-          </div> -->
+          <div class="result-group">
+            <li
+              class="animated fadeInUp fast waves-effect"
+              v-for="result in results"
+              @click="showPlaceInfo(result)"
+              @keyup.enter="showPlaceInfo(result)"
+              tabindex="0">
+              <i class="material-icons">{{ getMaterialIcon(result.item.properties.type) }}</i>
+              {{ result.item.properties.name_en }}
+            </li>
+          </div>
+        </div>
       </div>
   </script>
 
-  <script type="text/x-template" id="v-dock">
-    <div
-      class="container dock waves-effect"
-      :class="{ 'expand-height': isExpanded }"
-      :style="{ height: height }"
-      @click="routeToPage()">
-      <h4 class="place-name">{{ place.properties.name_en }}</h4>
-      <h5 class="place-type">{{ place.properties.type }}</h5>
-    </div>
-  </script>
-
+  <!-- PlaceGroup -->
   <script type="text/x-template" id="v-placegroup">
     <li>
       <div class="collapsible-header waves-effect waves-teal">
@@ -174,8 +164,20 @@
     </li>
   </script>
 
+  <!-- Dock -->
+  <script type="text/x-template" id="v-dock">
+    <div
+      class="container dock waves-effect"
+      :class="{ 'expand-height': isExpanded }"
+      :style="{ height: height }"
+      @click="routeToPage()">
+      <h4 class="place-name">{{ place.properties.name_en }}</h4>
+      <h5 class="place-type">{{ place.properties.type }}</h5>
+    </div>
+  </script>
+
   <!-- Place Page -->
-  <script type="text/x-template" id="v-place-page">
+  <!-- <script type="text/x-template" id="v-place-page">
     <div
       class="place-page"
       :style="{ height: height, position: position }">
@@ -193,25 +195,40 @@
         <a @click="toggle()" replace class="btn">Toggle</a>
 
         <div class="carousel">
-          <a 
+          <a
             class="carousel-item">
             <img src="res/img/d-cs/bg.png">
           </a>
-          <a 
+          <a
             class="carousel-item">
             <img src="res/img/d-cs/img1.png">
           </a>
-          <a 
+          <a
             class="carousel-item">
             <img src="res/img/d-cs/img2.jpg">
           </a>
-          <a 
+          <a
             class="carousel-item">
             <img src="res/img/d-cs/img3.jpg">
           </a>
         </div>
       </div>
     </div>
+  </script> -->
+
+  <script type="text/x-template" id="v-place-page">
+    <ul 
+      class="collapsible" 
+      style="position: fixed; bottom: 0; margin: 0; width: 100%">
+      <li>
+        <div class="collapsible-header"><i class="material-icons">{{ getMaterialIcon(properties.type) }}</i>{{ properties.name_en }}</div>
+        <div 
+          class="collapsible-body"
+          style="background-color: white;">
+          <span>Lorem ipsum dolor sit amet.</span>
+        </div>
+      </li>
+    </ul>
   </script>
 
   <script defer src="res/js/firebase.js"></script>

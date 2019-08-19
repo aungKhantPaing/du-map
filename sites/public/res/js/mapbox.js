@@ -105,6 +105,7 @@ function loadSourceFeature() {
         sourceFeatures.forEach(place => {
             if ((JSON.stringify(targetPlace.properties) === JSON.stringify(place.properties)) && (targetPlace != place)) {
                 duplicatedItems.push(place) // get the duplicates
+                analyseObj.total_duplicatedItems.push(place) // recording duplicates
             }
         })
         // remove the duplicatedItem(s) of targetPlace
@@ -255,7 +256,6 @@ function analyseSourceFeatures() {
 map.on('load', e => {
     console.log('map loaded!')
     loadSourceFeature()
-    analyseData()
 })
 
 class Place {
