@@ -266,21 +266,9 @@ var vPlacePage = Vue.component('v-place-page', {
             console.log(`old imgSrcs: ${this.imgSrcs.length}`)
             console.log('retrieving srcs...')
 
-            var placegroupRef
-
-            switch (this.properties.type) {
-                case 'department':
-                case 'bus stop':
-                case 'canteen':
-                    placegroupRef = placesRef
-                    break
-                default:
-                    placegroupRef = otherplacesRef
-            }
-
             try {
                 var srcArray = []
-                placegroupRef.child(this.properties.id).listAll().then(res => {
+                placesRef.child(this.properties.id).listAll().then(res => {
                     res.items.forEach(itemRef => {
                         itemRef.getDownloadURL().then(url => {
                             srcArray.push(url)
@@ -294,6 +282,7 @@ var vPlacePage = Vue.component('v-place-page', {
                     throw e
                 }
             }
+            
             console.log('retieved srcs!')
             console.log(this.imgSrcs)
         },
