@@ -138,52 +138,66 @@ body {
   height: 100vh;
 }
 
-.autocomplete {
-  top: 3px;
-  display: inline-flex;
-  background-color: white;
-  position: fixed;
-
-  input {
-    width: 32vh;
-    margin: 0;
-    padding-left: 10px;
-    border-radius: 10px;
-    border-color: transparent !important;
-    box-shadow: none !important;
-  }
-
-  ul {
-    z-index: 1;
-    background: white;
-    margin: 0px;
-    position: absolute;
-    width: 100%;
-    box-sizing: border-box;
-    visibility: visible;
-    pointer-events: auto;
-    top: 100%;
-    padding-left: 12px;
-  }
-}
-
 .place-page {
-  background: white;
+  position: fixed;
+  pointer-events: none;
+  bottom: 0;
+  right: 0;
+  margin: 0;
   width: 100%;
-  bottom: 0px;
-  transition: 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 
-  .img-group {
-    overflow-x: auto;
-    white-space: nowrap;
-    .place-img {
-      height: 28vh;
-      width: auto;
+  $dock-font-size: 14px;
+  $icon-margin: 0px 1.5rem 0rem 0rem;;
+  $icon-width: 2rem;
+  .dock-collapsible {
+    pointer-events: all;
+    margin: 0px;
+    border: none;
+    border-radius: 11px 11px 0px 0px;
+    .dock-header {
+      font-size: $dock-font-size;
+      border-radius: 11px 11px 0px 0px;
+      i {
+        width: $icon-width;
+        margin: $icon-margin !important;
+      }
     }
-  }
+    .dock-body {
+      font-size: $dock-font-size;
+      background-color: white;
+      padding: 0;
+      i {
+        width: $icon-width;
+        margin: $icon-margin !important;
+      }
+      .img-group {
+        overflow-x: auto;
+        white-space: nowrap;
+        .material-placeholder {
+          display: inline !important;
+        }
+        .img-item {
+          height: 10vh;
+          padding: 3px;
+          display: inline !important;
+          img {
+            height: 10vh;
+            display: inline !important;
+          }
+        }
+      }
 
-  .place-type {
-    color: gray !important;
+      .dock-collection {
+        border-bottom: 1px solid #ddd;
+        .dock-item {
+          padding: 10px 14px;
+          display: flex;
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -192,7 +206,8 @@ body {
   min-width: 60vh;
   background: white;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 
   .searchbar {
     display: flex;
@@ -254,4 +269,13 @@ body {
     color: white;
     position: absolute;
   }
+}
+
+.mapboxgl-ctrl-top-right {
+  top: 50px !important;
+}
+
+// HELPERs
+.p0 {
+  padding: 0 !important;
 }

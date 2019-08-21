@@ -24,7 +24,7 @@
     />
     <!-- import Materialize -->
     <link rel="stylesheet" href="res/css/materialize.css" />
-    <!-- CSS for dropdown -->
+    <!-- Dropdown -->
     <link rel="stylesheet" href="res/css/dropdown.css" />
     <!-- Animate.css -->
     <link rel="stylesheet" href="res/css/animate.css" />
@@ -217,18 +217,74 @@
   </script> -->
 
   <script type="text/x-template" id="v-place-page">
-    <ul 
-      class="collapsible" 
-      style="position: fixed; bottom: 0; margin: 0; width: 100%">
-      <li>
-        <div class="collapsible-header"><i class="material-icons">{{ getMaterialIcon(properties.type) }}</i>{{ properties.name_en }}</div>
-        <div 
-          class="collapsible-body"
-          style="background-color: white;">
-          <span>Lorem ipsum dolor sit amet.</span>
-        </div>
-      </li>
-    </ul>
+    <div class="row place-page">
+      <div class="col m6"></div>
+      <div class="col s12 m6" style="padding: 0;">
+        <ul 
+          class="collapsible dock-collapsible" 
+          style="margin: 0;">
+          <li>
+            <div 
+              class="collapsible-header dock-header"
+              @click="toggle()">
+              <i class="material-icons">{{ getMaterialIcon(properties.type) }}</i>{{ properties.name_en }}
+            </div>
+            <div 
+              class="collapsible-body p0">
+              <div class="dock-body">
+                <ul class="collection dock-collection">
+                  <li class="collection-item dock-item">
+                    <i class="material-icons">
+                      perm_identity
+                    </i>
+                    {{ properties.id }}
+                  </li>
+                  <li class="collection-item dock-item">
+                    <i class="material-icons">
+                      phone
+                    </i>
+                    09 404 770 584
+                  </li>
+                  <li class="collection-item dock-item">
+                    <i class="material-icons">
+                      access_time
+                    </i>
+                    9:00 - 13:00
+                  </li>
+                  <li class="collection-item dock-item">
+                    <i class="material-icons">
+                      location_on
+                    </i>
+                    {{ coordinates[0] }},{{ coordinates[1] }}
+                  </li>
+                </ul>
+                <div class="collapsible dock-collapsible">
+                  <li>
+                    <div 
+                      @click="initMaterialbox()"
+                      class="collapsible-header dock-header">
+                      <i class="material-icons">
+                        image
+                      </i>
+                      Images
+                    </div>
+                    <div class="collapsible-body dock-body">
+                      <div class="img-group">
+                        <div class="img-item" v-for="imgSrc in imgSrcs" >
+                          <img
+                            class="materialboxed"
+                            :src="imgSrc">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </script>
 
   <script defer src="res/js/firebase.js"></script>

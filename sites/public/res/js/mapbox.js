@@ -88,7 +88,7 @@ var analyseObj = {
             type: 'other',
             total: 0,
         },
-    ], 
+    ],
     total_idDuplicatedItems: [],
     total_duplicatedItems: [],
 }
@@ -190,6 +190,52 @@ function analyseData() {
     analyseObj.total_idDuplicatedItems.forEach(item => {
         console.log(item.properties.name_en)
     });
+}
+
+async function returnPlaceAndStorageData() {
+    var placeGroups = [
+        departments = new PlaceGroup('pl-department', 'Departments'),
+        busStops = new PlaceGroup('pl-busstop', 'Bus Stops'),
+        canteens = new PlaceGroup('pl-canteen', 'Canteens'),
+        copiers = new PlaceGroup('pl-copier', 'Copiers'),
+        otherPlaces = new PlaceGroup('pl-other', 'Other Places'),
+    ]
+
+    var place
+
+    // foreach doesn't work with async
+    for (const feature of sourceFeatures) {
+        place = new Place({
+            properties: feature.properties,
+            coordinates: feature.geometry.coordinates,
+        })
+        place.totalImage = 0
+
+        var res = await placesRef.child(place.properties.id).listAll()
+        place.totalImage = await res.items.length
+        await console.log(place)
+        
+        switch (place.properties.type) {
+            case 'department':
+                departments.places.push(place)
+                break
+            case 'bus stop':
+                busStops.places.push(place)
+                break
+            case 'canteen':
+                canteens.places.push(place)
+                break
+            case 'copier':
+                copiers.places.push(place)
+                break
+            default:
+                otherPlaces.places.push(place)
+        }
+    }
+
+    console.log('Done!')
+    console.log(placeGroups)
+    return placeGroups
 }
 
 // group the place datas in the respective placeGroup & return a array of those placeGroups

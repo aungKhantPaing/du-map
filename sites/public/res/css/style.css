@@ -105,49 +105,52 @@ body {
 .expand-height {
   height: 100vh; }
 
-.autocomplete {
-  top: 3px;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  background-color: white;
-  position: fixed; }
-  .autocomplete input {
-    width: 32vh;
-    margin: 0;
-    padding-left: 10px;
-    border-radius: 10px;
-    border-color: transparent !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important; }
-  .autocomplete ul {
-    z-index: 1;
-    background: white;
-    margin: 0px;
-    position: absolute;
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    visibility: visible;
-    pointer-events: auto;
-    top: 100%;
-    padding-left: 12px; }
-
 .place-page {
-  background: white;
-  width: 100%;
-  bottom: 0px;
-  -webkit-transition: 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-  -o-transition: 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-  transition: 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95); }
-  .place-page .img-group {
-    overflow-x: auto;
-    white-space: nowrap; }
-    .place-page .img-group .place-img {
-      height: 28vh;
-      width: auto; }
-  .place-page .place-type {
-    color: gray !important; }
+  position: fixed;
+  pointer-events: none;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  width: 100%; }
+  .place-page .dock-collapsible {
+    pointer-events: all;
+    margin: 0px;
+    border: none;
+    border-radius: 11px 11px 0px 0px; }
+    .place-page .dock-collapsible .dock-header {
+      font-size: 14px;
+      border-radius: 11px 11px 0px 0px; }
+      .place-page .dock-collapsible .dock-header i {
+        width: 2rem;
+        margin: 0px 1.5rem 0rem 0rem !important; }
+    .place-page .dock-collapsible .dock-body {
+      font-size: 14px;
+      background-color: white;
+      padding: 0; }
+      .place-page .dock-collapsible .dock-body i {
+        width: 2rem;
+        margin: 0px 1.5rem 0rem 0rem !important; }
+      .place-page .dock-collapsible .dock-body .img-group {
+        overflow-x: auto;
+        white-space: nowrap; }
+        .place-page .dock-collapsible .dock-body .img-group .material-placeholder {
+          display: inline !important; }
+        .place-page .dock-collapsible .dock-body .img-group .img-item {
+          height: 10vh;
+          padding: 3px;
+          display: inline !important; }
+          .place-page .dock-collapsible .dock-body .img-group .img-item img {
+            height: 10vh;
+            display: inline !important; }
+      .place-page .dock-collapsible .dock-body .dock-collection {
+        border-bottom: 1px solid #ddd; }
+        .place-page .dock-collapsible .dock-body .dock-collection .dock-item {
+          padding: 10px 14px;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex; }
+          .place-page .dock-collapsible .dock-body .dock-collection .dock-item p {
+            margin: 0; }
 
 .searchbar-group {
   position: fixed;
@@ -219,3 +222,9 @@ body {
 .hero .textexpand {
   color: white;
   position: absolute; }
+
+.mapboxgl-ctrl-top-right {
+  top: 50px !important; }
+
+.p0 {
+  padding: 0 !important; }

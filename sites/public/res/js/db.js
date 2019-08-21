@@ -22,10 +22,37 @@ var vPlaceGroup = Vue.component('v-placegroup', {
       required: true,
     }
   },
+})
+
+var vPlace = Vue.component('v-place', {
+  template: '#v-place',
+  props: {
+    place: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      totalImage: 0
+    }
+  },
   methods: {
     print(place) {
       console.log(place)
     },
+  },
+  computed: {
+    highlight() {
+      if (this.place.properties.type != 'bus stop' && this.totalImage == 0) {
+        return true
+      }
+    }
+  },
+   async mounted() {
+    var res = await placesRef.child(this.place.properties.id).listAll()
+    this.totalImage = await res.items.length
+    console.log(`${this.place.properties.name_en} loaded`)
   }
 })
 
@@ -106,8 +133,12 @@ var myVue = new Vue({
 
 map.on('load', function () {
   analyseData()
-  myVue.placeGroups = returnPlaceData()
   myVue.analyseObjs.push(analyseObj)
   console.log(myVue.placeGroups)
+  // returnPlaceAndStorageData().then(placeGroups => {
+  //   myVue.placeGroups = placeGroups
+  //   eventBus.$emit('load-data')
+  // })
+  myVue.placeGroups = returnPlaceData()
   eventBus.$emit('load-data')
 })

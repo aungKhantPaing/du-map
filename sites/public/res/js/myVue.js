@@ -99,12 +99,13 @@ Vue.component('v-sidebar', {
     },
     methods: {
         showPlaceInfo(result) {
-            highlightPlace(result.item)
-
-            // manually clearing search results
+            // clearing search results and previous highlight
             $('#searchInput').val('')
             this.results = []
             this.resultGroupHeight = '0vh'
+            removeHighlight()
+
+            highlightPlace(result.item)
         },
         getMaterialIcon(type) {
             return getMaterialIcon(type)
@@ -248,13 +249,18 @@ var vPlacePage = Vue.component('v-place-page', {
             }
         },
         expand() {
-            this.height = '100%'
             this.expanded = true
+
+
         },
         shrink() {
             this.height = '24vh'
             this.position = 'fixed'
             this.expanded = false
+        },
+        initMaterialbox() {
+            var materialboxElems = document.querySelectorAll('.materialboxed')
+            M.Materialbox.init(materialboxElems)
         },
         retrieveSrcs() {
             console.log(`old imgSrcs: ${this.imgSrcs.length}`)
@@ -304,8 +310,8 @@ var vPlacePage = Vue.component('v-place-page', {
     },
     mounted() {
         console.log(`component mounted!`)
-        var collapsibleElems = document.querySelectorAll('.collapsible');
-        M.Collapsible.init(collapsibleElems);
+        var collapsibleElems = document.querySelectorAll('.collapsible')
+        M.Collapsible.init(collapsibleElems)
     },
     watch: {
         '$route'(to, from) {
@@ -328,7 +334,7 @@ const routes = [{
 ]
 
 const router = new VueRouter({
-    routes // short for `routes: routes`
+    routes: routes // short for `routes: routes`
 })
 
 var myVue = new Vue({
@@ -373,12 +379,10 @@ function highlightPlace(place) {
         zoom: 18
     })
 
-    // highlight the respective building
     map.setFilter('building-3d-highlighted', ['in', 'id', id]) // highlight the 3d structure with same id
 
-    // route to place-page with the 'place params' in it
-
-    router.push({
+    
+    router.push({ // route to place-page with the 'place params' in it
         name: 'place',
         params: place,
     })
