@@ -97,7 +97,7 @@ var analyseObj = {
 // init sourceFeature[] with array of place datas (sorted by place.properties.name_en) & return it
 function loadSourceFeature() {
     sourceFeatures = map.querySourceFeatures('composite', {
-        sourceLayer: 'DU_Places_Final' // required if sourceLayer is a vector_tileset
+        sourceLayer: 'DU_Places_New' // required if sourceLayer is a vector_tileset
     })
 
     sourceFeatures.forEach(targetPlace => {

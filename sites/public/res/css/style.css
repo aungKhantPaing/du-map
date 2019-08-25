@@ -22,12 +22,13 @@ body {
   background-color: #00808075;
   padding-top: 30px; }
   .index-hero img {
-    height: 15vh; }
+    height: 90px; }
   .index-hero h1 {
-    margin: 30px 0px; }
+    color: white;
+    text-shadow: 1px 2px 2px black;
+    margin: 50px 0px; }
   .index-hero a {
     font-weight: bold;
-    border-radius: 30px !important;
     text-transform: none !important; }
 
 .custom-tabs {
@@ -61,8 +62,14 @@ body {
   .mybutton li {
     padding: 10px; }
 
-.adjest {
-  padding-left: 70px !important; }
+.placegroup-list {
+  padding-left: 58px !important; }
+  .placegroup-list .badge {
+    color: white;
+    background-color: #26a69a;
+    font-size: 1rem !important;
+    padding-top: 1px;
+    margin-left: 10px !important; }
 
 .bg-gray {
   background-color: #e6e6e6; }
@@ -74,9 +81,13 @@ body {
   margin: 0px !important; }
 
 .user-view-custom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   font-size: 46px; }
   .user-view-custom img {
-    width: 6vh; }
+    margin-right: 6px;
+    width: 50px; }
 
 .mapboxgl-ctrl-geocoder {
   left: 60px !important; }
@@ -85,22 +96,6 @@ body {
     margin-left: 38px !important;
     width: 201px !important;
     height: 5vh !important; }
-
-.dock {
-  width: 100%;
-  height: auto;
-  padding: 0px 10px 0px 10px;
-  background-color: white;
-  position: fixed;
-  bottom: 0px;
-  -webkit-transition: 1s;
-  -o-transition: 1s;
-  transition: 1s; }
-  .dock .place-name {
-    font-size: 2em !important; }
-  .dock .place-type {
-    font-size: 1.5rem !important;
-    color: gray !important; }
 
 .expand-height {
   height: 100vh; }
@@ -112,45 +107,91 @@ body {
   right: 0;
   margin: 0;
   width: 100%; }
-  .place-page .dock-collapsible {
+  .place-page .dock {
     pointer-events: all;
     margin: 0px;
     border: none;
-    border-radius: 11px 11px 0px 0px; }
-    .place-page .dock-collapsible .dock-header {
-      font-size: 14px;
-      border-radius: 11px 11px 0px 0px; }
-      .place-page .dock-collapsible .dock-header i {
-        width: 2rem;
-        margin: 0px 1.5rem 0rem 0rem !important; }
-    .place-page .dock-collapsible .dock-body {
-      font-size: 14px;
+    background-color: white; }
+    .place-page .dock .dock-hero {
+      background-image: url(../img/bg.jpeg);
+      background-size: cover;
+      background-position: center;
+      height: 49vh; }
+    .place-page .dock .dock-header {
+      display: block !important;
+      height: -webkit-fit-content !important;
+      height: -moz-fit-content !important;
+      height: fit-content !important;
+      padding: 10px 14px !important;
+      -webkit-transition: 1s;
+      -o-transition: 1s;
+      transition: 1s;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important; }
+      .place-page .dock .dock-header h4 {
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-size: 2.28rem !important;
+        margin: 8px !important; }
+      .place-page .dock .dock-header h6 {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin: 8px !important;
+        text-transform: capitalize;
+        color: gray; }
+        .place-page .dock .dock-header h6 i {
+          margin-right: 10px !important; }
+        .place-page .dock .dock-header h6 .badge {
+          color: white;
+          background-color: #26a69a;
+          font-size: 1rem !important;
+          padding-top: 1px;
+          margin-left: 10px !important; }
+    .place-page .dock .dock-body {
       background-color: white;
       padding: 0; }
-      .place-page .dock-collapsible .dock-body i {
+      .place-page .dock .dock-body i {
+        font-size: 24px !important;
         width: 2rem;
         margin: 0px 1.5rem 0rem 0rem !important; }
-      .place-page .dock-collapsible .dock-body .img-group {
+      .place-page .dock .dock-body .img-group {
         overflow-x: auto;
         white-space: nowrap; }
-        .place-page .dock-collapsible .dock-body .img-group .material-placeholder {
+        .place-page .dock .dock-body .img-group .material-placeholder {
           display: inline !important; }
-        .place-page .dock-collapsible .dock-body .img-group .img-item {
+        .place-page .dock .dock-body .img-group img {
           height: 10vh;
+          width: auto;
           padding: 3px;
           display: inline !important; }
-          .place-page .dock-collapsible .dock-body .img-group .img-item img {
-            height: 10vh;
-            display: inline !important; }
-      .place-page .dock-collapsible .dock-body .dock-collection {
+      .place-page .dock .dock-body .dock-collection {
+        margin: 0 !important;
         border-bottom: 1px solid #ddd; }
-        .place-page .dock-collapsible .dock-body .dock-collection .dock-item {
+        .place-page .dock .dock-body .dock-collection .dock-item {
           padding: 10px 14px;
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex; }
-          .place-page .dock-collapsible .dock-body .dock-collection .dock-item p {
+          .place-page .dock .dock-body .dock-collection .dock-item p {
             margin: 0; }
+      .place-page .dock .dock-body .dock-collapsible {
+        margin: 0 !important; }
+    .place-page .dock .dock-close {
+      width: 100%;
+      height: 50px;
+      padding-top: 7px; }
+      .place-page .dock .dock-close i {
+        font-size: 2.3rem !important; }
+    .place-page .dock .dock-animated {
+      -webkit-animation-delay: 300ms;
+      animation-delay: 300ms; }
 
 .searchbar-group {
   position: fixed;
@@ -158,7 +199,8 @@ body {
   background: white;
   border-radius: 2px;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 0 !important; }
   .searchbar-group .searchbar {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -201,6 +243,8 @@ body {
     list-style: none;
     padding: 10px;
     border-bottom: solid 0.5px lightgray; }
+    .searchbar-group .result-group li i {
+      margin-right: 10px !important; }
 
 .hero .bg-img {
   -webkit-transition: 1s;
@@ -225,6 +269,16 @@ body {
 
 .mapboxgl-ctrl-top-right {
   top: 50px !important; }
+
+.about-us {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: white; }
+
+.badge {
+  color: white !important;
+  background-color: #26a69a; }
 
 .p0 {
   padding: 0 !important; }

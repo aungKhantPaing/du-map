@@ -49,7 +49,7 @@ var vPlace = Vue.component('v-place', {
       }
     }
   },
-   async mounted() {
+  async mounted() {
     var res = await placesRef.child(this.place.properties.id).listAll()
     this.totalImage = await res.items.length
     console.log(`${this.place.properties.name_en} loaded`)
@@ -100,12 +100,12 @@ var vDashboard = Vue.component('v-dashboard', {
             analyseObj.counter[4].total,
           ],
           backgroundColor: [
-						'rgb(3,126,243)',
-						'rgb(10, 142, 160)',
-						'rgb(248, 90, 64)',
-						'rgb(255, 200, 69)',
-						'rgb(82, 86, 94)',
-					],
+            'rgb(3,126,243)',
+            'rgb(10, 142, 160)',
+            'rgb(248, 90, 64)',
+            'rgb(255, 200, 69)',
+            'rgb(82, 86, 94)',
+          ],
           borderColor: 'rgb(243, 244, 247)',
         }]
       },

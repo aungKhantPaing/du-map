@@ -1,183 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>DU Map (demo)</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/6.3.4/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/6.3.4/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>DU Map (demo)</title>
 
-    <!-- FRAME WORKS -->
-    <!-- Font -->
-    <link rel="font" href="res/font/Pyidaungsu-2.5_Regular.ttf" />
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/6.3.4/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/6.3.4/firebase-storage.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
 
-    <!-- import Google Icon Font-->
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <!-- import Materialize -->
-    <link rel="stylesheet" href="res/css/materialize.css" />
-    <!-- Dropdown -->
-    <link rel="stylesheet" href="res/css/dropdown.css" />
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="res/css/animate.css" />
+  <!-- FRAME WORKS -->
+  <!-- Font -->
+  <link rel="font" href="res/font/Pyidaungsu-2.5_Regular.ttf" />
 
-    <!-- MapBox -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js"></script>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css"
-      rel="stylesheet"
-    />
+  <!-- import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- import Materialize -->
+  <link rel="stylesheet" href="res/css/materialize.css" />
+  <!-- Dropdown -->
+  <link rel="stylesheet" href="res/css/dropdown.css" />
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="res/css/animate.css" />
 
-    <!-- CUSTOM CSS -->
-    <link rel="stylesheet" href="res/css/style.css" />
+  <!-- Image Loader -->
+  <script src="res/js/load-image.all.min.js"></script>
 
-    <!-- jQuery-->
-    <script src="res/js/jquery-3.4.1.js"></script>
+  <!-- MapBox -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.css" rel="stylesheet" />
 
-    <!-- Vue & Router -->
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-  </head>
+  <!-- CUSTOM CSS -->
+  <link rel="stylesheet" href="res/css/style.css" />
 
-  <body>
-    <div id="mapDiv">
-      <div id="map"></div>
+  <!-- jQuery-->
+  <script src="res/js/jquery-3.4.1.js"></script>
+
+  <!-- Vue & Router -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="mapDiv">
+    <div id="map"></div>
+  </div>
+
+  <div id="myVue">
+    <div style="height: 100vh;" v-if="dataLoaded == false">
+      <div class="progress" style="position: fixed; top: 50vh;">
+        <div class="indeterminate" style="width: 70%"></div>
+      </div>
     </div>
-    
+    <transition>
+      <router-view></router-view>
+    </transition>
+    <v-sidebar></v-sidebar>
+  </div>
+</body>
 
-    <div id="myVue">
-      <div style="height: 100vh;" v-if="dataLoaded == false">
-        <div 
-          class="progress" 
-          style="position: fixed; top: 50vh;">
-          <div class="indeterminate" style="width: 70%"></div>
+<!-- Sidebar -->
+<script type="text/x-template" id="v-sidebar">
+  <div style="position: absolute">
+    <!-- Sidebar -->
+    <ul id="slide-out" class="sidenav">
+      <li>
+        <div class="user-view user-view-custom">
+          <img src="res/img/mobile-map.svg" /> DU Map
         </div>
-      </div>
-      <v-sidebar></v-sidebar>
-      <v-dock></v-dock>
-      <transition>
-        <router-view></router-view>
-      </transition>
-    </div>
-  </body>
+      </li>
 
-  <!-- Welcome -->
-  <script type="text/x-template" id="v-welcome">
-    <div>
-      <div class="hero">
-        <img src="res/img/myLogo.svg" />
-        <h1>Hello Map</h1>
-        <router-link to="/" class="btn">To Map</router-link>
-      </div>
-    </div>
-  </script>
+      <li><a class="subheader">Places</a></li>
+      <ul class="collapsible main">
+        <!-- Sidebar Place Group -->
+        <!-- Departments, Other Places, Bus Stops  -->
+        <v-placegroup
+          v-for="placegroup in placegroups"
+          :placegroup="placegroup"
+          :key="placegroup.id"
+        ></v-placegroup>
+      </ul>
 
-  <!-- Sidebar -->
-  <script type="text/x-template" id="v-sidebar">
-    <div style="position: absolute">
-        <!-- Sidebar -->
-        <ul id="slide-out" class="sidenav">
-          <li>
-            <div class="user-view user-view-custom">
-              <img src="res/img/maps.svg" /> DU Map
-            </div>
-          </li>
+      <li class="divider"></li>
 
-          <li><a class="subheader">Places</a></li>
-          <ul class="collapsible main">
-            <!-- Sidebar Place Group -->
-            <!-- Departments, Other Places, Bus Stops  -->
-            <v-placegroup
-              v-for="placegroup in placegroups"
-              :placegroup="placegroup"
-              :key="placegroup.id"
-            ></v-placegroup>
-          </ul>
+      <li><a class="subheader">About</a></li>
+      <li>
+        <a
+          style="font-weight: normal !important;"
+          class="collapsible-header waves-effect"
+          href="about-us.html">
+          <i
+            style="margin-right: 1rem !important; color: rgba(0, 0, 0, 0.87);" 
+            class="material-icons">info</i> 
+            About Us
+        </a>
+      </li>
+    </ul>
 
-          <li class="divider"></li>
-
-          <li><a class="subheader">About</a></li>
-          <li>
-            <div class="collapsible-header waves-effect">
-              <i class="material-icons">info</i> About Us
-            </div>
-          </li>
-        </ul>
-
-
-        <!-- Searchbar -->
-        <div class="searchbar-group animated fadeInUp">
-          <div class="searchbar">
-            <a
-            href="#"
-            data-target="slide-out"
-            class="btn-sidenav sidenav-trigger btn"
-            >
-              <i class="material-icons">menu</i>
-            </a>
-            <input id="searchInput" placeholder="Search" type="text">
-          </div>
-
-          <div class="result-group">
-            <li
-              class="animated fadeInUp fast waves-effect"
-              v-for="result in results"
-              @click="showPlaceInfo(result)"
-              @keyup.enter="showPlaceInfo(result)"
-              tabindex="0">
-              <i class="material-icons">{{ getMaterialIcon(result.item.properties.type) }}</i>
-              {{ result.item.properties.name_en }}
-            </li>
-          </div>
-        </div>
-      </div>
-  </script>
-
-  <!-- PlaceGroup -->
-  <script type="text/x-template" id="v-placegroup">
-    <li>
-      <div class="collapsible-header waves-effect waves-teal">
-        <i class="material-icons">{{ getMaterialIcon }}</i>
-        {{ placegroup.name }}
-        <div id="dropdown-3" class="dropdown"></div>
-      </div>
-
-      <div class="collapsible-body ">
-        <ul class="bg-gray">
-          <li
-            class="adjest waves-effect waves-block sidenav-close"
-            v-for="place in placegroup.places"
-            @click="showPlaceInfo(place)"
+    <!-- Searchbar -->
+    <div class="row">
+      <div class="searchbar-group animated fadeInUp col s12 m6">
+        <div
+          v-if="searchbarIsVisible" 
+          class="searchbar">
+          <a
+          href="#"
+          data-target="slide-out"
+          class="btn-sidenav sidenav-trigger btn"
           >
-            {{ place.properties.name_en }}
+            <i class="material-icons">menu</i>
+          </a>
+          <input id="searchInput" placeholder="Search" type="text">
+        </div>
+  
+        <div class="result-group">
+          <li
+            class="animated fadeInUp fast waves-effect"
+            v-for="result in results"
+            @click="showPlaceInfo(result)"
+            @keyup.enter="showPlaceInfo(result)"
+            tabindex="0">
+            <i class="material-icons">{{ getMaterialIcon(result.item.properties.type) }}</i>
+            {{ result.item.properties.name_en }}
+            <span
+            v-if="'note' in result.item.properties"
+            class="badge">{{ result.item.properties.note }}</span>
           </li>
-        </ul>
+        </div>
       </div>
-    </li>
-  </script>
-
-  <!-- Dock -->
-  <script type="text/x-template" id="v-dock">
-    <div
-      class="container dock waves-effect"
-      :class="{ 'expand-height': isExpanded }"
-      :style="{ height: height }"
-      @click="routeToPage()">
-      <h4 class="place-name">{{ place.properties.name_en }}</h4>
-      <h5 class="place-type">{{ place.properties.type }}</h5>
     </div>
-  </script>
 
-  <!-- Place Page -->
-  <!-- <script type="text/x-template" id="v-place-page">
+  </div>
+</script>
+
+<!-- PlaceGroup -->
+<script type="text/x-template" id="v-placegroup">
+  <li>
+    <div
+      class="collapsible-header waves-effect waves-teal">
+      <i class="material-icons">{{ getMaterialIcon }}</i>
+      {{ placegroup.name }}
+      <div id="dropdown-3" class="dropdown"></div>
+    </div>
+
+    <div class="collapsible-body ">
+      <ul class="bg-gray">
+        <li
+          class="placegroup-list waves-effect waves-block sidenav-close"
+          v-for="place in placegroup.places"
+          @click="showPlaceInfo(place)"
+        >
+          {{ place.properties.name_en }}
+          <span
+            v-if="'note' in place.properties"
+            class="badge">{{ place.properties.note }}</span>
+        </li>
+      </ul>
+    </div>
+  </li>
+</script>
+
+<!-- Dock -->
+<script type="text/x-template" id="v-dock">
+  <div
+    class="container dock waves-effect"
+    :class="{ 'expand-height': isExpanded }"
+    :style="{ height: height }"
+    @click="routeToPage()">
+    <h4 class="place-name">{{ place.properties.name_en }}</h4>
+    <h5 class="place-type">{{ place.properties.type }}</h5>
+
+    <button on></button>
+  </div>
+</script>
+
+<!-- Place Page -->
+<!-- <script type="text/x-template" id="v-place-page">
     <div
       class="place-page"
       :style="{ height: height, position: position }">
@@ -216,98 +218,142 @@
     </div>
   </script> -->
 
-  <script type="text/x-template" id="v-place-page">
-    <div class="row place-page">
-      <div class="col m6"></div>
-      <div class="col s12 m6" style="padding: 0;">
-        <ul 
-          class="collapsible dock-collapsible" 
-          style="margin: 0;">
-          <li>
-            <div 
-              class="collapsible-header dock-header"
-              @click="toggle()">
-              <i class="material-icons">{{ getMaterialIcon(properties.type) }}</i>{{ properties.name_en }}
-            </div>
-            <div 
-              class="collapsible-body p0">
-              <div class="dock-body">
-                <ul class="collection dock-collection">
-                  <li class="collection-item dock-item">
-                    <i class="material-icons">
-                      perm_identity
-                    </i>
-                    {{ properties.id }}
-                  </li>
-                  <li class="collection-item dock-item">
-                    <i class="material-icons">
-                      phone
-                    </i>
-                    09 404 770 584
-                  </li>
-                  <li class="collection-item dock-item">
-                    <i class="material-icons">
-                      access_time
-                    </i>
-                    9:00 - 13:00
-                  </li>
-                  <li class="collection-item dock-item">
-                    <i class="material-icons">
-                      location_on
-                    </i>
-                    {{ coordinates[0] }},{{ coordinates[1] }}
-                  </li>
-                </ul>
-                <div class="collapsible dock-collapsible">
-                  <li>
-                    <div 
-                      @click="initMaterialbox()"
-                      class="collapsible-header dock-header">
-                      <i class="material-icons">
-                        image
-                      </i>
-                      Images
-                    </div>
-                    <div class="collapsible-body dock-body">
-                      <div class="img-group">
-                        <div class="img-item" v-for="imgSrc in imgSrcs" >
-                          <img
-                            class="materialboxed"
-                            :src="imgSrc">
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+<script type="text/x-template" id="v-place-page">
+  <div class="row place-page">
+    <div class="col m6"></div>
+    <div class="col s12 m6" style="padding: 0;">
+      <div 
+        :style="{ height: height }"
+        class="dock animated faster fadeInUp">
+
+        <div
+          class="dock-header waves-effect"
+          @click="toggle()">
+          <h4>
+            {{ properties.name_en }} 
+          </h4>
+          <h6 v-if="!expanded"><i class="material-icons"> 
+            {{ getMaterialIcon(properties.type) }} </i>  {{ properties.type }}
+            <span
+              v-if="'note' in properties"
+              class="badge">{{ properties.note }}</span>
+          </h6>
+        </div>
+
+        <div
+          v-if="expanded"
+          class="dock-body">
+          <ul class="collection dock-collection">
+            <li 
+              v-if="'note' in properties"
+              class="collection-item dock-item"
+              data-position="left" data-tooltip="Phone No.">
+              <i class="material-icons">
+                {{ getMaterialIcon(properties.type) }}
+              </i>
+              {{ properties.note }}
+            </li>
+            <li 
+              v-if="'Phone' in properties"
+              class="collection-item dock-item"
+              data-position="left" data-tooltip="Phone No.">
+              <i class="material-icons">
+                phone
+              </i>
+              {{ properties.Phone }}
+            </li>
+            <li 
+              v-if="'open' in properties"
+              class="collection-item dock-item"
+              data-position="left" data-tooltip="Open Hours">
+              <i class="material-icons">
+                access_time
+              </i>
+              {{ properties.open }} to {{ properties.close }}
+            </li>
+            <li 
+              class="collection-item dock-item"
+              data-position="left" data-tooltip="Longitudes and Latitudes"
+              >
+              <i class="material-icons">
+                location_on
+              </i>
+              {{ coordinates[0] }},{{ coordinates[1] }}
+            </li>
+
+            <li
+              v-if="'population_student' in properties" 
+              class="collection-item dock-item"
+              data-position="left" data-tooltip="Population">
+              <i class="material-icons">
+                people
+              </i>
+              {{ properties.population_student + properties.population_teacher }}
+            </li>
+          </ul>
+          <ul class="collapsible dock-collapsible">
+            <li>
+              <div
+                v-if="imgSrcs.length > 0"
+                @click="initMaterialbox()"
+                class="collapsible-header"
+                data-position="left" data-tooltip="Click to view images">
+                <i class="material-icons">
+                  image
+                </i>
+                Images
+              </div>
+              <div class="collapsible-body dock-body">
+                <div class="img-group dock-animated ">
+                  <img
+                    v-for="imgSrc in imgSrcs"
+                    class="materialboxed"
+                    :src="imgSrc">
                 </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+          <!-- dock-collapsible end -->
+          <button
+            v-if="expanded" 
+            class="dock-close btn waves-effect"
+            @click="shrink()">
+            <i class="material-icons">
+              keyboard_arrow_down
+            </i>
+          </button>
+        </div>
+        <!-- dock-body end -->
+
+          
       </div>
+      <!-- dock end -->
     </div>
-  </script>
+  </div>
+</script>
 
-  <script defer src="res/js/firebase.js"></script>
+<script defer src="res/js/firebase.js"></script>
 
-  <!-- JSs  -->
-  <!-- String Literials -->
-  <script src="res/js/constants.js"></script>
+<!-- JSs  -->
+<!-- String Literials -->
+<script src="res/js/constants.js"></script>
 
-  <!-- GeoJson Data  -->
-  <script src="res/js/du-places.js"></script>
+<!-- GeoJson Data  -->
+<script src="res/js/du-places.js"></script>
 
-  <!-- JS for dropdown animation -->
-  <script type="text/javascript" src="res/js/dropdown.js"></script>
+<!-- JS for dropdown animation -->
+<script type="text/javascript" src="res/js/dropdown.js"></script>
 
-  <!-- Fuse.js -->
-  <script src="res/js/fuse.js"></script>
+<!-- Fuse.js -->
+<script src="res/js/fuse.js"></script>
 
-  <!-- Materialize JS -->
-  <script type="text/javascript" src="res/js/materialize.js"></script>
+<!-- Materialize JS -->
+<script type="text/javascript" src="res/js/materialize.js"></script>
 
-  <!-- Custom Mapbox JS -->
-  <script src="res/js/mapbox.js"></script>
+<!-- Custom Mapbox JS -->
+<script src="res/js/mapbox.js"></script>
 
-  <!-- Vue -->
-  <script src="res/js/myVue.js"></script>
+<!-- Vue -->
+<script src="res/js/myVue.js"></script>
+
 </html>
