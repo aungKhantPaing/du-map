@@ -1964,7 +1964,7 @@ $jscomp.polyfill = function (e, r, p, m) {
        * Setup Event Handlers
        */
 
-    }, {
+    },{
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         var _this4 = this;
@@ -2141,6 +2141,10 @@ $jscomp.polyfill = function (e, r, p, m) {
           if (typeof this.options.onOpenStart === 'function') {
             this.options.onOpenStart.call(this, $collapsibleLi[0]);
           }
+          
+          // custom code implemented! (for dropdown animation)
+          var $dropdown = $($collapsibleLi.children('.collapsible-header').children('.dropdown'));
+          $dropdown.toggleClass('close');
 
           // Handle accordion behavior
           if (this.options.accordion) {
@@ -2172,6 +2176,10 @@ $jscomp.polyfill = function (e, r, p, m) {
           if (typeof this.options.onCloseStart === 'function') {
             this.options.onCloseStart.call(this, $collapsibleLi[0]);
           }
+
+          // custom code implemented! (for dropdown animation)
+          var $dropdown = $($collapsibleLi.children('.collapsible-header').children('.dropdown'));
+          $dropdown.toggleClass('close');
 
           // Animate out
           $collapsibleLi[0].classList.remove('active');
