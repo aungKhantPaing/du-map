@@ -1,5 +1,5 @@
 # DU Map
-[DU Map](https://www.du-map.web.app) is a web app to guide people who are from Dagon University or new visitors. The app is also responsive which displays well on both mobile and desktop.
+[DU Map](https://du-map.web.app) is a web app to guide people who are from Dagon University or new visitors. The app is also responsive which displays well on both mobile and desktop.
 ## Features
 Users can easily - 
 - Search places by place names, type, or department numbers
