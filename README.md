@@ -8,7 +8,8 @@ Users can easily -
 - Analyze places with data visualization
 
 ## Build with
-DU Map was built with -
+DU Map was built using -
 - Easy, but powerful __VueJS__
 - Fairly pricing (almost free) __MapBox__
 - Beautiful, yet solid __Materialize CSS__ framework
+- And with a little touch of __Animate.css__
