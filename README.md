@@ -12,4 +12,4 @@ DU Map was built using -
 - Easy, but powerful [__VueJS__](https://vuejs.org)
 - Fairly pricing (almost free) [__MapBox__](https://www.mapbox.com)
 - Beautiful, yet solid [__Materialize CSS__](https://materializecss.com) framework
-- And with a little touch of [__Animate.css__](https://daneden.github.io/animate.css/) and [__Fuse.js__ - JavaScript fuzzy-search library](https://fusejs.io/)
+- With a little touch of [__Animate.css__](https://daneden.github.io/animate.css/) and [__Fuse.js__ - JavaScript fuzzy-search library](https://fusejs.io/)
