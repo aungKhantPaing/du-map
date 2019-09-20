@@ -1,24 +1,15 @@
-# Project Guide
-This is the guide for the group members contributing in **DU MAP** project on GitHub.
+# DU Map
+[DU Map](https://du-map.web.app) is a web app to guide people who are from Dagon University or new visitors. The app is also responsive which displays well on both mobile and desktop.
+## Features
+Users can easily - 
+- Search places by place names, type, or department numbers
+- See places information ( location, phone numbers )
+- Know current user location ( only in DU area )
+- Analyze places with data visualization
 
-- All the text-based data will be put into [Google Sheet](https://docs.google.com/spreadsheets/d/1JsduLiMVX9brQrrsgP688Z6mKfG54ghrrlHU1VODHAo/edit?usp=sharing)
-- All the images will be put into [img folder](https://github.com/aungKhantPaing/aungKhantPaing.github.io/tree/master/img)
-- Project's process can be see in [project board](https://github.com/aungKhantPaing/aungKhantPaing.github.io/projects/1)
-
-# Refrences and Documentations
-These are the development tools we used.
-## GitHub
-- Download [Git](https://gitforwindows.org/) and [GitHub Desktop](https://desktop.github.com/)
-- [GitHub Glossary](https://help.github.com/en/articles/github-glossary)
-- [Git Cheetsheet](https://github.github.com/training-kit/downloads/github-git-cheat-sheet/)
-
-## Google Map Platform
-- [Embed Map](https://developers.google.com/maps/documentation/embed/guide)
-- [Map URLs](https://developers.google.com/maps/documentation/urls/guide)
-
-## Bootstrap 4.3.1
-- [Documentations](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
-- [Download](https://getbootstrap.com/docs/4.3/getting-started/download/)
-
-## PHP
-- [Documentations](https://www.php.net/)
+## Build with
+DU Map was built using -
+- Easy, but powerful [__VueJS__](https://vuejs.org)
+- Fairly pricing (almost free) [__MapBox__](https://www.mapbox.com)
+- Beautiful, yet solid [__Materialize CSS__](https://materializecss.com) framework
+- With a little touch of [__Animate.css__](https://daneden.github.io/animate.css/) and [__Fuse.js__ - JavaScript fuzzy-search library](https://fusejs.io/)
