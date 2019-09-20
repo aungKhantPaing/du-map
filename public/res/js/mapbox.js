@@ -1,5 +1,5 @@
 mapboxgl.accessToken =
-    "pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw";
+    "sk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqenF2bm5jajExcW0zbW56YXY5bzYxcm0ifQ.XmeaqHvE65BsFXdZe7O6mQ";
 var map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/akp101/cjxkkxwpc01x11cnur0aepitf/draft",
@@ -32,7 +32,9 @@ var locationControl = new mapboxgl.GeolocateControl({
 
 map.addControl(zoomControl).addControl(locationControl)
 
-var marker = new mapboxgl.Marker().setLngLat([0, 0]).addTo(map);
+var marker = new mapboxgl.Marker({
+    color: "#F85A40"
+}).setLngLat([0, 0]).addTo(map);
 
 
 // Events
