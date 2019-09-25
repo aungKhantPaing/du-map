@@ -154,12 +154,12 @@ Vue.component('v-sidebar', {
             if ($('#checkbox_population').is(":checked")) {
                 this.switchMapThemeToAnalysis()
                 map.setLayoutProperty('building-3d-datavisualization-background', 'visibility', 'visible')
-                map.setLayoutProperty('population-data-visualization', 'visibility', 'visible')
+                map.setLayoutProperty('population-bar', 'visibility', 'visible')
                 map.setLayoutProperty('label-structure-data-visualization', 'visibility', 'visible')
                 this.populationAnalisisIsOn = true
             } else {
                 map.setLayoutProperty('building-3d-datavisualization-background', 'visibility', 'none');
-                map.setLayoutProperty('population-data-visualization', 'visibility', 'none');
+                map.setLayoutProperty('population-bar', 'visibility', 'none');
                 map.setLayoutProperty('label-structure-data-visualization', 'visibility', 'none');
                 this.populationAnalisisIsOn = false
                 if (!this.placeAnalisisIsOn) {
