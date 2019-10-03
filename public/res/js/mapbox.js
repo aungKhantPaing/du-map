@@ -29,7 +29,6 @@ var locationControl = new mapboxgl.GeolocateControl({
         zoom: 15
     }
 });
-
 map.addControl(zoomControl).addControl(locationControl)
 
 var marker = new mapboxgl.Marker({
@@ -42,13 +41,12 @@ function locate() {
     locationControl.trigger();
 }
 
+// Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
 map.on("mouseenter", 'poi-label-places', function () {
-    // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
     map.getCanvas().style.cursor = "pointer";
 });
-
+// Change it back to a pointer when it leaves.
 map.on("mouseleave", 'poi-label-places', function () {
-    // Change it back to a pointer when it leaves.
     map.getCanvas().style.cursor = "";
 });
 
@@ -66,7 +64,7 @@ function rotateCamera(timestamp) {
     requestAnimationFrame(rotateCamera);
 }
 
-// Global Variables
+// Data Sources
 var sourceFeatures = []
 var analyseObj = {
     counter: [ // arrays of numbers of places according to place type
@@ -320,6 +318,7 @@ map.on('load', e => {
     loadSourceFeature()
 })
 
+// Models
 class Place {
     constructor({
         properties,
@@ -329,7 +328,6 @@ class Place {
         this.coordinates = coordinates
     }
 }
-
 class PlaceGroup {
     constructor(id, name) {
         this.id = id

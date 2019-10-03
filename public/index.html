@@ -41,9 +41,10 @@
   <!-- jQuery-->
   <script src="res/js/jquery-3.4.1.js"></script>
 
-  <!-- Vue & Router -->
+  <!-- vue, router, vue-resource -->
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 
   <!-- Chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -297,17 +298,22 @@
         class="dock animated faster fadeInUp">
 
         <div
-          class="dock-header waves-effect"
-          @click="toggle()">
-          <h4>
-            {{ properties.name_en }} 
-          </h4>
-          <h6 v-if="!expanded"><i class="material-icons"> 
-            {{ getMaterialIcon(properties.type) }} </i>  {{ properties.type }}
-            <span
-              v-if="'note' in properties"
-              class="badge">{{ properties.note }}</span>
-          </h6>
+          class="dock-header row waves-effect"
+          >
+          <div class="col s9" @click="toggle()">
+            <h4>
+              {{ properties.name_en }}
+            </h4>
+            <h6 v-if="!expanded"><i class="material-icons"> 
+              {{ getMaterialIcon(properties.type) }} </i>  {{ properties.type }}
+              <span
+                v-if="'note' in properties"
+                class="badge">{{ properties.note }}</span>
+            </h6>
+          </div>
+          <div class="col s3">
+            <a @click="sharePlace(properties.id)" class="btn">Share</a>
+          </div>
         </div>
 
         <div
@@ -323,15 +329,16 @@
               </i>
               {{ properties.note }}
             </li>
-            <li 
+            <a 
               v-if="'Phone' in properties"
-              class="collection-item dock-item"
+              href="tel:properties.Phone"
+              class="collection-item dock-item waves-effect"
               data-position="left" data-tooltip="Phone No.">
               <i class="material-icons">
                 phone
               </i>
               {{ properties.Phone }}
-            </li>
+            </a>
             <li 
               v-if="'open' in properties"
               class="collection-item dock-item"

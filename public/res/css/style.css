@@ -102,7 +102,13 @@ body {
       background-position: center;
       height: 49vh; }
     .place-page .dock .dock-header {
-      display: block !important;
+      display: -webkit-box !important;
+      display: -ms-flexbox !important;
+      display: flex !important;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      margin: 0 !important;
       height: -webkit-fit-content !important;
       height: -moz-fit-content !important;
       height: fit-content !important;
@@ -118,7 +124,7 @@ body {
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
-        font-size: 2.28rem !important;
+        font-size: 1.8rem !important;
         margin: 8px !important; }
       .place-page .dock .dock-header h6 {
         display: -webkit-box;
@@ -162,7 +168,8 @@ body {
           padding: 10px 14px;
           display: -webkit-box;
           display: -ms-flexbox;
-          display: flex; }
+          display: flex;
+          color: black !important; }
           .place-page .dock .dock-body .dock-collection .dock-item p {
             margin: 0; }
       .place-page .dock .dock-body .dock-collapsible {

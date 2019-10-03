@@ -484,6 +484,19 @@ var vPlacePage = Vue.component('v-place-page', {
 
             node.addEventListener('animationend', handleAnimationEnd)
         },
+        sharePlace(id) {
+            console.log('#Sharing '+id)
+            if(navigator.share) {
+                navigator.share({
+                    title: '#Share Place',
+                    url: 'https://du-map.web.app/#/place/'+id,
+                }).then(() => {
+                    console.log('#Share Success!')
+                }).catch(console.error)
+            } else {
+                console.log('#Navigator is not supported')
+            }
+        }
     },
     computed: {
         headerColor() {
@@ -515,12 +528,7 @@ var vPlacePage = Vue.component('v-place-page', {
             }
         }
     },
-    created() {
-        console.log(`component created!`)
-    },
     mounted() {
-        this.retrieveSrcs()
-        console.log(`component mounted!`)
         var collapsibleElems = document.querySelectorAll('.collapsible')
         collapsibleInstance = M.Collapsible.init(collapsibleElems)
 
@@ -532,53 +540,70 @@ var vPlacePage = Vue.component('v-place-page', {
             dock.removeEventListener('animationend', removeAnimation)
         }
     },
-    // beforeRouteLeave(to, from, next) {
-    //     const dock = document.querySelector('.dock')
-    //     if (dock != null) {
-    //         dock.classList.add('animated', 'faster', 'fadeOutDown')
-    //         this.expanded = false
-
-    //         dock.addEventListener('animationend', () => {
-    //             dock.classList.remove('animated', 'fast', 'faster', 'fadeOutDown', 'fadeInUp')
-    //             next()
-    //         })
-    //     }
-    //     else {
-    //         next()
-    //     }
-    // },
     watch: {
         '$route'(to, from) {
             // react to route changes...
             this.retrieveSrcs()
             this.initMaterialbox()
         }
-    }
+    },
 })
 
 const routes = [{
-    path: '/place',
-    name: 'place',
-    component: vPlacePage,
-    props: true,
-}, ]
+        path: '/place',
+        name: 'place',
+        component: vPlacePage,
+        props: true,
+    },
+    {
+        path: '/place/:id',
+        name: 'placeWithId',
+        props: (route) => {
+            var filteredPlace =
+                sourceFeatures.filter(place => place.properties.id == route.params.id)
+
+            try {
+                var place = new Place({
+                    coordinates: filteredPlace[0].geometry.coordinates,
+                    properties: filteredPlace[0].properties,
+                })
+                highlightPlace(place)
+            } catch (error) {
+
+            }
+        },
+    }
+]
 
 const router = new VueRouter({
-    routes: routes // short for `routes: routes`
+    routes // short for `routes: routes`
 })
 
 var myVue = new Vue({
     el: "#myVue",
     data: {
         placegroups: [],
-        dataLoaded: false
+    },
+    computed: {
+        dataLoaded() {
+            return this.placegroups.length > 0;
+        }
     },
     router: router,
     mounted() {
+        this.$http.get('https://gist.githubusercontent.com/aungKhantPaing/169f9d9743200ff7fef512d0bb428040/raw/74e2e5befc036602d7ac99e68daa70c5648a8a84/du-map-places')
+            .then(response => {
+                console.log(response.body)
+            }, errorResponse => {
+                console.log(errorResponse.body)
+            })
+
+        // track mouse events as soon as the components are mounted.
+        // remove highlight when user click/tap other area of the map (non-icon area)
         map.on("click", e => {
             removeHighlight()
         })
-
+        // highlight when user specifically click/tap place icon
         map.on('click', 'poi-label-places', e => {
             var place = new Place({
                 properties: e.features[0].properties,
@@ -592,27 +617,27 @@ var myVue = new Vue({
 // assign place data to Vue when the map finish loading
 map.on('load', function () {
     myVue.placegroups = returnPlaceData() // put data to Vue
-    myVue.dataLoaded = true
     eventBus.$emit('load-data', myVue.placegroups)
 })
 
-// Bioler Plates
+// Helpers
 function highlightPlace(place) {
     var id = place.properties.id
     var coordinates = place.coordinates
 
     // pin the marker
-    marker.remove() // marker from mapbox.js
+    marker.remove() // remove default-marker from mapbox.js 
     marker.setLngLat(coordinates).addTo(map)
     map.flyTo({
         center: coordinates,
         zoom: 18
     })
 
-    map.setFilter('building-3d-highlighted', ['in', 'id', id]) // highlight the 3d structure with same id
+    // highlight the 3d structure by filtering with equal id
+    map.setFilter('building-3d-highlighted', ['in', 'id', id])
 
-
-    router.push({ // route to place-page with the 'place params' in it
+    // route to place-page with the 'place params' in it
+    router.push({
         name: 'place',
         params: place,
     })

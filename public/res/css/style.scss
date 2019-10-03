@@ -154,7 +154,9 @@ body {
     }
 
     .dock-header {
-      display: block !important;
+      display: flex !important;
+      align-items: center;
+      margin: 0 !important;
       height: fit-content !important;
       padding: 10px 14px !important;
       transition: 1s;
@@ -164,7 +166,7 @@ body {
       h4 {
         display: flex !important;
         align-items: center;
-        font-size: 2.28rem !important;
+        font-size: 1.8rem !important;
         margin: 8px !important;
       }
       h6 {
@@ -216,6 +218,7 @@ body {
         .dock-item {
           padding: 10px 14px;
           display: flex;
+          color: black !important;
           p {
             margin: 0;
           }
