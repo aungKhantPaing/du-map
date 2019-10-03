@@ -188,6 +188,28 @@ body {
           margin-left: 10px !important;
         }
       }
+      .btn-share {
+        display: flex;
+        flex-direction: row;
+        padding: 0 10px;
+        width: fit-content;
+        height: fit-content;
+
+        font-size: 12px;
+        background-color: transparent;
+        color: black;
+        border: solid 1px gray;
+        border-radius: 20px;
+        text-transform: none;
+        box-shadow: none;
+
+        i {
+          margin-right: 5px;
+        }
+      }
+      .col { // overiding materilize col
+        padding: 0 !important;
+      }
     }
 
     .dock-body {

@@ -312,7 +312,14 @@
             </h6>
           </div>
           <div class="col s3">
-            <a @click="sharePlace(properties.id)" class="btn">Share</a>
+            <a
+              class="btn btn-share waves-effect" 
+              @click="sharePlace(properties.id)">
+                <i class="material-icons">
+                  share
+                </i>
+                Share
+              </a>
           </div>
         </div>
 

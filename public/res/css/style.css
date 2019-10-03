@@ -144,6 +144,33 @@ body {
           font-size: 1rem !important;
           padding-top: 1px;
           margin-left: 10px !important; }
+      .place-page .dock .dock-header .btn-share {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        padding: 0 10px;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        height: -webkit-fit-content;
+        height: -moz-fit-content;
+        height: fit-content;
+        font-size: 12px;
+        background-color: transparent;
+        color: black;
+        border: solid 1px gray;
+        border-radius: 20px;
+        text-transform: none;
+        -webkit-box-shadow: none;
+        box-shadow: none; }
+        .place-page .dock .dock-header .btn-share i {
+          margin-right: 5px; }
+      .place-page .dock .dock-header .col {
+        padding: 0 !important; }
     .place-page .dock .dock-body {
       background-color: white;
       padding: 0; }
