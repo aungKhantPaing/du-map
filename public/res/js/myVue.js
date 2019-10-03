@@ -485,11 +485,12 @@ var vPlacePage = Vue.component('v-place-page', {
             node.addEventListener('animationend', handleAnimationEnd)
         },
         sharePlace(id) {
-            console.log('#Sharing '+id)
+            var url = window.location.href+'/'+id
+            console.log('#Sharing '+url)
             if(navigator.share) {
                 navigator.share({
                     title: '#Share Place',
-                    url: 'https://du-map.web.app/#/place/'+id,
+                    url: url,
                 }).then(() => {
                     console.log('#Share Success!')
                 }).catch(console.error)
