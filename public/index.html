@@ -331,7 +331,7 @@
             </li>
             <a 
               v-if="'Phone' in properties"
-              href="tel:properties.Phone"
+              :href="getTel(properties.Phone)"
               class="collection-item dock-item waves-effect"
               data-position="left" data-tooltip="Phone No.">
               <i class="material-icons">

@@ -496,6 +496,10 @@ var vPlacePage = Vue.component('v-place-page', {
             } else {
                 console.log('#Navigator is not supported')
             }
+        },
+        getTel(tel) {
+            console.log(tel)
+            return "tel:"+tel
         }
     },
     computed: {
@@ -526,7 +530,7 @@ var vPlacePage = Vue.component('v-place-page', {
                 default:
                     return 'teal'
             }
-        }
+        },
     },
     mounted() {
         var collapsibleElems = document.querySelectorAll('.collapsible')
