@@ -363,6 +363,7 @@ var vPlacePage = Vue.component('v-place-page', {
             height: 'fit-content',
             position: 'fixed',
             expanded: false,
+            shareOpened: false,
         }
     },
     methods: {
@@ -496,6 +497,7 @@ var vPlacePage = Vue.component('v-place-page', {
                 }).catch(console.error)
             } else {
                 console.log('#Navigator is not supported')
+                this.shareOpened = true
             }
         },
         getTel(tel) {

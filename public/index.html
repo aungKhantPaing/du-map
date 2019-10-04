@@ -250,57 +250,22 @@
 </script>
 
 <!-- Place Page -->
-<!-- <script type="text/x-template" id="v-place-page">
-    <div
-      class="place-page"
-      :style="{ height: height, position: position }">
-      <div class="hero">
-        <div class="bg-img" v-if="expanded"></div>
-        <h3
-          class="hero-text"
-          :class="{ textexpand: expanded }">
-          {{ properties.name_en }}
-        </h3>
-      </div>
-
-      <div class="container">
-        <h5 style="color: gray;">{{ properties.type }}</h5>
-        <a @click="toggle()" replace class="btn">Toggle</a>
-
-        <div class="carousel">
-          <a
-            class="carousel-item">
-            <img src="res/img/d-cs/bg.png">
-          </a>
-          <a
-            class="carousel-item">
-            <img src="res/img/d-cs/img1.png">
-          </a>
-          <a
-            class="carousel-item">
-            <img src="res/img/d-cs/img2.jpg">
-          </a>
-          <a
-            class="carousel-item">
-            <img src="res/img/d-cs/img3.jpg">
-          </a>
-        </div>
-      </div>
-    </div>
-  </script> -->
-
 <script type="text/x-template" id="v-place-page">
   <div class="row place-page">
     <div class="col m6"></div>
     <div class="col s12 m6" style="padding: 0;">
-      <div 
+      <div
         :style="{ height: height }"
         class="dock animated faster fadeInUp">
 
         <div
           class="dock-header row waves-effect"
+          
           >
-          <div class="col s9" @click="toggle()">
+          <div 
+            class="col s9 place-label-container"
+            @click="toggle()"
+          >
             <h4>
               {{ properties.name_en }}
             </h4>
@@ -311,10 +276,11 @@
                 class="badge">{{ properties.note }}</span>
             </h6>
           </div>
-          <div class="col s3">
+          <div class="col s3 btn-share-container">
             <a
               class="btn btn-share waves-effect" 
-              @click="sharePlace(properties.id)">
+              @click="sharePlace(properties.id)"
+              >
                 <i class="material-icons">
                   share
                 </i>
@@ -408,12 +374,29 @@
           </button>
         </div>
         <!-- dock-body end -->
-
-          
       </div>
       <!-- dock end -->
+
+      <div 
+        v-if="false"
+        class="share-page">
+        <i class="material-icons">
+          message
+        </i>
+        <i class="material-icons">
+          emoji_objects
+        </i>
+        <i class="material-icons">
+          public
+        </i>
+        <i class="material-icons">
+          people
+        </i>
+      </div>
+      <!-- share-menu end -->
     </div>
   </div>
+
 </script>
 
 <script defer src="res/js/firebase.js"></script>
