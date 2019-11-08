@@ -1,43 +1,55 @@
 <template>
-  <div id="app">
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
+
+        <v-img
+          alt="Vuetify Name"
+          class="shrink mt-1 hidden-sm-and-down"
+          contain
+          min-width="100"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+          width="100"
+        />
+      </div>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Latest Release</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+    </v-app-bar>
+
     <Map></Map>
-    <!-- TODO: add progress bar -->
-    <!-- TODO: add side bar -->
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import Map from "@/views/components/Map.vue";
 import store from "./store";
 import { mapState } from "vuex";
 
-export default {
+export default Vue.extend({
+  name: "App",
   store,
   components: {
     Map
   },
-  computed: mapState(["dataLoaded", "placeLists"])
-};
+  computed: mapState(["dataLoaded", "placeLists"]),
+  data: () => ({})
+});
 </script>
-
-<style lang="scss" scoped>
-//? can't find a way to import scss yet
-//* put '~' in front of directory to import node_module
-
-// @import url("~materialize-css/dist/css/materialize.css");
-/*
-  materialize-css is currently vulnerable to Cross-Site Scripting
-  more detail: https://www.npmjs.com/advisories/817
-*/
-
-// .progress-container {
-//   height: 100vh;
-//   .progress {
-//     position: fixed;
-//     top: 50vh;
-//     .indeterminate {
-//       width: 70%;
-//     }
-//   }
-// }
-</style>
