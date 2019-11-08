@@ -3,9 +3,7 @@ declare module '*.vue' {
   export default Vue;
 }
 
-declare module '*.js';
-
 declare module 'mapbox-gl' {
-  import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+  import mapboxgl from 'mapbox-gl/index';
   export default mapboxgl;
 }
