@@ -4,7 +4,7 @@
 
 <script lang="ts">
 /* eslint-disable no-console */
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 import mapboxgl from "mapbox-gl";
 import * as PList from "@/models/placeList";
 import Place from "@/models/place";
@@ -24,6 +24,8 @@ export default {
       ],
       bearing: -27.5 // rotation
     });
+
+    console.log(map);
 
     map.touchZoomRotate.enable();
     map.touchZoomRotate.enableRotation();
@@ -149,8 +151,7 @@ export default {
       this.$store.commit("setPlaceLists", getCleanedPlaceData());
       this.$store.commit("setDataLoaded", true);
     });
-  },
-  computed: mapState(["dataLoaded", "placeLists"])
+  }
 };
 </script>
 
