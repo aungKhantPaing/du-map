@@ -247,7 +247,7 @@ Vue.component('v-sidebar', {
                 maxPatternLength: 32,
                 minMatchCharLength: 3,
                 keys: [
-                    "properties.name_en",
+                    "properties.name",
                     "properties.type",
                     "properties.note"
                 ]
@@ -321,7 +321,7 @@ Vue.component('v-searchbar', {
                 maxPatternLength: 32,
                 minMatchCharLength: 1,
                 keys: [
-                    "properties.name_en",
+                    "properties.name",
                     "properties.type"
                 ]
             }

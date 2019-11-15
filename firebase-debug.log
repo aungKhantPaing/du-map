@@ -1,29 +1,22 @@
-[debug] [2019-11-08T09:47:39.015Z] ----------------------------------------------------------------------
-[debug] [2019-11-08T09:47:39.022Z] Command:       /home/akp/.nvm/versions/node/v12.7.0/bin/node /home/akp/.nvm/versions/node/v12.7.0/bin/firebase serve
-[debug] [2019-11-08T09:47:39.022Z] CLI Version:   7.4.0
-[debug] [2019-11-08T09:47:39.022Z] Platform:      linux
-[debug] [2019-11-08T09:47:39.023Z] Node Version:  v12.7.0
-[debug] [2019-11-08T09:47:39.023Z] Time:          Fri Nov 08 2019 16:17:39 GMT+0630 (Myanmar Time)
-[debug] [2019-11-08T09:47:39.024Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2019-11-08T09:47:39.070Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-11-08T09:47:39.071Z] > authorizing via signed-in user
-[debug] [2019-11-08T09:47:39.071Z] [iam] checking project du-map for permissions ["firebase.projects.get"]
-[debug] [2019-11-08T09:47:39.073Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2019-11-08T09:47:39.074Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2019-11-08T09:47:39.368Z] <<< HTTP RESPONSE 200
-[debug] [2019-11-08T09:47:39.458Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/du-map:testIamPermissions  
+[debug] [2019-11-15T14:41:50.790Z] ----------------------------------------------------------------------
+[debug] [2019-11-15T14:41:50.792Z] Command:       /home/akp/.nvm/versions/node/v12.7.0/bin/node /home/akp/.nvm/versions/node/v12.7.0/bin/firebase serve --only hosting
+[debug] [2019-11-15T14:41:50.793Z] CLI Version:   7.7.0
+[debug] [2019-11-15T14:41:50.793Z] Platform:      linux
+[debug] [2019-11-15T14:41:50.793Z] Node Version:  v12.7.0
+[debug] [2019-11-15T14:41:50.793Z] Time:          Fri Nov 15 2019 21:11:50 GMT+0630 (Myanmar Time)
+[debug] [2019-11-15T14:41:50.793Z] ----------------------------------------------------------------------
+[debug] [2019-11-15T14:41:50.793Z] 
+[debug] [2019-11-15T14:41:50.797Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-15T14:41:50.798Z] > authorizing via signed-in user
+[debug] [2019-11-15T14:41:50.798Z] [iam] checking project du-map for permissions ["firebase.projects.get"]
+[debug] [2019-11-15T14:41:50.801Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/du-map:testIamPermissions  
 
-[debug] [2019-11-08T09:47:41.401Z] <<< HTTP RESPONSE 200
-[debug] [2019-11-08T09:47:41.402Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/du-map  
+[debug] [2019-11-15T14:41:52.325Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-15T14:41:52.340Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/du-map  
  
-[debug] [2019-11-08T09:47:43.018Z] <<< HTTP RESPONSE 200
-[info] 
-[info] === Serving from '/home/akp/Desktop/aungKhantPaing.github.io'...
-[info] 
-[debug] [2019-11-08T09:47:43.026Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/du-map/webApps/-/config  
+[debug] [2019-11-15T14:41:52.902Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-15T14:41:52.904Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/du-map/webApps/-/config  
  
-[debug] [2019-11-08T09:47:44.044Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-15T14:41:53.941Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000

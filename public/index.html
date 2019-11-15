@@ -182,7 +182,7 @@
                 @keyup.enter="showPlaceInfo(result)"
                 tabindex="0">
                 <i class="material-icons">{{ getMaterialIcon(result.item.properties.type) }}</i>
-                {{ result.item.properties.name_en }}
+                {{ result.item.properties.name }}
                 <span
                 v-if="'note' in result.item.properties"
                 class="badge">{{ result.item.properties.note }}</span>
@@ -236,7 +236,7 @@
             v-for="place in placegroup.places"
             @click="showPlaceInfo(place)"
           >
-            {{ place.properties.name_en }}
+            {{ place.properties.name }}
             <span
               v-if="'note' in place.properties"
               class="badge">{{ place.properties.note }}</span>
@@ -253,7 +253,7 @@
       :class="{ 'expand-height': isExpanded }"
       :style="{ height: height }"
       @click="routeToPage()">
-      <h4 class="place-name">{{ place.properties.name_en }}</h4>
+      <h4 class="place-name">{{ place.properties.name }}</h4>
       <h5 class="place-type">{{ place.properties.type }}</h5>
 
       <button on></button>
@@ -278,7 +278,7 @@
               @click="toggle()"
             >
               <h4>
-                {{ properties.name_en }}
+                {{ properties.name }}
               </h4>
               <h6 v-if="!expanded"><i class="material-icons">
                 {{ getMaterialIcon(properties.type) }} </i>  {{ properties.type }}
@@ -313,25 +313,25 @@
                 </i>
                 {{ properties.note }}
               </li>
-              <a
-                v-if="'Phone' in properties"
-                :href="getTel(properties.Phone)"
+              <!-- <a
+                v-if="'phones' in properties"
+                :href="getTel(properties.phone)"
                 class="collection-item dock-item waves-effect"
                 data-position="left" data-tooltip="Phone No.">
                 <i class="material-icons">
-                  phone
+                  phones
                 </i>
-                {{ properties.Phone }}
-              </a>
-              <li
-                v-if="'open' in properties"
+                {{ properties.phones }}
+              </a> -->
+              <!-- <li
+                v-if="'open_hours' in properties"
                 class="collection-item dock-item"
                 data-position="left" data-tooltip="Open Hours">
                 <i class="material-icons">
                   access_time
                 </i>
-                {{ properties.open }} to {{ properties.close }}
-              </li>
+                {{ properties.open_hours.from }} to {{ properties.open_hours.to }}
+              </li> -->
               <li
                 class="collection-item dock-item"
                 data-position="left" data-tooltip="Longitudes and Latitudes"
@@ -342,15 +342,15 @@
                 {{ coordinates[0] }}, {{ coordinates[1] }}
               </li>
 
-              <li
-                v-if="'population_student' in properties"
+              <!-- <li
+                v-if="'population' in properties"
                 class="collection-item dock-item"
                 data-position="left" data-tooltip="Population">
                 <i class="material-icons">
                   people
                 </i>
-                {{ properties.population_student + properties.population_teacher }}
-              </li>
+                {{ properties.population.student + properties.population.teacher }}
+              </li> -->
             </ul>
             <!-- <ul class="collapsible dock-collapsible">
               <li>
