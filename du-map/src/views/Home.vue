@@ -2,7 +2,7 @@
   <v-app>
     <div v-if="dataLoaded">
       <app-bar class="animated fadeInDown faster" />
-      <navi-drawer :drawer="drawer" />
+      <navi-drawer />
       <router-view></router-view>
     </div>
 
@@ -46,15 +46,6 @@ export default class Home extends Vue {
     bearing: -27.5, // rotation
     touchZoomRotate: true,
   };
-
-  // as v-model do both getting and setting the value...
-  // ...computed setter is a handy way to link v-model with vuex
-  set drawer(value: boolean) {
-    this.$store.commit('setDrawer', value);
-  }
-  get drawer() {
-    return this.$store.state.drawer;
-  }
 
   onLoaded(placeList: Array<Place>) {
     this.$store.commit('setPlaceList', placeList);
