@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter, { Route, RouteConfig } from 'vue-router';
 import Home from '@/views/Home.vue';
+import Dock from '@/components/Dock.vue';
+import store from '@/store';
 
 Vue.use(VueRouter);
 
@@ -9,7 +11,19 @@ const routes: RouteConfig[] = [
     path: '/',
     name: 'home',
     component: Home,
+    alias: '/place',
+    children: [
+      {
+        path: '/place/:id',
+        name: 'place',
+        component: Dock,
+        props: (route) => {
+          return { place: store.getters.getPlace(route.params.id) };
+        },
+      },
+    ],
   },
+
   // {
   //   path: '/about',
   //   name: 'about',

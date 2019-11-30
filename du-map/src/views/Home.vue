@@ -3,6 +3,7 @@
     <div v-if="dataLoaded">
       <app-bar class="animated fadeInDown faster" />
       <navi-drawer :drawer="drawer" />
+      <router-view></router-view>
     </div>
 
     <Map @loaded="onLoaded" :map-options="mapOptions" :token="token" location-control />
