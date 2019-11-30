@@ -1,6 +1,8 @@
 <template>
   <v-app>
     <Map @loaded="onLoaded" :map-options="mapOptions" :token="token" location-control />
+
+    <progress-indicator :show="!dataLoaded" />
   </v-app>
 </template>
 
@@ -10,11 +12,13 @@ import store from '@/store';
 import { mapState } from 'vuex';
 import Map from '@/components/Map.vue';
 import { Place } from '@/models/place';
+import ProgressIndicator from '@/components/ProgressIndicator.vue';
 
 @Component({
   store,
   components: {
     Map,
+    ProgressIndicator,
   },
   computed: mapState(['dataLoaded']),
 })

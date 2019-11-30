@@ -1,0 +1,29 @@
+<template>
+  <!-- Progress Indicator -->
+  <v-overlay v-if="show" absolute color="#FFF" opacity="1">
+    <v-container style="width: 200px;">
+      <v-row align="center" justify="center">
+        <v-col cols="8">
+          <v-progress-linear
+            absolute
+            :active="true"
+            indeterminate
+            color="blue"
+            :rounded="true"
+            height="8"
+          ></v-progress-linear>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-overlay>
+</template>
+
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { mapState } from 'vuex';
+
+@Component
+export default class ProgressIndicator extends Vue {
+  @Prop(Boolean) readonly show!: boolean;
+}
+</script>
