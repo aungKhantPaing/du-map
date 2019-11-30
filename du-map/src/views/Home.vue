@@ -1,72 +1,50 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <Map></Map>
-
-    <!-- Progress Indicator -->
-    <v-container v-if="!dataLoaded" class="fill-height" fluid>
-      <v-row align="center" justify="center">
-        <v-col cols="8">
-          <v-progress-linear
-            :active="true"
-            indeterminate
-            color="teal"
-            :rounded="true"
-            height="8"
-          ></v-progress-linear>
-        </v-col>
-      </v-row>
-    </v-container>
+    <Map @loaded="onLoaded" :map-options="mapOptions" :token="token" location-control />
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Map from "@/views/components/Map.vue";
-import store from "@/store";
-import { mapState } from "vuex";
+import { Vue, Component } from 'vue-property-decorator';
+import store from '@/store';
+import { mapState } from 'vuex';
+import Map from '@/components/Map.vue';
+import { Place } from '@/models/place';
 
-export default {
-  name: "Home",
+@Component({
   store,
   components: {
-    Map
+    Map,
   },
-  computed: mapState(["dataLoaded", "placeLists"]),
-  data: () => ({})
-};
+  computed: mapState(['dataLoaded']),
+})
+export default class Home extends Vue {
+  token =
+    'pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw';
+  mapOptions = {
+    style: 'mapbox://styles/akp101/cjxkkxwpc01x11cnur0aepitf/draft',
+    center: [96.212739, 16.911199],
+    zoom: 14.8,
+    maxBounds: [
+      [96.20043008891338, 16.899012663005408], // Southwest coordinates
+      [96.22252355799174, 16.9239222243597], // Northeast coordinates
+    ],
+    bearing: -27.5, // rotation
+    touchZoomRotate: true,
+  };
+
+  onLoaded(placeList: Array<Place>) {
+    this.$store.commit('setPlaceList', placeList);
+    this.$store.commit('setDataLoaded', true);
+    this.$emit('loaded');
+    // eslint-disable-next-line no-console
+    console.log('Home: LOADED');
+  }
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+// // put ~ infront to import node_module
+// //? can't find a way to import scss yet
+// @import url('~animate.css/animate.css');
+</style>
