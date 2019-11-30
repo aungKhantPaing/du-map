@@ -3,15 +3,12 @@
 </template>
 
 <script lang="ts">
-import Map from "@/views/components/Map.vue";
-import Vue from "vue";
-import store from "@/store";
-import { mapState } from "vuex";
+import Vue from 'vue';
+import store from '@/store';
 
 export default {
-  name: "App",
-  store
-  // computed: mapState(["dataLoaded", "placeLists"])
+  name: 'App',
+  store,
 };
 </script>
 
