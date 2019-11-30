@@ -1,5 +1,10 @@
 <template>
   <v-app>
+    <div v-if="dataLoaded">
+      <app-bar class="animated fadeInDown faster" />
+      <navi-drawer :drawer="drawer" />
+    </div>
+
     <Map @loaded="onLoaded" :map-options="mapOptions" :token="token" location-control />
 
     <progress-indicator :show="!dataLoaded" />
@@ -11,14 +16,18 @@ import { Vue, Component } from 'vue-property-decorator';
 import store from '@/store';
 import { mapState } from 'vuex';
 import Map from '@/components/Map.vue';
-import { Place } from '@/models/place';
 import ProgressIndicator from '@/components/ProgressIndicator.vue';
+import AppBar from '@/components/AppBar.vue';
+import NaviDrawer from '@/components/NaviDrawer.vue';
+import { Place } from '@/models/place';
 
 @Component({
   store,
   components: {
     Map,
     ProgressIndicator,
+    AppBar,
+    NaviDrawer,
   },
   computed: mapState(['dataLoaded']),
 })
@@ -37,6 +46,15 @@ export default class Home extends Vue {
     touchZoomRotate: true,
   };
 
+  // as v-model do both getting and setting the value...
+  // ...computed setter is a handy way to link v-model with vuex
+  set drawer(value: boolean) {
+    this.$store.commit('setDrawer', value);
+  }
+  get drawer() {
+    return this.$store.state.drawer;
+  }
+
   onLoaded(placeList: Array<Place>) {
     this.$store.commit('setPlaceList', placeList);
     this.$store.commit('setDataLoaded', true);
@@ -48,7 +66,7 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// // put ~ infront to import node_module
-// //? can't find a way to import scss yet
-// @import url('~animate.css/animate.css');
+// put ~ infront to import node_module
+//? can't find a way to import scss yet
+@import url('~animate.css/animate.css');
 </style>
