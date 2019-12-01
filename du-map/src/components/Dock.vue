@@ -1,16 +1,19 @@
 <template>
   <v-row class="dock">
-    <v-col class="pa-0" md="6" offset-md="6">
-      <v-card v-ripple class="dock-header">
-        <!-- <v-list-item two-line>
-          <v-list-item-content>
-            <v-list-item-title>{{ place.properties.name }}</v-list-item-title>
-            <v-list-item-subtitle>{{ place.properties.type }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item> -->
-        <div class="place-label-container">
+    <v-col class="pa-0" sm="6" offset-sm="6">
+      <v-card class="dock-header">
+        <div @click="toggleExpand" v-ripple class="place-label-container">
           <p class="headline">{{ place.properties.name }}</p>
           <chip-label class="ml-2" :rules="chipRules" :value="place.properties.type"></chip-label>
+        </div>
+
+        <div v-if="expanded">
+          <v-list-item>
+            <v-list-item-title>{{ openHours }}</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>{{ note }}</v-list-item-title>
+          </v-list-item>
         </div>
       </v-card>
     </v-col>
@@ -34,6 +37,7 @@ import place_types from '@/constants/placeType';
 })
 export default class Dock extends Vue {
   place: Place = (this.$attrs.place as unknown) as Place;
+  expanded: Boolean = false;
   chipRules: Record<string, ChipProperties> = {
     default: { icon: 'mdi-domain', color: 'grey' },
 
@@ -44,6 +48,30 @@ export default class Dock extends Vue {
     hostel: { icon: 'mdi-hotel', color: 'pink' },
     hall: { icon: 'mdi-school', color: 'teal accent-4' },
   };
+
+  get openHours() {
+    return this.place.properties.open_hours;
+  }
+
+  get lngLat() {
+    return this.place.geometry.coordinates;
+  }
+
+  get phones() {
+    return this.place.properties.phones;
+  }
+
+  get population() {
+    return this.place.properties.population;
+  }
+
+  get note() {
+    return this.place.properties.note;
+  }
+
+  toggleExpand() {
+    this.expanded = !this.expanded;
+  }
 
   mounted() {
     eventBus.$emit('highlightPlace', this.place);
@@ -60,8 +88,7 @@ export default class Dock extends Vue {
 
 <style lang="scss" scoped>
 .dock {
-  z-index: 3;
-  position: fixed;
+  position: absolute;
   pointer-events: none;
   bottom: 0;
   margin: 0;
