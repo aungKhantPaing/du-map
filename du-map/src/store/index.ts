@@ -6,9 +6,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    searchClosed: true,
     dataLoaded: false,
     placeList: Array<Place>(),
-    drawer: null,
+    drawer: false,
   },
   getters: {
     getPlace: (state) => (id: string) => {
@@ -25,8 +26,22 @@ export default new Vuex.Store({
     setPlaceList(state, value: Place[]) {
       state.placeList = value;
     },
+
     setDrawer(state, value: any) {
       state.drawer = value;
+    },
+    toggleDrawer(state) {
+      state.drawer = !state.drawer;
+    },
+
+    openSearch(state) {
+      state.searchClosed = false;
+    },
+    closeSearch(state) {
+      state.searchClosed = true;
+    },
+    toggleSearch(state) {
+      state.searchClosed = !state.searchClosed;
     },
   },
   actions: {},

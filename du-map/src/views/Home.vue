@@ -1,13 +1,44 @@
 <template>
   <v-app>
+    <Map @loaded="onLoaded" :map-options="mapOptions" :token="token" location-control />
+
     <div v-if="dataLoaded">
-      <app-bar class="animated fadeInDown faster" />
+      <app-bar class="animated fadeInDown faster layer-3" />
+
       <navi-drawer />
       <!-- Dock -->
-      <router-view class="animated fadeInUp faster"></router-view>
-    </div>
+      <router-view class="animated fadeInUp faster layer-3"></router-view>
 
-    <Map @loaded="onLoaded" :map-options="mapOptions" :token="token" location-control />
+      <v-fab-transition>
+        <v-btn
+          v-show="searchClosed"
+          @click="openSearch()"
+          fixed
+          dark
+          fab
+          bottom
+          right
+          color="primary"
+        >
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </v-fab-transition>
+
+      <v-fab-transition>
+        <v-btn
+          v-show="!searchClosed"
+          @click="closeSearch()"
+          fixed
+          dark
+          fab
+          bottom
+          right
+          color="warning"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </div>
 
     <progress-indicator :show="!dataLoaded" />
   </v-app>
@@ -22,6 +53,7 @@ import ProgressIndicator from '@/components/ProgressIndicator.vue';
 import AppBar from '@/components/AppBar.vue';
 import NaviDrawer from '@/components/NaviDrawer.vue';
 import { Place } from '@/models/place';
+import eventBus from '../eventBus';
 
 @Component({
   store,
@@ -31,7 +63,7 @@ import { Place } from '@/models/place';
     AppBar,
     NaviDrawer,
   },
-  computed: mapState(['dataLoaded']),
+  computed: mapState(['dataLoaded', 'searchClosed']),
 })
 export default class Home extends Vue {
   token =
@@ -55,6 +87,14 @@ export default class Home extends Vue {
     // eslint-disable-next-line no-console
     console.log('Home: LOADED');
   }
+
+  openSearch() {
+    eventBus.$emit('openSearch');
+  }
+
+  closeSearch() {
+    eventBus.$emit('closeSearch');
+  }
 }
 </script>
 
@@ -62,4 +102,8 @@ export default class Home extends Vue {
 // put ~ infront to import node_module
 //? can't find a way to import scss yet
 @import url('~animate.css/animate.css');
+
+.layer-3 {
+  z-index: 3 !important;
+}
 </style>

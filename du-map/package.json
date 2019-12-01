@@ -11,6 +11,7 @@
     "@types/mapbox-gl": "^1.5.1",
     "animate.css": "^3.7.2",
     "core-js": "^3.3.2",
+    "fuse.js": "^3.4.6",
     "mapbox-gl": "^1.4.1",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
