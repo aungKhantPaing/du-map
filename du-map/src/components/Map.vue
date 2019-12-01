@@ -23,11 +23,13 @@ export default class Map extends Vue {
   readonly token!: string;
 
   @Prop({
+    type: Boolean,
     default: () => true,
   })
   readonly zoomControl!: Boolean;
 
   @Prop({
+    type: Boolean,
     default: () => false,
   })
   readonly locationControl!: Boolean;
@@ -163,7 +165,11 @@ export default class Map extends Vue {
     };
     let highlightPlace = (place: Place) => {
       marker.remove(); // remove default-marker from mapbox.js
-      marker.setLngLat(place.geometry.coordinates).addTo(map); // pin the marker
+      try {
+        marker.setLngLat(place.geometry.coordinates).addTo(map); // pin the marker
+      } catch (error) {
+        console.log(place);
+      }
       map.flyTo({
         center: place.geometry.coordinates,
         zoom: 18,
