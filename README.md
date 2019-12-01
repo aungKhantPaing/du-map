@@ -1,15 +1,29 @@
-# DU Map
-[DU Map](https://du-map.web.app) is a web app to guide people who are from Dagon University or new visitors. The app is also responsive which displays well on both mobile and desktop.
-## Features
-Users can easily - 
-- Search places by place names, type, or department numbers
-- See places information ( location, phone numbers )
-- Know current user location ( only in DU area )
-- Analyze places with data visualization
+# du-map
 
-## Build with
-DU Map was built using -
-- Easy, but powerful [__VueJS__](https://vuejs.org)
-- Fairly pricing (almost free) [__MapBox__](https://www.mapbox.com)
-- Beautiful, yet solid [__Materialize CSS__](https://materializecss.com) framework
-- With a little touch of [__Animate.css__](https://daneden.github.io/animate.css/) and [__Fuse.js__ - JavaScript fuzzy-search library](https://fusejs.io/)
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
