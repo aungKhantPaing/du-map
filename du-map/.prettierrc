@@ -1,0 +1,13 @@
+{
+  "printWidth": 100,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "semi": true,
+  "overrides": [{
+    "files": ["**/app/**/*", "**/spec/**/*"],
+    "options": {
+      "endOfLine": "auto"
+    }
+  }]
+}

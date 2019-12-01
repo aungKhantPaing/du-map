@@ -19,4 +19,31 @@
  
 [debug] [2019-11-15T14:41:53.941Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
+[debug] [2019-10-24T13:39:35.972Z] ----------------------------------------------------------------------
+[debug] [2019-10-24T13:39:35.978Z] Command:       /home/akp/.nvm/versions/node/v12.7.0/bin/node /home/akp/.nvm/versions/node/v12.7.0/bin/firebase serve
+[debug] [2019-10-24T13:39:35.978Z] CLI Version:   7.4.0
+[debug] [2019-10-24T13:39:35.978Z] Platform:      linux
+[debug] [2019-10-24T13:39:35.978Z] Node Version:  v12.7.0
+[debug] [2019-10-24T13:39:35.979Z] Time:          Thu Oct 24 2019 20:09:35 GMT+0630 (Myanmar Time)
+[debug] [2019-10-24T13:39:35.979Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-10-24T13:39:35.992Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-10-24T13:39:35.992Z] > authorizing via signed-in user
+[debug] [2019-10-24T13:39:35.993Z] [iam] checking project du-map for permissions ["firebase.projects.get"]
+[debug] [2019-10-24T13:39:35.995Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-10-24T13:39:35.995Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-10-24T13:39:36.264Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-24T13:39:36.361Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/du-map:testIamPermissions  
+
+[debug] [2019-10-24T13:39:37.944Z] <<< HTTP RESPONSE 200
+[debug] [2019-10-24T13:39:37.945Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/du-map  
+ 
+[debug] [2019-10-24T13:39:38.763Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/akp/Desktop/aungKhantPaing.github.io'...
+[info] 
+[debug] [2019-10-24T13:39:38.765Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/du-map/webApps/-/config  
+ 
+[debug] [2019-10-24T13:39:39.682Z] <<< HTTP RESPONSE 200
 [info] ✔  hosting: Local server: http://localhost:5000
