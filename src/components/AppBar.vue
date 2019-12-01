@@ -34,8 +34,9 @@
             v-for="{ item } in filteredPlaces"
             @click="goTo(item)"
             :key="item.properties.id"
+            class="body-2"
           >
-            <v-list-item-title v-text="item.properties.name"></v-list-item-title>
+            {{ item.properties.name }}
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -114,7 +115,7 @@ export default class AppBar extends Vue {
       this.expandBar();
     });
 
-    eventBus.$on('clearSearch', () => {
+    eventBus.$on('closeSearch', () => {
       this.collapseBar();
     });
   }
