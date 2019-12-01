@@ -6,15 +6,23 @@
         v-for="placeGroup in placeGroups"
         :key="placeGroup.name"
         :prepend-icon="placeGroup.icon"
-        no-action
       >
         <template v-slot:activator>
-          <v-list-item-title class="subtitle-2">{{ placeGroup.name }}</v-list-item-title>
+          <v-list-item-title class="subtitle-1">{{ placeGroup.name }}</v-list-item-title>
         </template>
 
         <template v-slot:default>
-          <v-list-item v-for="place in placeGroup.placeList" :key="place.properties.id">
-            <v-list-item-title v-text="place.properties.name"> </v-list-item-title>
+          <v-list-item
+            v-for="place in placeGroup.placeList"
+            @click="goTo(place)"
+            :key="place.properties.id"
+          >
+            <v-list-item-title
+              style="margin-left: 56px;"
+              class="body-1"
+              v-text="place.properties.name"
+            >
+            </v-list-item-title>
           </v-list-item>
         </template>
       </v-list-group>
@@ -39,6 +47,10 @@ export default class NaviDrawer extends Vue {
   }
   get drawer() {
     return this.$store.state.drawer;
+  }
+
+  goTo(place: Place) {
+    this.$router.push(`/place/${place.properties.id}`);
   }
 
   placeGroups: PlaceGroup[] = [
