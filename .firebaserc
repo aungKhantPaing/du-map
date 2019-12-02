@@ -1,5 +1,6 @@
 {
   "projects": {
-    "main_map": "du-map"
+    "default": "du-map",
+    "map_testing": "du-map"
   }
 }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/production-sub-path/precache-manifest.c81c0f056a3a13ea83fe2dd33bf5cc08.js"
+  "/precache-manifest.87dd08da09f05803121f8531956d1eee.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "du-map"});
