@@ -1,28 +1,28 @@
-import Vue from "vue";
-import VueRouter, { Route } from "vue-router";
-import Home from "../views/Home.vue";
-import Dock from "@/components/Dock.vue";
-import store from "@/store";
+import Vue from 'vue';
+import VueRouter, { Route } from 'vue-router';
+import Home from '../views/Home.vue';
+import Dock from '@/components/Dock.vue';
+import store from '@/store';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "home",
+    path: '/',
+    name: 'home',
     component: Home,
-    alias: "/place",
+    alias: '/place',
     children: [
       {
-        path: "/place/:id",
-        name: "place",
+        path: '/place/:id',
+        name: 'place',
         component: Dock,
         props: (route: Route) => {
           return { place: store.getters.getPlace(route.params.id) };
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
   // {
   //   path: "/about",
   //   name: "about",
@@ -35,7 +35,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
 });
 
 export default router;
