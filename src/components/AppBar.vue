@@ -1,7 +1,7 @@
 <template>
-  <div class="bar-container">
+  <v-col class="bar-container" sm="6">
     <!-- app bar -->
-    <v-app-bar absolute class="responsive-bar" :collapse="searchClosed" color="primary" app dark>
+    <v-app-bar absolute :collapse="searchClosed" color="primary" app dark>
       <v-btn text icon @click="toggleDrawer()">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -12,12 +12,12 @@
         v-if="!searchClosed"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
+        placeholder="Search"
         solo
         dense
         light
         full-width
         autofocus
-        placeholder="Search"
       ></v-text-field>
 
       <v-btn v-show="searchClosed" text icon @click="onLayerClick()">
@@ -41,7 +41,7 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-  </div>
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -70,7 +70,7 @@ export default class AppBar extends Vue {
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    keys: ['properties.name', 'properties.type'],
+    keys: ['properties.name', 'properties.type', 'properties.id'],
   });
 
   collapseBar() {
@@ -123,26 +123,19 @@ export default class AppBar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.responsive-bar {
-  // mobile
-  @media (min-width: 320px) and (max-width: 480px) {
-    right: 0 !important;
-  }
-  // else
-  right: 50% !important;
-}
+// .responsive-bar {
+//   // mobile
+//   @media (min-width: 320px) and (max-width: 480px) {
+//     right: 0 !important;
+//   }
+//   // else
+//   right: 50% !important;
+// }
 
 .responsive-container {
   position: fixed !important;
   left: 0 !important;
   right: 0 !important;
-
-  // mobile
-  @media (min-width: 320px) and (max-width: 600px) {
-    width: 100% !important;
-  }
-  // else
-  width: 50% !important;
 }
 
 .bar-container {
