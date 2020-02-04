@@ -4,7 +4,11 @@
       <v-card class="dock-header">
         <div @click="toggleExpand" v-ripple class="place-label-container">
           <p class="headline">{{ place.properties.name }}</p>
-          <chip-label class="ml-2" :rules="chipRules" :value="place.properties.type"></chip-label>
+          <chip-label
+            class="ml-2"
+            :value="place.properties.type"
+            :theme="getThemeOf(place.properties.type)"
+          ></chip-label>
         </div>
 
         <div v-if="expanded">
@@ -29,8 +33,9 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Place } from '@/models/place';
 import { Watch } from 'vue-property-decorator';
-import ChipLabel, { ChipProperties } from '@/components/ChipLabel.vue';
+import ChipLabel from './ChipLabel.vue';
 import place_types from '@/constants/placeType';
+import kPlaceToTheme from '@/constants/placeToTheme';
 
 @Component({
   components: { ChipLabel },
@@ -38,16 +43,6 @@ import place_types from '@/constants/placeType';
 export default class Dock extends Vue {
   place: Place = (this.$attrs.place as unknown) as Place;
   expanded: Boolean = false;
-  chipRules: Record<string, ChipProperties> = {
-    default: { icon: 'mdi-domain', color: 'grey' },
-
-    department: { icon: 'mdi-bank', color: '#1976d2' },
-    canteen: { icon: 'mdi-silverware', color: '#f85a40' },
-    'bus stop': { icon: 'mdi-bus', color: 'yellow darken-3' },
-    library: { icon: 'mdi-library', color: '#795548' },
-    hostel: { icon: 'mdi-hotel', color: 'pink' },
-    hall: { icon: 'mdi-school', color: 'teal accent-4' },
-  };
 
   get openHours() {
     return this.place.properties.open_hours;
@@ -69,12 +64,17 @@ export default class Dock extends Vue {
     return this.place.properties.note;
   }
 
+  getThemeOf(value: place_types) {
+    return kPlaceToTheme[value as place_types];
+  }
+
   toggleExpand() {
     this.expanded = !this.expanded;
   }
 
   mounted() {
     eventBus.$emit('highlightPlace', this.place);
+    console.log(this.place);
   }
 
   @Watch('$route')

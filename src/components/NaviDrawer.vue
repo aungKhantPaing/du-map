@@ -37,6 +37,7 @@ import place_types from '@/constants/placeType';
 import eventBus from '@/eventBus';
 import store from '@/store';
 import { Place } from '@/models/place';
+import kPlaceToTheme from '@/constants/placeToTheme';
 
 @Component
 export default class NaviDrawer extends Vue {
@@ -47,6 +48,10 @@ export default class NaviDrawer extends Vue {
   }
   get drawer() {
     return this.$store.state.drawer;
+  }
+
+  getColorOf(value: place_types) {
+    return kPlaceToTheme[value].color;
   }
 
   goTo(place: Place) {
