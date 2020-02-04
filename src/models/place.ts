@@ -1,4 +1,4 @@
-import  place_types  from '@/constants/placeType';
+import place_types from '@/constants/placeType';
 
 export class Place implements Feature {
   id: string;
@@ -86,16 +86,17 @@ export class Properties {
   }
 
   static parse(dynamic: any): Properties {
-    return new Properties(
+    let prop = new Properties(
       dynamic.id.toString(),
       dynamic.type.toString(),
       dynamic.name.toString(),
       dynamic.name_zg.toString(),
-      dynamic.open_hours ? OpenHours.parse(dynamic.open_hours) : new OpenHours(),
-      dynamic.phones ? dynamic.phones : [],
-      dynamic.population ? Population.parse(dynamic.population) : new Population(),
-      dynamic.note ? dynamic.note.toString() : [null],
+      dynamic.open_hours ? OpenHours.parse(JSON.parse(dynamic.open_hours)) : null,
+      dynamic.phones ? dynamic.phones : null,
+      dynamic.population ? Population.parse(JSON.parse(dynamic.population)) : null,
+      dynamic.note ? dynamic.note.toString() : null,
     );
+    return prop;
   }
 }
 
@@ -127,8 +128,8 @@ export class OpenHours {
 
   static parse(dynamic: any): OpenHours {
     return {
-      from: dynamic.from ? dynamic.from.toString() : null,
-      to: dynamic.to ? dynamic.to.toString() : null,
+      from: dynamic.from ? dynamic.from : null,
+      to: dynamic.to ? dynamic.to : null,
     };
   }
 }
