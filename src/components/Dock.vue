@@ -79,7 +79,7 @@ export default class Dock extends Vue {
 
   @Watch('$route')
   onRouteChange(to: Route, from: Route) {
-    let nextPlace: Place = store.getters.getPlace(to.params.id);
+    let nextPlace: Place = store.getters.placeById(to.params.id);
     eventBus.$emit('highlightPlace', nextPlace);
     this.place = nextPlace;
   }

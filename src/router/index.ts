@@ -18,7 +18,7 @@ const routes = [
         name: 'place',
         component: Dock,
         props: (route: Route) => {
-          return { place: store.getters.getPlace(route.params.id) };
+          return { place: store.getters.placeById(route.params.id) };
         },
       },
     ],

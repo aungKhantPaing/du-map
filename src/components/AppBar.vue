@@ -62,7 +62,7 @@ import Fuse from 'fuse.js';
 export default class AppBar extends Vue {
   width = '80';
   searchText = '';
-  fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(this.$store.state.placeList, {
+  fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(this.$store.state.places, {
     shouldSort: true,
     includeMatches: true,
     threshold: 0.6,
