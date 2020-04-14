@@ -4,10 +4,12 @@
   "trailingComma": "all",
   "arrowParens": "always",
   "semi": true,
-  "overrides": [{
-    "files": ["**/app/**/*", "**/spec/**/*"],
-    "options": {
-      "endOfLine": "auto"
+  "overrides": [
+    {
+      "files": ["**/app/**/*", "**/spec/**/*"],
+      "options": {
+        "endOfLine": "auto"
+      }
     }
-  }]
+  ]
 }

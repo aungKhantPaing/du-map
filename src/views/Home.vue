@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Map @loaded="onLoaded" :map-options="mapOptions" :token="token" location-control />
+    <Map :map-options="mapOptions" :token="token" location-control />
 
     <div v-if="dataLoaded">
       <app-bar class="animated fadeInDown faster layer-3" />
@@ -43,7 +43,6 @@
     <progress-indicator :show="!dataLoaded" />
   </v-app>
 </template>
-
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import store from '@/store';
