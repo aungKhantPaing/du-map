@@ -4,13 +4,16 @@ import Vuex, { Getter } from 'vuex';
 import { Place } from '@/models/place';
 import mapboxgl from 'mapbox-gl';
 import MapService from '@/services/mapService';
+import { App } from '@/constants/appState';
+import router from '@/router';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    searchClosed: true,
-    dataLoaded: false,
+    appState: App.loading,
+    // searchClosed: true,
+    // dataLoaded: false,
     drawer: false,
     mapService: {} as MapService,
     places: Array<Place>(),
@@ -22,25 +25,14 @@ export default new Vuex.Store({
     },
 
     getMapBox: (state) => state.mapService,
+
+    isLoading: (state) => state.appState == App.loading,
+    isLoaded: (state) => state.appState == App.loaded,
+    isSearching: (state) => state.appState == App.search,
   },
   mutations: {
-    setDataLoaded(state, value: boolean) {
-      state.dataLoaded = value;
-    },
-    setDrawer(state, value: any) {
+    SET_DRAWER(state, value: any) {
       state.drawer = value;
-    },
-    toggleDrawer(state) {
-      state.drawer = !state.drawer;
-    },
-    openSearch(state) {
-      state.searchClosed = false;
-    },
-    closeSearch(state) {
-      state.searchClosed = true;
-    },
-    toggleSearch(state) {
-      state.searchClosed = !state.searchClosed;
     },
 
     SET_PLACES(state, places: Place[]) {
@@ -50,6 +42,17 @@ export default new Vuex.Store({
     SET_MAPSERVICE(state, mapService: MapService) {
       state.mapService = mapService;
     },
+
+    SET_APP_STATE(state, appStae: App) {
+      state.appState = appStae;
+    },
+
+    removeHighLight(state) {
+      state.mapService.removeHighlight();
+    },
+    highLightPlace(state, place: Place) {
+      state.mapService.highlightPlace(place);
+    },
   },
   actions: {
     configMapbox(context, mapService: MapService) {
@@ -58,8 +61,27 @@ export default new Vuex.Store({
       context.commit('SET_MAPSERVICE', mapService);
       mapService.mapbox.on('load', () => {
         context.commit('SET_PLACES', mapService.getPlaces());
-        context.commit('setDataLoaded', true);
+        context.commit('SET_APP_STATE', App.loaded);
       });
+    },
+
+    openSearch(context) {
+      context.commit('SET_APP_STATE', App.search);
+    },
+    closeSearch(context) {
+      context.commit('SET_APP_STATE', App.loaded);
+    },
+
+    openDrawer(context) {
+      context.commit('SET_DRAWER', true);
+    },
+
+    removeHighLight(context) {
+      context.commit('removeHighLight');
+    },
+    highLightPlace({ commit }, place: Place) {
+      commit('highLightPlace', place);
+      // router.push(`/place/${place.properties.id}`);
     },
   },
   modules: {},

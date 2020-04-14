@@ -2,16 +2,16 @@
   <v-app>
     <Map :map-options="mapOptions" :token="token" location-control />
 
-    <div v-if="dataLoaded">
+    <div v-if="!isLoading">
       <app-bar class="animated fadeInDown faster layer-3" />
 
       <navi-drawer />
       <!-- Dock -->
-      <router-view class="animated fadeInUp faster layer-3"></router-view>
+      <router-view :key="$route.fullPath" class="animated fadeInUp faster layer-3"></router-view>
 
       <v-fab-transition>
         <v-btn
-          v-show="searchClosed"
+          v-show="!isSearching"
           @click="openSearch()"
           fixed
           dark
@@ -26,7 +26,7 @@
 
       <v-fab-transition>
         <v-btn
-          v-show="!searchClosed"
+          v-show="isSearching"
           @click="closeSearch()"
           fixed
           dark
@@ -40,13 +40,13 @@
       </v-fab-transition>
     </div>
 
-    <progress-indicator :show="!dataLoaded" />
+    <progress-indicator :show="isLoading" />
   </v-app>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import store from '@/store';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import Map from '@/components/Map.vue';
 import ProgressIndicator from '@/components/ProgressIndicator.vue';
 import AppBar from '@/components/AppBar.vue';
@@ -62,7 +62,10 @@ import eventBus from '@/eventBus';
     AppBar,
     NaviDrawer,
   },
-  computed: mapState(['dataLoaded', 'searchClosed']),
+  computed: {
+    ...mapState(['dataLoaded', 'searchClosed']),
+    ...mapGetters(['isLoading', 'isSearching']),
+  },
 })
 export default class Home extends Vue {
   token =

@@ -39,6 +39,10 @@ import kPlaceToTheme from '@/constants/placeToTheme';
 
 @Component({
   components: { ChipLabel },
+  beforeRouteLeave: (to, from, next) => {
+    store.dispatch('removeHighLight');
+    next();
+  },
 })
 export default class Dock extends Vue {
   place: Place = (this.$attrs.place as unknown) as Place;
@@ -73,16 +77,18 @@ export default class Dock extends Vue {
   }
 
   mounted() {
-    eventBus.$emit('highlightPlace', this.place);
+    // dispatch after mounted. need to wait for the mapbox to complete loading.
+    store.dispatch('highLightPlace', store.getters.placeById(this.place.properties.id));
     console.log(this.place);
   }
 
-  @Watch('$route')
-  onRouteChange(to: Route, from: Route) {
-    let nextPlace: Place = store.getters.placeById(to.params.id);
-    eventBus.$emit('highlightPlace', nextPlace);
-    this.place = nextPlace;
-  }
+  // @Watch('$route')
+  // onRouteChange(to: Route, from: Route) {
+  //   // update current place on route change
+  //   let nextPlace: Place = store.getters.placeById(to.params.id);
+  //   eventBus.$emit('highlightPlace', nextPlace);
+  //   this.place = nextPlace;
+  // }
 }
 </script>
 

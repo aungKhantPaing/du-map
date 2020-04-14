@@ -44,7 +44,7 @@ export default class NaviDrawer extends Vue {
   // as v-model do both getting and setting the value...
   // ...computed setter is a handy way to link v-model with vuex
   set drawer(value: boolean) {
-    this.$store.commit('setDrawer', value);
+    this.$store.commit('SET_DRAWER', value);
   }
   get drawer() {
     return this.$store.state.drawer;

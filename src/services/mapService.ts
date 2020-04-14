@@ -98,13 +98,14 @@ export default class MapService {
 
     //* 📡 set on-click events
     this.mapbox.on('click', (_) => {
-      this._removeHighlight();
+      this.removeHighlight();
+      if (router.currentRoute.name != 'home') router.replace('/');
     });
     // highlight when user specifically click/tap place icon
     this.mapbox.on('click', 'poi-label-places', (e) => {
       if (e.features) {
         let place = Place.parse(e.features[0]);
-        this._highlightPlace(place);
+        router.push(`/place/${place.properties.id}`);
       }
     });
 
@@ -112,13 +113,12 @@ export default class MapService {
     this._marker.setLngLat([0, 0]).addTo(this.mapbox);
   }
 
-  private _removeHighlight() {
+  removeHighlight() {
     this._marker.remove();
     this.mapbox.setFilter('building-3d-highlighted', ['in', 'id', '']); // remove highlight
-    if (router.currentRoute.name != 'home') router.replace('/');
   }
 
-  private _highlightPlace(place: Place) {
+  highlightPlace(place: Place) {
     this._marker.remove(); // remove default-marker from this.mapboxbox.js
     try {
       this._marker.setLngLat(place.geometry.coordinates).addTo(this.mapbox); // pin the marker
@@ -132,7 +132,5 @@ export default class MapService {
 
     // highlight the 3d structure by filtering with equal id
     this.mapbox.setFilter('building-3d-highlighted', ['in', 'id', place.properties.id]);
-
-    router.push(`/place/${place.properties.id}`);
   }
 }

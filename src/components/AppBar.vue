@@ -1,15 +1,15 @@
 <template>
   <v-col class="bar-container" sm="6">
     <!-- app bar -->
-    <v-app-bar absolute :collapse="searchClosed" color="primary" app dark>
-      <v-btn text icon @click="toggleDrawer()">
+    <v-app-bar absolute :collapse="!isSearching" color="primary" app dark>
+      <v-btn text icon @click="openDrawer()">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
 
       <v-text-field
         v-model.lazy="searchText"
         class="mt-6"
-        v-if="!searchClosed"
+        v-if="isSearching"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
         placeholder="Search"
@@ -20,7 +20,7 @@
         autofocus
       ></v-text-field>
 
-      <v-btn v-show="searchClosed" text icon @click="onLayerClick()">
+      <v-btn v-show="!isSearching" text icon @click="onLayerClick()">
         <v-icon>mdi-layers</v-icon>
       </v-btn>
     </v-app-bar>
@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 import eventBus from '@/eventBus';
 import { Place } from '@/models/place';
 import Fuse from 'fuse.js';
@@ -54,9 +54,10 @@ import Fuse from 'fuse.js';
 @Component({
   computed: {
     ...mapState(['drawer', 'searchClosed']),
+    ...mapGetters(['isSearching']),
   },
   methods: {
-    ...mapMutations(['toggleDrawer']),
+    ...mapActions(['openDrawer']),
   },
 })
 export default class AppBar extends Vue {
@@ -74,22 +75,19 @@ export default class AppBar extends Vue {
   });
 
   collapseBar() {
-    this.$store.commit('closeSearch');
+    this.$store.dispatch('closeSearch');
     this.searchText = '';
   }
 
   expandBar() {
-    this.$store.commit('openSearch');
+    this.$store.dispatch('openSearch');
   }
 
   onBlur() {
-    if (!this.searchIsBusy) {
-      this.collapseBar();
-    }
+    if (!this.searchIsBusy) this.collapseBar();
   }
 
   goTo(place: Place) {
-    this.searchText = '';
     this.collapseBar();
     this.$router.push(`/place/${place.properties.id}`);
   }
