@@ -48,6 +48,7 @@ export default class Map extends Vue {
 </script>
 
 <style scoped>
+@import url('~mapbox-gl/dist/mapbox-gl.css');
 #map {
   /* overflow: hidden;
   overflow-x: hidden;
