@@ -6,18 +6,23 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
 
+      <!-- 📝 @input/:value is more sutiable than v-model for mobile ux -->
+      <!-- 👨‍🏫 Even You explained why: https://github.com/vuejs/vue/issues/9777#issuecomment-478831263 -->
       <v-text-field
-        v-model.lazy="searchText"
+        :value="searchText"
+        @input="(input) => (searchText = input)"
         class="mt-6"
         v-if="isSearching"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
         placeholder="Search"
+        @click:clear="clearText()"
         solo
         dense
         light
         full-width
         autofocus
+        clearable
       ></v-text-field>
 
       <!-- <v-btn v-show="!isSearching" text icon @click="onLayerClick()">
