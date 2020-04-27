@@ -3,7 +3,8 @@
   <v-overlay v-if="show" absolute color="#FFF" opacity="1">
     <v-container style="width: 200px;">
       <v-row align="center" justify="center">
-        <v-col cols="8">
+        <v-col cols="8" align="center">
+          <v-chip class="mb-10" color="primary"> version: {{ versionNo }} </v-chip>
           <v-progress-linear
             absolute
             :active="true"
@@ -21,9 +22,11 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { mapState } from 'vuex';
+import { versionNo } from '@/constants/const';
 
 @Component
 export default class ProgressIndicator extends Vue {
   @Prop(Boolean) readonly show!: boolean;
+  versionNo = versionNo;
 }
 </script>
