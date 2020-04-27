@@ -4,43 +4,33 @@
 
     <div v-if="!isLoading">
       <app-bar class="animated fadeInDown faster layer-3" />
-
       <navi-drawer />
-      <!-- Dock -->
-      <transition name="slide-fade" mode="out-in">
-        <router-view :key="$route.fullPath" class="z-3"></router-view>
-      </transition>
 
-      <v-btn
-        v-show="!isSearching"
-        @click="openSearch()"
-        fixed
-        dark
-        right
-        :elevation="6"
-        color="primary"
-        class="fab animated fadeInRight faster"
-      >
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <v-container fluid class="bottom-container">
+        <v-row no-gutters>
+          <v-container class="d-flex justify-end pa-0">
+            <div class="fab-container">
+              <Fab v-show="!isSearching" @click="openSearch()">
+                <v-icon>mdi-magnify</v-icon>
+              </Fab>
 
-      <v-btn
-        v-show="isSearching"
-        @click="closeSearch()"
-        fixed
-        dark
-        right
-        :elevation="6"
-        color="warning"
-        class="fab animated fadeInRight faster"
-      >
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
+              <Fab v-show="isSearching" @click="closeSearch()" color="warning">
+                <v-icon>mdi-close</v-icon>
+              </Fab>
+            </div>
+          </v-container>
+
+          <transition name="slide-fade" mode="out-in">
+            <router-view :key="$route.fullPath"></router-view>
+          </transition>
+        </v-row>
+      </v-container>
     </div>
 
     <progress-indicator :show="isLoading" />
   </v-app>
 </template>
+
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import store from '@/store';
@@ -49,6 +39,7 @@ import Map from '@/components/Map.vue';
 import ProgressIndicator from '@/components/ProgressIndicator.vue';
 import AppBar from '@/components/AppBar.vue';
 import NaviDrawer from '@/components/NaviDrawer.vue';
+import Fab from '@/components/Fab.vue';
 import { Place } from '@/models/place';
 import eventBus from '@/eventBus';
 
@@ -58,6 +49,7 @@ import eventBus from '@/eventBus';
     Map,
     ProgressIndicator,
     AppBar,
+    Fab,
     NaviDrawer,
   },
   computed: {
@@ -97,15 +89,22 @@ export default class Home extends Vue {
 </script>
 
 <style scoped>
-/* put ~ infront to import node_module */
+/* 📝 put ~ infront to import from node_module */
 /* can't find a way to import scss yet */
 @import url('~animate.css/animate.css');
 
-.z-3 {
+.bottom-container {
+  position: fixed;
+  bottom: 0px !important;
+  pointer-events: none !important;
   z-index: 3 !important;
 }
+.fab-container {
+  pointer-events: all !important;
+  position: relative !important;
+}
 
-/* TRANSITIONS */
+/* ⏲ TRANSITIONS */
 .slide-fade-enter,
 .slide-fade-leave-to {
   transform: translateY(10px);
@@ -116,15 +115,5 @@ export default class Home extends Vue {
 }
 .slide-fade-leave-active {
   transition: all 0.05s ease-out;
-}
-.fab {
-  min-height: 0;
-  min-width: 0;
-  padding: 0;
-  height: 56px !important;
-  width: 56px !important;
-  bottom: 110px !important;
-  right: 0px !important;
-  border-radius: 20% 0% 0% 20% !important;
 }
 </style>

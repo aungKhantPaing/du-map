@@ -4,7 +4,7 @@
       <v-card class="dock-header">
         <div v-ripple @click="toggleExpand" class="place-label-container">
           <v-row align="center" justify="space-between" no-gutters>
-            <!-- no-glutters solve child overflowing -->
+            <!-- 📝'no-gutters' remove🔪gutter between v-cols. -->
             <v-col class="pa-0">
               <p class="headline">{{ place.properties.name }}</p>
               <chip-label
@@ -116,29 +116,13 @@ export default class Dock extends Vue {
 
 <style lang="scss" scoped>
 .dock {
-  position: absolute;
-  pointer-events: none;
-  bottom: 0;
   margin: 0;
-  width: 100%;
+  pointer-events: none;
 
   .dock-header {
     cursor: auto;
     pointer-events: all;
   }
-
-  // .dock-header {
-  //   cursor: auto;
-  //   pointer-events: all;
-  //   display: flex !important;
-  //   align-items: center;
-  //   margin: 0 !important;
-  //   height: fit-content !important;
-  //   border-radius: 6px 6px 0px 0px;
-  //   transition: 1s;
-  //   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
-  //     Cantarell, 'Helvetica Neue', sans-serif !important;
-  //   // border-radius: 11px 11px 0px 0px;
 
   .place-label-container {
     cursor: pointer;
@@ -171,6 +155,5 @@ export default class Dock extends Vue {
       }
     }
   }
-  // }
 }
 </style>
