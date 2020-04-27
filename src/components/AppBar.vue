@@ -34,7 +34,7 @@
             v-for="{ item } in filteredPlaces"
             @click="goTo(item)"
             :key="item.properties.id"
-            class="body-2"
+            class=""
           >
             {{ item.properties.name }}
           </v-list-item>
@@ -50,6 +50,7 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 import eventBus from '@/eventBus';
 import { Place } from '@/models/place';
 import Fuse from 'fuse.js';
+import gsap from 'gsap';
 
 @Component({
   computed: {
@@ -61,7 +62,6 @@ import Fuse from 'fuse.js';
   },
 })
 export default class AppBar extends Vue {
-  width = '80';
   searchText = '';
   fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(this.$store.state.places, {
     shouldSort: true,
@@ -100,14 +100,6 @@ export default class AppBar extends Vue {
     return this.fuse.search<Array<Place>>(this.searchText);
   }
 
-  get right() {
-    let width = window.innerWidth > 0 ? window.innerWidth : screen.width;
-    // eslint-disable-next-line no-console
-    console.log(width);
-    let isMobile = width >= 320 && width <= 767;
-    return isMobile ? '0' : '50%';
-  }
-
   mounted() {
     eventBus.$on('openSearch', () => {
       this.expandBar();
@@ -116,6 +108,14 @@ export default class AppBar extends Vue {
     eventBus.$on('closeSearch', () => {
       this.collapseBar();
     });
+
+    // gsap.from('.list-item', {
+    //   duration: 0.5,
+    //   opacity: 0,
+    //   y: 200,
+    //   ease: 'power1',
+    //   stagger: 0.1,
+    // });
   }
 }
 </script>
