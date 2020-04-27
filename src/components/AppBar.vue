@@ -99,11 +99,11 @@ export default class AppBar extends Vue {
   }
 
   get searchIsBusy() {
-    return this.searchText.length > 0 && this.filteredPlaces.length > 0;
+    return this.searchText && this.searchText.length && this.filteredPlaces.length;
   }
 
   get filteredPlaces() {
-    return this.fuse.search<Array<Place>>(this.searchText);
+    return this.fuse.search<Array<Place>>(this.searchText || '');
   }
 
   mounted() {
