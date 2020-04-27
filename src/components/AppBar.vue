@@ -12,14 +12,12 @@
         v-if="isSearching"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
-        @click:clear="clearText()"
         placeholder="Search"
         solo
         dense
         light
         full-width
         autofocus
-        clearable
       ></v-text-field>
 
       <!-- <v-btn v-show="!isSearching" text icon @click="onLayerClick()">
