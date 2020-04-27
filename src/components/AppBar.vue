@@ -52,7 +52,7 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 import eventBus from '@/eventBus';
 import { Place } from '@/models/place';
 import Fuse from 'fuse.js';
-import gsap from 'gsap';
+// import gsap from 'gsap';
 
 @Component({
   computed: {
