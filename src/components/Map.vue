@@ -67,7 +67,8 @@ export default class Map extends Vue {
 </style>
 
 <style>
-.mapboxgl-ctrl-top-right {
+.mapboxgl-ctrl-top-left {
   top: 70px !important;
+  z-index: 0;
 }
 </style>

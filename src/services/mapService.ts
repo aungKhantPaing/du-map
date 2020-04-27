@@ -83,8 +83,8 @@ export default class MapService {
         zoom: 15,
       },
     });
-    if (this._show_zoom_control) this.mapbox.addControl(zoomControl);
-    if (this._show_location_control) this.mapbox.addControl(locationControl);
+    if (this._show_zoom_control) this.mapbox.addControl(zoomControl, 'top-left');
+    if (this._show_location_control) this.mapbox.addControl(locationControl, 'top-left');
 
     //* 📡 set cursor events
     // change the cursor to pointer 👆 when the it enters a feature in the 'symbols' layer.
