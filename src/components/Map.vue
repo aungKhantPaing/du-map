@@ -12,6 +12,7 @@ import eventBus from '@/eventBus';
 import store from '@/store';
 import { MapboxOptions } from 'mapbox-gl/index';
 import MapService from '@/services/mapService';
+import { MAP_TOKEN } from '@/constants/const';
 
 @Component({
   methods: mapMutations(['setPlaceList', 'setDataLoaded']),
@@ -19,9 +20,6 @@ import MapService from '@/services/mapService';
 export default class Map extends Vue {
   @Prop()
   readonly mapOptions!: Object;
-
-  @Prop()
-  readonly token!: string;
 
   @Prop({
     type: Boolean,
@@ -42,39 +40,9 @@ export default class Map extends Vue {
 
   mounted() {
     // ⚙️ CONFIG MAP
-    mapboxgl.accessToken = this.token;
+    mapboxgl.accessToken = MAP_TOKEN;
     let map = new mapboxgl.Map(this.$data.options);
-    let mapService = new MapService(map);
-    console.log(mapService);
-    console.log(mapService.mapbox);
-    this.$store.dispatch('configMapbox', mapService);
-    // let marker = new mapboxgl.Marker({
-    //   color: '#F85A40', // red
-    // })
-    //   .setLngLat([0, 0])
-    //   .addTo(map);
-
-    // 👂 LISTEN EVENTs
-    // call after map data are fully loaded
-    // map.on('load', () => {
-    //   let cleanData = this.getCleanedPlaceData(map);
-    //   this.$emit('loaded', cleanData);
-
-    //   console.log('CLEAN DATA');
-    //   console.log(cleanData);
-    //   eventBus.$emit('loaded');
-    // });
-
-    // listen to mouse events as soon as the components are mounted.
-    // remove highlight when user click/tap other area of the map (non-icon area)
-
-    // eventBus.$on('removeHighlight', () => {
-    //   removeHighlight();
-    //   this.$router.replace('/');
-    // });
-    // eventBus.$on('highlightPlace', (place: Place) => {
-    //   highlightPlace(place);
-    // });
+    this.$store.dispatch('configMapbox', new MapService(map));
   }
 }
 </script>

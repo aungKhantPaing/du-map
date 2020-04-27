@@ -1,13 +1,15 @@
 <template>
   <v-app>
-    <Map :map-options="mapOptions" :token="token" location-control />
+    <Map :map-options="mapOptions" location-control />
 
     <div v-if="!isLoading">
       <app-bar class="animated fadeInDown faster layer-3" />
 
       <navi-drawer />
       <!-- Dock -->
-      <router-view :key="$route.fullPath" class="animated fadeInUp faster layer-3"></router-view>
+      <transition name="slide-fade" mode="out-in">
+        <router-view :key="$route.fullPath" class="z-3"></router-view>
+      </transition>
 
       <v-fab-transition>
         <v-btn
@@ -68,8 +70,6 @@ import eventBus from '@/eventBus';
   },
 })
 export default class Home extends Vue {
-  token =
-    'pk.eyJ1IjoiYWtwMTAxIiwiYSI6ImNqeGtrbnVwazAxM2Izbm1vOWYwdHQxdjkifQ.gtLMDe9KAEU2rxBvk_vnzw';
   mapOptions = {
     style: 'mapbox://styles/akp101/cjxkkxwpc01x11cnur0aepitf/draft',
     center: [96.212739, 16.911199],
@@ -100,12 +100,25 @@ export default class Home extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-// put ~ infront to import node_module
-//? can't find a way to import scss yet
+<style scoped>
+/* put ~ infront to import node_module */
+/* can't find a way to import scss yet */
 @import url('~animate.css/animate.css');
 
-.layer-3 {
+.z-3 {
   z-index: 3 !important;
+}
+
+/* TRANSITIONS */
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
+.slide-fade-enter-active {
+  transition: all 0.2s ease-in;
+}
+.slide-fade-leave-active {
+  transition: all 0.05s ease-out;
 }
 </style>

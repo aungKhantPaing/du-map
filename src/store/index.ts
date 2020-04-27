@@ -4,7 +4,7 @@ import Vuex, { Getter } from 'vuex';
 import { Place } from '@/models/place';
 import mapboxgl from 'mapbox-gl';
 import MapService from '@/services/mapService';
-import { App } from '@/constants/appState';
+import { App } from '@/models/appState';
 import router from '@/router';
 
 Vue.use(Vuex);
@@ -12,8 +12,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     appState: App.loading,
-    // searchClosed: true,
-    // dataLoaded: false,
     drawer: false,
     mapService: {} as MapService,
     places: Array<Place>(),
@@ -47,17 +45,18 @@ export default new Vuex.Store({
       state.appState = appStae;
     },
 
-    removeHighLight(state) {
+    REMOVE_HIGHLIGHT(state) {
       state.mapService.removeHighlight();
     },
-    highLightPlace(state, place: Place) {
+
+    HIGHLIGHT_PLACE(state, place: Place) {
       state.mapService.highlightPlace(place);
     },
   },
   actions: {
     configMapbox(context, mapService: MapService) {
-      console.log(mapService);
-      console.log(mapService.mapbox);
+      // console.log(mapService);
+      // console.log(mapService.mapbox);
       context.commit('SET_MAPSERVICE', mapService);
       mapService.mapbox.on('load', () => {
         context.commit('SET_PLACES', mapService.getPlaces());
@@ -77,10 +76,10 @@ export default new Vuex.Store({
     },
 
     removeHighLight(context) {
-      context.commit('removeHighLight');
+      context.commit('REMOVE_HIGHLIGHT');
     },
     highLightPlace({ commit }, place: Place) {
-      commit('highLightPlace', place);
+      commit('HIGHLIGHT_PLACE', place);
       // router.push(`/place/${place.properties.id}`);
     },
   },
