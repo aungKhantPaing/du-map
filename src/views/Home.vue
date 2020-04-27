@@ -96,6 +96,7 @@ export default class Home extends Vue {
 .bottom-container {
   position: fixed;
   bottom: 0px !important;
+  padding: 0px;
   pointer-events: none !important;
   z-index: 3 !important;
 }
