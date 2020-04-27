@@ -12,17 +12,19 @@
         v-if="isSearching"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
+        @click:clear="clearText()"
         placeholder="Search"
         solo
         dense
         light
         full-width
         autofocus
+        clearable
       ></v-text-field>
 
-      <v-btn v-show="!isSearching" text icon @click="onLayerClick()">
+      <!-- <v-btn v-show="!isSearching" text icon @click="onLayerClick()">
         <v-icon>mdi-layers</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
     <!-- search result -->
@@ -74,9 +76,13 @@ export default class AppBar extends Vue {
     keys: ['properties.name', 'properties.type', 'properties.id'],
   });
 
+  clearText() {
+    this.searchText = '';
+  }
+
   collapseBar() {
     this.$store.dispatch('closeSearch');
-    this.searchText = '';
+    this.clearText();
   }
 
   expandBar() {

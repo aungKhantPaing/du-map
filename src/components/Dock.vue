@@ -2,13 +2,33 @@
   <v-row class="dock">
     <v-col class="pa-0" sm="6" offset-sm="6">
       <v-card class="dock-header">
-        <div @click="toggleExpand" v-ripple class="place-label-container">
-          <p class="headline">{{ place.properties.name }}</p>
-          <chip-label
-            class="ml-2"
-            :value="place.properties.type"
-            :theme="getThemeOf(place.properties.type)"
-          ></chip-label>
+        <div v-ripple @click="toggleExpand" class="place-label-container">
+          <v-row align="center" justify="space-between" no-gutters>
+            <!-- no-glutters solve child overflowing -->
+            <v-col class="pa-0">
+              <p class="headline">{{ place.properties.name }}</p>
+              <chip-label
+                class="ml-2"
+                :value="place.properties.type"
+                :theme="getThemeOf(place.properties.type)"
+              ></chip-label>
+            </v-col>
+
+            <v-chip
+              @touchstart.stop
+              @mousedown.stop
+              @click.stop="share()"
+              outlined
+              large
+              color="black"
+              class="mr-2"
+            >
+              <v-avatar left>
+                <v-icon>mdi-share-variant</v-icon>
+              </v-avatar>
+              Share
+            </v-chip>
+          </v-row>
         </div>
 
         <div v-if="expanded">
@@ -76,6 +96,8 @@ export default class Dock extends Vue {
     this.expanded = !this.expanded;
   }
 
+  share() {}
+
   mounted() {
     // dispatch after mounted. need to wait for the mapbox to complete loading.
     store.dispatch('highLightPlace', store.getters.placeById(this.place.properties.id));
@@ -120,7 +142,7 @@ export default class Dock extends Vue {
 
   .place-label-container {
     cursor: pointer;
-    padding: 10px 0px 10px 14px !important;
+    padding: 10px 0px 10px 0px !important;
     margin: 0 !important;
     .headline {
       display: flex !important;

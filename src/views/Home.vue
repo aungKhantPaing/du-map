@@ -11,35 +11,31 @@
         <router-view :key="$route.fullPath" class="z-3"></router-view>
       </transition>
 
-      <v-fab-transition>
-        <v-btn
-          v-show="!isSearching"
-          @click="openSearch()"
-          fixed
-          dark
-          fab
-          bottom
-          right
-          color="primary"
-        >
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </v-fab-transition>
+      <v-btn
+        v-show="!isSearching"
+        @click="openSearch()"
+        fixed
+        dark
+        right
+        :elevation="6"
+        color="primary"
+        class="fab animated fadeInRight faster"
+      >
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
 
-      <v-fab-transition>
-        <v-btn
-          v-show="isSearching"
-          @click="closeSearch()"
-          fixed
-          dark
-          fab
-          bottom
-          right
-          color="warning"
-        >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-fab-transition>
+      <v-btn
+        v-show="isSearching"
+        @click="closeSearch()"
+        fixed
+        dark
+        right
+        :elevation="6"
+        color="warning"
+        class="fab animated fadeInRight faster"
+      >
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
     </div>
 
     <progress-indicator :show="isLoading" />
@@ -120,5 +116,15 @@ export default class Home extends Vue {
 }
 .slide-fade-leave-active {
   transition: all 0.05s ease-out;
+}
+.fab {
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  height: 56px !important;
+  width: 56px !important;
+  bottom: 110px !important;
+  right: 0px !important;
+  border-radius: 20% 0% 0% 20% !important;
 }
 </style>
