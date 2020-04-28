@@ -26,34 +26,20 @@ export default class MapService {
   // dirty data -> filter -> sort -> clean data
   getPlaces(): Array<Place> {
     // query dirty list data from map
-    let sourceFeatures = this.mapbox.querySourceFeatures('composite', {
-      sourceLayer: 'DU_Places_New', // require if sourceLayer is a vector_tileset
-    });
+    let places = this.mapbox
+      .querySourceFeatures('composite', {
+        sourceLayer: 'DU_Places_New', // require if sourceLayer is a vector_tileset
+      })
+      .map((f) => Place.parse(f));
 
-    console.log('SOURCE FEATURES');
-    console.log(sourceFeatures);
+    // ⏬ filter duplicated data
+    places = [...new Map(places.map((place) => [place.properties.id, place])).values()];
 
-    // filter duplicated data
-    sourceFeatures.forEach((targetPlace) => {
-      var duplicatedItems: any[] = [];
-      sourceFeatures.forEach((place) => {
-        if (
-          JSON.stringify(targetPlace.properties) === JSON.stringify(place.properties) && // compare primitive data
-          targetPlace != place // compare reference data
-        ) {
-          duplicatedItems.push(place); // get the duplicates
-        }
-      });
-      // remove the duplicatedItem(s) of targetPlace
-      duplicatedItems.forEach((item) => {
-        var itemIndex = sourceFeatures.indexOf(item);
-        sourceFeatures.splice(itemIndex, 1);
-      });
-    });
+    // 🆎 sort alphabetically
+    places.sort(compare);
+    console.log(places);
 
-    // sort alphabetically
-    sourceFeatures.sort(compare);
-    function compare(a: any, b: any) {
+    function compare(a: Place, b: Place) {
       var aString = '' + a.properties.name; // cast to unicode
       var bString = '' + b.properties.name;
 
@@ -63,7 +49,7 @@ export default class MapService {
       return 0;
     }
 
-    return sourceFeatures.map((feature) => Place.parse(feature));
+    return places;
   }
 
   private _config(): void {
@@ -132,5 +118,9 @@ export default class MapService {
 
     // highlight the 3d structure by filtering with equal id
     this.mapbox.setFilter('building-3d-highlighted', ['in', 'id', place.properties.id]);
+  }
+
+  _getUniqueListBy(arr: Place[], key: String) {
+    return [...new Map(arr.map((item) => [item, item])).values()];
   }
 }
