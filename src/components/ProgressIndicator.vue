@@ -22,11 +22,11 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { versionNo } from '@/constants/const';
+const pjson = require('../../package.json');
 
 @Component
 export default class ProgressIndicator extends Vue {
   @Prop(Boolean) readonly show!: boolean;
-  versionNo = versionNo;
+  versionNo = pjson.version;
 }
 </script>
