@@ -28,6 +28,8 @@
     </div>
 
     <progress-indicator :show="isLoading" />
+
+    <offline-dialog v-if="isOffline" @reload="reload()"></offline-dialog>
   </v-app>
 </template>
 
@@ -38,10 +40,12 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 import Map from '@/components/Map.vue';
 import ProgressIndicator from '@/components/ProgressIndicator.vue';
 import AppBar from '@/components/AppBar.vue';
+import OfflineDialog from '@/components/OfflineDialog.vue';
 import NaviDrawer from '@/components/NaviDrawer.vue';
 import Fab from '@/components/Fab.vue';
 import { Place } from '@/models/place';
 import eventBus from '@/eventBus';
+import { App } from '../models/appState';
 
 @Component({
   store,
@@ -51,10 +55,11 @@ import eventBus from '@/eventBus';
     AppBar,
     Fab,
     NaviDrawer,
+    OfflineDialog,
   },
   computed: {
     ...mapState(['dataLoaded', 'searchClosed']),
-    ...mapGetters(['isLoading', 'isSearching']),
+    ...mapGetters(['isLoading', 'isSearching', 'isOffline']),
   },
   methods: {
     ...mapActions(['openSearch', 'closeSearch']),
@@ -87,6 +92,14 @@ export default class Home extends Vue {
 
   closeSearch() {
     store.dispatch('closeSearch');
+  }
+
+  reload() {
+    location.reload();
+  }
+
+  makeOffline() {
+    store.commit('SET_APP_STATE', App.offline);
   }
 }
 </script>

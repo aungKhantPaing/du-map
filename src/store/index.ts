@@ -27,6 +27,7 @@ export default new Vuex.Store({
     isLoading: (state) => state.appState == App.loading,
     isLoaded: (state) => state.appState == App.loaded,
     isSearching: (state) => state.appState == App.search,
+    isOffline: (state) => state.appState == App.offline,
   },
   mutations: {
     SET_DRAWER(state, value: any) {
@@ -54,14 +55,17 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    configMapbox(context, mapService: MapService) {
+    configMapbox({ commit }, mapService: MapService) {
       // console.log(mapService);
       // console.log(mapService.mapbox);
-      context.commit('SET_MAPSERVICE', mapService);
+      commit('SET_MAPSERVICE', mapService);
       mapService.mapbox.on('load', () => {
-        context.commit('SET_PLACES', mapService.getPlaces());
-        context.commit('SET_APP_STATE', App.loaded);
+        commit('SET_PLACES', mapService.getPlaces());
+        commit('SET_APP_STATE', App.loaded);
       });
+      // mapService.mapbox.on('error', () => {
+      //   commit('SET_APP_STATE', App.offline);
+      // });
     },
 
     openSearch(context) {
@@ -82,6 +86,10 @@ export default new Vuex.Store({
       dispatch('closeSearch');
       commit('HIGHLIGHT_PLACE', place);
       // router.push(`/place/${place.properties.id}`);
+    },
+
+    turnOffline({ commit }) {
+      commit('SET_APP_STATE', App.offline);
     },
   },
   modules: {},
