@@ -59,7 +59,7 @@ export default class Map extends Vue {
   left: 0px;
   right: 0px;
   bottom: 0px; */
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   width: 100%;

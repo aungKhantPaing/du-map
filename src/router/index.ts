@@ -1,12 +1,12 @@
 import Vue from 'vue';
-import VueRouter, { Route } from 'vue-router';
+import VueRouter, { Route, RouteConfig } from 'vue-router';
 import Home from '../views/Home.vue';
 import Dock from '@/components/Dock.vue';
 import store from '@/store';
 
 Vue.use(VueRouter);
 
-const routes = [
+const routes: RouteConfig[] = [
   {
     path: '/',
     name: 'home',
@@ -23,6 +23,7 @@ const routes = [
       },
     ],
   },
+
   // {
   //   path: "/about",
   //   name: "about",

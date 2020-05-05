@@ -1,7 +1,7 @@
 <template>
-  <v-col class="bar-container" sm="6">
+  <v-col sm="6" class="pa-0">
     <!-- app bar -->
-    <v-app-bar absolute :collapse="!isSearching" color="primary" app dark>
+    <v-app-bar :collapse="!isSearching" color="primary" app dark>
       <v-btn text icon @click="openDrawer()">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -9,20 +9,20 @@
       <!-- 📝 @input/:value is more sutiable than v-model for mobile ux -->
       <!-- 👨‍🏫 Even You explained why: https://github.com/vuejs/vue/issues/9777#issuecomment-478831263 -->
       <v-text-field
-        :value="searchText"
+        :value.sync="searchText"
         @input="(input) => (searchText = input)"
-        class="mt-6"
-        v-if="isSearching"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
-        placeholder="Search"
         @click:clear="clearText()"
+        clearable
+        autofocus
+        v-if="isSearching"
+        placeholder="Search"
+        class="mt-6"
         solo
         dense
         light
         full-width
-        autofocus
-        clearable
       ></v-text-field>
 
       <!-- <v-btn v-show="!isSearching" text icon @click="onLayerClick()">
@@ -31,19 +31,17 @@
     </v-app-bar>
 
     <!-- search result -->
-    <v-card v-if="searchIsBusy" class="mt-12 responsive-container" color="transparent" flat>
-      <v-list dense>
+    <v-card v-if="searchIsBusy && isSearching" class="pt-12" color="transparent" flat>
+      <v-list subheader>
         <v-subheader>Results</v-subheader>
-        <v-list-item-group color="primary">
-          <v-list-item
-            v-for="{ item } in filteredPlaces"
-            @click="goTo(item)"
-            :key="item.properties.id"
-            class=""
-          >
-            {{ item.properties.name }}
-          </v-list-item>
-        </v-list-item-group>
+        <v-list-item
+          v-for="{ item } in filteredPlaces"
+          @click="goTo(item)"
+          :key="item.properties.id"
+          class=""
+          ><place-icon class="mr-2" :place-type="item.properties.type"></place-icon>
+          {{ item.properties.name }}
+        </v-list-item>
       </v-list>
     </v-card>
   </v-col>
@@ -54,6 +52,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 import eventBus from '@/eventBus';
 import { Place } from '@/models/place';
+import PlaceIcon from '@/components/PlaceIcon.vue';
 import Fuse from 'fuse.js';
 // import gsap from 'gsap';
 
@@ -65,6 +64,7 @@ import Fuse from 'fuse.js';
   methods: {
     ...mapActions(['openDrawer']),
   },
+  components: { PlaceIcon },
 })
 export default class AppBar extends Vue {
   searchText = '';
@@ -110,14 +110,6 @@ export default class AppBar extends Vue {
   }
 
   mounted() {
-    eventBus.$on('openSearch', () => {
-      this.expandBar();
-    });
-
-    eventBus.$on('closeSearch', () => {
-      this.collapseBar();
-    });
-
     // gsap.from('.list-item', {
     //   duration: 0.5,
     //   opacity: 0,
@@ -138,15 +130,4 @@ export default class AppBar extends Vue {
 //   // else
 //   right: 50% !important;
 // }
-
-.responsive-container {
-  position: fixed !important;
-  left: 0 !important;
-  right: 0 !important;
-}
-
-.bar-container {
-  position: fixed;
-  width: 100%;
-}
 </style>

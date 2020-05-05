@@ -78,7 +78,8 @@ export default new Vuex.Store({
     removeHighLight(context) {
       context.commit('REMOVE_HIGHLIGHT');
     },
-    highLightPlace({ commit }, place: Place) {
+    highLightPlace({ commit, dispatch }, place: Place) {
+      dispatch('closeSearch');
       commit('HIGHLIGHT_PLACE', place);
       // router.push(`/place/${place.properties.id}`);
     },

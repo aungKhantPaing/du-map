@@ -3,7 +3,7 @@
     <Map :map-options="mapOptions" location-control />
 
     <div v-if="!isLoading">
-      <app-bar class="animated fadeInDown faster layer-3" />
+      <app-bar class="animated fadeInDown faster appbar" />
       <navi-drawer />
 
       <v-container fluid class="bottom-container">
@@ -34,7 +34,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import store from '@/store';
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import Map from '@/components/Map.vue';
 import ProgressIndicator from '@/components/ProgressIndicator.vue';
 import AppBar from '@/components/AppBar.vue';
@@ -55,6 +55,9 @@ import eventBus from '@/eventBus';
   computed: {
     ...mapState(['dataLoaded', 'searchClosed']),
     ...mapGetters(['isLoading', 'isSearching']),
+  },
+  methods: {
+    ...mapActions(['openSearch', 'closeSearch']),
   },
 })
 export default class Home extends Vue {
@@ -79,11 +82,11 @@ export default class Home extends Vue {
   }
 
   openSearch() {
-    eventBus.$emit('openSearch');
+    store.dispatch('openSearch');
   }
 
   closeSearch() {
-    eventBus.$emit('closeSearch');
+    store.dispatch('closeSearch');
   }
 }
 </script>
@@ -98,7 +101,11 @@ export default class Home extends Vue {
   bottom: 0px !important;
   padding: 0px;
   pointer-events: none !important;
-  z-index: 3 !important;
+  z-index: 1;
+}
+.appbar {
+  position: absolute;
+  z-index: 2 !important;
 }
 .fab-container {
   pointer-events: all !important;

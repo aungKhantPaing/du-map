@@ -59,17 +59,17 @@ export default class NaviDrawer extends Vue {
   }
 
   placeGroups: PlaceGroup[] = [
-    new PlaceGroup('Department', [place_types.department], 'mdi-bank'),
-    new PlaceGroup('Canteen', [place_types.canteen], 'mdi-silverware'),
-    new PlaceGroup('Bus Stop', [place_types.bus_stop], 'mdi-bus'),
-    new PlaceGroup(
-      'Sport and Activities',
-      [place_types.rc, place_types.library, place_types.stadium],
-      'mdi-run',
-    ),
-    new PlaceGroup('Copier', [place_types.copier], 'mdi-content-copy'),
-    new PlaceGroup('Hostel', [place_types.hostel], 'mdi-hotel'),
-    new PlaceGroup('Other', [], 'mdi-domain'),
+    new PlaceGroup('Department', 'mdi-bank', [place_types.department]),
+    new PlaceGroup('Canteen', 'mdi-silverware', [place_types.canteen]),
+    new PlaceGroup('Bus Stop', 'mdi-bus', [place_types.bus_stop]),
+    new PlaceGroup('Sport and Activities', 'mdi-run', [
+      place_types.rc,
+      place_types.library,
+      place_types.stadium,
+    ]),
+    new PlaceGroup('Copier', 'mdi-content-copy', [place_types.copier]),
+    new PlaceGroup('Hostel', 'mdi-bed', [place_types.hostel]),
+    new PlaceGroup('Other', 'mdi-domain'),
   ];
 
   mounted() {

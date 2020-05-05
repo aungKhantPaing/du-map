@@ -4,7 +4,7 @@ import Theme from '@/models/theme';
 // COLORS
 const colors = {
   vuetifyBlue: '#1976d2',
-  libBrown: '#795548',
+  libraryBrown: '#795548',
   aiesecRed: '#f85a40',
 };
 
@@ -14,18 +14,19 @@ let kPlaceToTheme: Record<place_types, Theme> = {
   department: { icon: 'mdi-bank', color: colors.vuetifyBlue },
   canteen: { icon: 'mdi-silverware', color: colors.aiesecRed },
   'bus stop': { icon: 'mdi-bus', color: 'yellow darken-3' },
-  library: { icon: 'mdi-library', color: colors.libBrown },
-  hostel: { icon: 'mdi-hotel', color: 'pink' },
+  library: { icon: 'mdi-library', color: colors.libraryBrown },
+  hostel: { icon: 'mdi-bed', color: 'pink' },
   hall: { icon: 'mdi-school', color: 'teal accent-4' },
   office: { icon: 'mdi-domain', color: 'grey' },
-  copier: { icon: 'mdi-content-copy', color: null },
+  copier: { icon: 'mdi-content-copy', color: 'grey' },
   station: { icon: 'mdi-train', color: 'yellow darken-3' },
-  activity: { icon: 'mdi-run', color: null },
+  activity: { icon: 'mdi-run', color: 'grey' },
   'herbarium house': { icon: 'mdi-leaf', color: 'green darken-1' },
   atm: { icon: 'mdi-cash-usd', color: 'grey' },
   threatre: { icon: 'mdi-domain', color: 'grey' },
   stadium: { icon: 'mdi-domain', color: 'grey' },
   rc: { icon: 'mdi-domain', color: 'grey' },
+  clinic: { icon: 'mdi-hospital', color: 'red' },
 };
 
 export default kPlaceToTheme;

@@ -19,6 +19,7 @@ enum place_types {
   rc = 'rc',
   atm = 'atm',
   other = 'other',
+  clinic = 'clinic',
 }
 
 export default place_types;

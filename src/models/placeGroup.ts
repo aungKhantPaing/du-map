@@ -7,7 +7,7 @@ export default class PlaceGroup {
   readonly icon: string;
   placeList: Place[] = [];
 
-  constructor(name: string, types: place_types[] = [], icon: string = '') {
+  constructor(name: string, icon: string, types: place_types[] = []) {
     this.name = name;
     this.types = types;
     this.icon = icon;
