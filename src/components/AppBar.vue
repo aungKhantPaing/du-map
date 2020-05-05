@@ -1,7 +1,7 @@
 <template>
   <v-col sm="6" class="pa-0">
     <!-- app bar -->
-    <v-app-bar :collapse="!isSearching" color="primary" app dark>
+    <v-app-bar :collapse="!isSearching" color="primary" style="position: sticky;" app dark>
       <v-btn text icon @click="openDrawer()">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -31,7 +31,7 @@
     </v-app-bar>
 
     <!-- search result -->
-    <v-card v-if="searchIsBusy && isSearching" class="pt-12" color="transparent" flat>
+    <v-card v-if="searchIsBusy && isSearching" color="transparent" flat>
       <v-list subheader>
         <v-subheader>Results</v-subheader>
         <v-list-item
