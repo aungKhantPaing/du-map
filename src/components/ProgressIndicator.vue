@@ -1,6 +1,6 @@
 <template>
   <!-- Progress Indicator -->
-  <v-overlay :v-if="show" absolute color="#FFF" opacity="1">
+  <v-overlay absolute color="#FFF" opacity="1">
     <v-container style="width: 200px;">
       <v-row align="center" justify="center">
         <v-col cols="8" align="center">
@@ -26,8 +26,6 @@ const pjson = require('../../package.json');
 
 @Component
 export default class ProgressIndicator extends Vue {
-  @Prop(Boolean)
-  readonly show!: boolean;
   versionNo = pjson.version;
 }
 </script>

@@ -2,7 +2,7 @@
   <v-app>
     <Map :map-options="mapOptions" location-control />
 
-    <div v-if="!isLoading">
+    <div v-if="isLoaded">
       <app-bar class="animated fadeInDown faster appbar" />
       <navi-drawer />
 
@@ -27,7 +27,7 @@
       </v-container>
     </div>
 
-    <progress-indicator :show="isLoading" />
+    <progress-indicator v-if="isLoading" />
 
     <offline-dialog v-if="isOffline" @reload="reload()"></offline-dialog>
   </v-app>
@@ -59,7 +59,7 @@ import { App } from '../models/appState';
   },
   computed: {
     ...mapState(['dataLoaded', 'searchClosed']),
-    ...mapGetters(['isLoading', 'isSearching', 'isOffline']),
+    ...mapGetters(['isLoading', 'isSearching', 'isOffline', 'isLoaded']),
   },
   methods: {
     ...mapActions(['openSearch', 'closeSearch']),

@@ -9,12 +9,6 @@ export default Vue.extend({
   data: () => ({
     //
   }),
-  mounted() {
-    window.addEventListener('load', () => {
-      window.addEventListener('offline', () => {
-        this.$store.dispatch('turnOffline');
-      });
-    });
-  },
+  mounted() {},
 });
 </script>

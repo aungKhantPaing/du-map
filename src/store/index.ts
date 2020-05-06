@@ -15,6 +15,8 @@ export default new Vuex.Store({
     drawer: false,
     mapService: {} as MapService,
     places: Array<Place>(),
+    deferredPrompt: null,
+    installable: false,
   },
 
   getters: {
@@ -30,42 +32,53 @@ export default new Vuex.Store({
     isOffline: (state) => state.appState == App.offline,
   },
   mutations: {
-    SET_DRAWER(state, value: any) {
-      state.drawer = value;
+    SET_DRAWER(context, value: any) {
+      context.drawer = value;
     },
 
-    SET_PLACES(state, places: Place[]) {
-      state.places = places;
+    SET_PLACES(context, value: Place[]) {
+      context.places = value;
     },
 
-    SET_MAPSERVICE(state, mapService: MapService) {
-      state.mapService = mapService;
+    SET_MAPSERVICE(context, value: MapService) {
+      context.mapService = value;
     },
 
-    SET_APP_STATE(state, appStae: App) {
-      state.appState = appStae;
+    SET_APP_STATE(context, value: App) {
+      context.appState = value;
     },
 
-    REMOVE_HIGHLIGHT(state) {
-      state.mapService.removeHighlight();
+    REMOVE_HIGHLIGHT(context) {
+      context.mapService.removeHighlight();
     },
 
-    HIGHLIGHT_PLACE(state, place: Place) {
-      state.mapService.highlightPlace(place);
+    HIGHLIGHT_PLACE(context, place: Place) {
+      context.mapService.highlightPlace(place);
+    },
+
+    SET_DEFERRED_PROMPT(context, value: any) {
+      context.deferredPrompt = value;
+    },
+
+    SET_INSTALLABLE(context, value: boolean) {
+      context.installable = value;
     },
   },
   actions: {
-    configMapbox({ commit }, mapService: MapService) {
+    configMapbox(context, mapService: MapService) {
       // console.log(mapService);
       // console.log(mapService.mapbox);
-      commit('SET_MAPSERVICE', mapService);
+      context.commit('SET_MAPSERVICE', mapService);
       mapService.mapbox.on('load', () => {
-        commit('SET_PLACES', mapService.getPlaces());
-        commit('SET_APP_STATE', App.loaded);
+        context.commit('SET_PLACES', mapService.getPlaces());
+        context.commit('SET_APP_STATE', App.loaded);
       });
-      // mapService.mapbox.on('error', () => {
-      //   commit('SET_APP_STATE', App.offline);
-      // });
+      mapService.mapbox.on('error', (event) => {
+        console.log(event);
+        if (event.error.message == 'Failed to fetch') {
+          context.commit('SET_APP_STATE', App.offline);
+        }
+      });
     },
 
     openSearch(context) {
@@ -88,8 +101,33 @@ export default new Vuex.Store({
       // router.push(`/place/${place.properties.id}`);
     },
 
-    turnOffline({ commit }) {
-      commit('SET_APP_STATE', App.offline);
+    turnOffline(context) {
+      context.commit('SET_APP_STATE', App.offline);
+    },
+
+    setDeferredPrompt(context, deferredPrompt: Event) {
+      context.commit('SET_DEFERRED_PROMPT', deferredPrompt);
+    },
+
+    showInstall(context) {
+      context.commit('SET_INSTALLABLE', true);
+    },
+
+    installPWA({ state, commit }) {
+      if (state.deferredPrompt) {
+        (state.deferredPrompt as any).prompt();
+        // Wait for the user to respond to the prompt
+        (state.deferredPrompt as any).userChoice.then((choiceResult: any) => {
+          if (choiceResult.outcome === 'accepted') {
+            // eslint-disable-next-line no-console
+            console.log('User accepted the install prompt');
+            commit('SET_INSTALLABLE', false);
+          } else {
+            // eslint-disable-next-line no-console
+            console.log('User dismissed the install prompt');
+          }
+        });
+      }
     },
   },
   modules: {},

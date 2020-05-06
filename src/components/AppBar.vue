@@ -1,9 +1,20 @@
 <template>
   <v-col sm="6" class="pa-0">
     <!-- app bar -->
-    <v-app-bar :collapse="!isSearching" color="primary" style="position: sticky;" app dark>
+    <v-app-bar
+      :collapse="!isSearching"
+      :min-width="appBarWidth"
+      color="primary"
+      style="position: sticky;"
+      app
+      dark
+    >
       <v-btn text icon @click="openDrawer()">
         <v-icon>mdi-menu</v-icon>
+      </v-btn>
+
+      <v-btn v-if="installable && !isSearching" text @click="installPWA()">
+        Install
       </v-btn>
 
       <!-- 📝 @input/:value is more sutiable than v-model for mobile ux -->
@@ -58,16 +69,15 @@ import Fuse from 'fuse.js';
 
 @Component({
   computed: {
-    ...mapState(['drawer', 'searchClosed']),
+    ...mapState(['drawer', 'searchClosed', 'installable']),
     ...mapGetters(['isSearching']),
   },
   methods: {
-    ...mapActions(['openDrawer']),
+    ...mapActions(['openDrawer', 'installPWA']),
   },
   components: { PlaceIcon },
 })
 export default class AppBar extends Vue {
-  searchText = '';
   fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(this.$store.state.places, {
     shouldSort: true,
     includeMatches: true,
@@ -78,6 +88,7 @@ export default class AppBar extends Vue {
     minMatchCharLength: 1,
     keys: ['properties.name', 'properties.type', 'properties.id'],
   });
+  searchText = '';
 
   clearText() {
     this.searchText = '';
@@ -107,6 +118,10 @@ export default class AppBar extends Vue {
 
   get filteredPlaces() {
     return this.fuse.search<Array<Place>>(this.searchText || '');
+  }
+
+  get appBarWidth() {
+    return this.$store.state.installable ? '156px' : '0px';
   }
 
   mounted() {
