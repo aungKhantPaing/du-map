@@ -2,7 +2,7 @@
   <v-app>
     <Map :map-options="mapOptions" location-control />
 
-    <div :v-if="isLoaded || isSearching">
+    <div v-if="isLoaded || isSearching">
       <app-bar class="animated fadeInDown faster appbar" />
       <navi-drawer />
 
