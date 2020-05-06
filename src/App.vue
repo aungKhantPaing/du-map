@@ -4,11 +4,15 @@
 
 <script lang="ts">
 import Vue from 'vue';
-
+import { App } from '@/models/appState';
 export default Vue.extend({
   data: () => ({
     //
   }),
-  mounted() {},
+  mounted() {
+    // if (!window.navigator.onLine) {
+    //   this.$router.replace('/offline');
+    // }
+  },
 });
 </script>

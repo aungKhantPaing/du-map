@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter, { Route, RouteConfig } from 'vue-router';
 import Home from '../views/Home.vue';
 import Dock from '@/components/Dock.vue';
+import OfflineDialog from '@/components/OfflineDialog.vue';
 import store from '@/store';
 
 Vue.use(VueRouter);
@@ -19,6 +20,13 @@ const routes: RouteConfig[] = [
         component: Dock,
         props: (route: Route) => {
           return { place: store.getters.placeById(route.params.id) };
+        },
+      },
+      {
+        path: '/offline',
+        name: 'offline',
+        components: {
+          offline: OfflineDialog,
         },
       },
     ],

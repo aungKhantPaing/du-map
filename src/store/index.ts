@@ -29,7 +29,6 @@ export default new Vuex.Store({
     isLoading: (state) => state.appState == App.loading,
     isLoaded: (state) => state.appState == App.loaded,
     isSearching: (state) => state.appState == App.search,
-    isOffline: (state) => state.appState == App.offline,
   },
   mutations: {
     SET_DRAWER(context, value: any) {
@@ -73,12 +72,6 @@ export default new Vuex.Store({
         context.commit('SET_PLACES', mapService.getPlaces());
         context.commit('SET_APP_STATE', App.loaded);
       });
-      mapService.mapbox.on('error', (event) => {
-        console.log(event);
-        if (event.error.message == 'Failed to fetch') {
-          context.commit('SET_APP_STATE', App.offline);
-        }
-      });
     },
 
     openSearch(context) {
@@ -99,10 +92,6 @@ export default new Vuex.Store({
       dispatch('closeSearch');
       commit('HIGHLIGHT_PLACE', place);
       // router.push(`/place/${place.properties.id}`);
-    },
-
-    turnOffline(context) {
-      context.commit('SET_APP_STATE', App.offline);
     },
 
     setDeferredPrompt(context, deferredPrompt: Event) {

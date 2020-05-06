@@ -14,6 +14,7 @@
               <v-card-actions>
                 <v-spacer />
                 <v-btn @click="onClick()" outlined color="white">Refresh</v-btn>
+                <v-spacer />
               </v-card-actions>
             </v-card>
           </v-col>
@@ -28,6 +29,9 @@ export default {
   methods: {
     onClick() {
       this.$emit('reload');
+    },
+    onDismiss() {
+      this.$emit('dismiss');
     },
   },
 };

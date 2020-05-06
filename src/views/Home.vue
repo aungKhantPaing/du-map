@@ -2,7 +2,7 @@
   <v-app>
     <Map :map-options="mapOptions" location-control />
 
-    <div v-if="isLoaded">
+    <div :v-if="isLoaded || isSearching">
       <app-bar class="animated fadeInDown faster appbar" />
       <navi-drawer />
 
@@ -29,7 +29,12 @@
 
     <progress-indicator v-if="isLoading" />
 
-    <offline-dialog v-if="isOffline" @reload="reload()"></offline-dialog>
+    <router-view
+      name="offline"
+      @reload="reload()"
+      @dismiss="closeDialog()"
+      :key="$route.fullPath"
+    ></router-view>
   </v-app>
 </template>
 
@@ -98,8 +103,8 @@ export default class Home extends Vue {
     location.reload();
   }
 
-  makeOffline() {
-    store.commit('SET_APP_STATE', App.offline);
+  closeDialog() {
+    this.$router.replace('/');
   }
 }
 </script>
