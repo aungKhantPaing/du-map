@@ -29,12 +29,7 @@
 
     <progress-indicator v-if="isLoading" />
 
-    <router-view
-      name="offline"
-      @reload="reload()"
-      @dismiss="closeDialog()"
-      :key="$route.fullPath"
-    ></router-view>
+    <offline-dialog v-if="offline" @reload="reload()"></offline-dialog>
   </v-app>
 </template>
 
@@ -63,7 +58,7 @@ import { App } from '../models/appState';
     OfflineDialog,
   },
   computed: {
-    ...mapState(['dataLoaded', 'searchClosed']),
+    ...mapState(['dataLoaded', 'searchClosed', 'offline']),
     ...mapGetters(['isLoading', 'isSearching', 'isOffline', 'isLoaded']),
   },
   methods: {

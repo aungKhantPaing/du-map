@@ -17,6 +17,7 @@ export default new Vuex.Store({
     places: Array<Place>(),
     deferredPrompt: null,
     installable: false,
+    offline: false,
   },
 
   getters: {
@@ -62,13 +63,20 @@ export default new Vuex.Store({
     SET_INSTALLABLE(context, value: boolean) {
       context.installable = value;
     },
+
+    SET_OFFLINE(state, value: boolean) {
+      state.offline = value;
+    },
   },
   actions: {
     configMapbox(context, mapService: MapService) {
-      // console.log(mapService);
-      // console.log(mapService.mapbox);
+      // set offline when loading take more than 10s
+      let networkTimeout = setTimeout(() => {
+        context.commit('SET_OFFLINE', true);
+      }, 10 * 1000);
       context.commit('SET_MAPSERVICE', mapService);
       mapService.mapbox.on('load', () => {
+        clearTimeout(networkTimeout);
         context.commit('SET_PLACES', mapService.getPlaces());
         context.commit('SET_APP_STATE', App.loaded);
       });
