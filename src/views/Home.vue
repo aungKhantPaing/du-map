@@ -59,7 +59,7 @@ import { App } from '../models/appState';
   },
   computed: {
     ...mapState(['dataLoaded', 'searchClosed', 'offline']),
-    ...mapGetters(['isLoading', 'isSearching', 'isOffline', 'isLoaded']),
+    ...mapGetters(['isLoading', 'isSearching', 'isLoaded']),
   },
   methods: {
     ...mapActions(['openSearch', 'closeSearch']),
