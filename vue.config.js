@@ -7,7 +7,7 @@ module.exports = {
   pwa: {
     manifestOptions: {
       name: 'DU Map',
-      short_name: 'du-map',
+      short_name: 'DU Map',
       background_color: '#ffffff',
     },
   },
