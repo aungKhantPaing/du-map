@@ -5,6 +5,9 @@ module.exports = {
     devtool: 'source-map',
   },
   pwa: {
-    name: 'DU Map',
+    manifestOptions: {
+      name: 'DU Map',
+      short_name: 'du-map',
+    },
   },
 };
