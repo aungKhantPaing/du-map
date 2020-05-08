@@ -8,6 +8,7 @@ module.exports = {
     manifestOptions: {
       name: 'DU Map',
       short_name: 'du-map',
+      background_color: '#ffffff',
     },
   },
 };
