@@ -1,11 +1,11 @@
 <template>
-  <v-col sm="6" class="pa-0">
+  <v-col sm="6" lg="3" class="appbar-container">
     <!-- app bar -->
     <v-app-bar
       :collapse="!isSearching"
       :min-width="appBarWidth"
       color="primary"
-      style="position: sticky;"
+      class="appbar"
       app
       dark
     >
@@ -121,7 +121,7 @@ export default class AppBar extends Vue {
   }
 
   get appBarWidth() {
-    return this.$store.state.installable ? '156px' : '0px';
+    return this.$store.state.installable ? '156px' : '';
   }
 
   mounted() {
@@ -145,4 +145,15 @@ export default class AppBar extends Vue {
 //   // else
 //   right: 50% !important;
 // }
+
+.appbar-container {
+  padding: 0px;
+  pointer-events: none;
+  > * {
+    pointer-events: all;
+  }
+  .appbar {
+    position: sticky !important;
+  }
+}
 </style>
