@@ -2,6 +2,7 @@
 import mapboxgl from 'mapbox-gl';
 import { Place } from '@/models/place';
 import router from '@/router/index';
+import place_types from '@/constants/placeType';
 
 export default class MapService {
   mapbox: mapboxgl.Map;
@@ -30,7 +31,8 @@ export default class MapService {
       .querySourceFeatures('composite', {
         sourceLayer: 'DU_Places_New', // require if sourceLayer is a vector_tileset
       })
-      .map((f) => Place.parse(f));
+      .map((f) => Place.parse(f))
+      .filter((p) => p.properties.type != place_types.canteen);
 
     // ⏬ filter duplicated data
     places = [...new Map(places.map((place) => [place.properties.id, place])).values()];

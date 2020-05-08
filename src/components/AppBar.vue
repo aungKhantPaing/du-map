@@ -19,9 +19,9 @@
 
       <!-- 📝 @input/:value is more sutiable than v-model for mobile ux -->
       <!-- 👨‍🏫 Even You explained why: https://github.com/vuejs/vue/issues/9777#issuecomment-478831263 -->
-      <v-text-field
-        :value.sync="searchText"
-        @input="(input) => (searchText = input)"
+
+      <!-- <v-text-field
+        v-model="searchText"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
         @click:clear="clearText()"
@@ -34,11 +34,15 @@
         dense
         light
         full-width
-      ></v-text-field>
+      ></v-text-field> -->
 
-      <!-- <v-btn v-show="!isSearching" text icon @click="onLayerClick()">
-        <v-icon>mdi-layers</v-icon>
-      </v-btn> -->
+      <text-field
+        :show="isSearching"
+        :value="searchText"
+        @change="onChange"
+        @input.passive="onInput"
+        focus
+      ></text-field>
     </v-app-bar>
 
     <!-- search result -->
@@ -47,7 +51,7 @@
         <v-subheader>Results</v-subheader>
         <v-list-item
           v-for="{ item } in filteredPlaces"
-          @click="goTo(item)"
+          @click="onClick(item)"
           :key="item.properties.id"
           class=""
           ><place-icon class="mr-2" :place-type="item.properties.type"></place-icon>
@@ -64,6 +68,7 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 import eventBus from '@/eventBus';
 import { Place } from '@/models/place';
 import PlaceIcon from '@/components/PlaceIcon.vue';
+import TextField from '@/components/TextField.vue';
 import Fuse from 'fuse.js';
 // import gsap from 'gsap';
 
@@ -75,18 +80,20 @@ import Fuse from 'fuse.js';
   methods: {
     ...mapActions(['openDrawer', 'installPWA']),
   },
-  components: { PlaceIcon },
+  components: { PlaceIcon, TextField },
 })
 export default class AppBar extends Vue {
-  fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(this.$store.state.places, {
+  fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(Array.from(this.$store.state.places), {
     shouldSort: true,
+    includeScore: false,
     includeMatches: true,
     threshold: 0.6,
     location: 0,
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    keys: ['properties.name', 'properties.type', 'properties.id'],
+
+    keys: ['properties.name', 'properties.type', 'properties.note'],
   });
   searchText = '';
 
@@ -107,9 +114,13 @@ export default class AppBar extends Vue {
     if (!this.searchIsBusy) this.collapseBar();
   }
 
-  goTo(place: Place) {
+  onClick(place: Place) {
     this.collapseBar();
     this.$router.push(`/place/${place.properties.id}`);
+  }
+
+  onInput(value: any) {
+    this.searchText = value;
   }
 
   get searchIsBusy() {
