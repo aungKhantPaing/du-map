@@ -1,7 +1,10 @@
 module.exports = {
-  transpileDependencies: ["vuetify"],
-  publicPath: "/",
+  transpileDependencies: ['vuetify'],
+  publicPath: '/',
   configureWebpack: {
-    devtool: "source-map"
-  }
+    devtool: 'source-map',
+  },
+  pwa: {
+    name: 'DU Map',
+  },
 };
