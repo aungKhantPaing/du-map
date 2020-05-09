@@ -6,6 +6,9 @@ const colors = {
   vuetifyBlue: '#1976d2',
   libraryBrown: '#795548',
   aiesecRed: '#f85a40',
+  hightLightGreen: '#26a69a',
+  grassGreen: '#b1c671',
+  buildingGray: '#a1a5a5',
 };
 
 let kPlaceToTheme: Record<place_types, Theme> = {

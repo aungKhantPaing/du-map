@@ -39,7 +39,6 @@
       <text-field
         :show="isSearching"
         :value="searchText"
-        @change="onChange"
         @input.passive="onInput"
         focus
       ></text-field>
