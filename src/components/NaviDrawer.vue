@@ -60,7 +60,7 @@ export default class NaviDrawer extends Vue {
 
   placeGroups: PlaceGroup[] = [
     new PlaceGroup('Department', 'mdi-bank', [place_types.department]),
-    new PlaceGroup('Canteen', 'mdi-silverware', [place_types.canteen]),
+    // new PlaceGroup('Canteen', 'mdi-silverware', [place_types.canteen]),
     new PlaceGroup('Bus Stop', 'mdi-bus', [place_types.bus_stop]),
     new PlaceGroup('Sport and Activities', 'mdi-run', [
       place_types.rc,

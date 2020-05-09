@@ -4,7 +4,7 @@
       <v-icon color="#263238" small>{{ theme.icon }}</v-icon>
     </v-avatar>
 
-    {{ value }}
+    {{ formatedValue }}
   </v-chip>
 </template>
 
@@ -24,6 +24,10 @@ export default class ChipLabel extends Vue {
     required: true,
   })
   readonly value!: string;
+
+  get formatedValue() {
+    return this.value.length < 4 ? this.value.toUpperCase() : this.value;
+  }
 }
 </script>
 

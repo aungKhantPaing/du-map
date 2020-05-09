@@ -89,7 +89,7 @@ export default class Dock extends Vue {
   }
 
   getThemeOf(value: place_types) {
-    return kPlaceToTheme[value as place_types];
+    return kPlaceToTheme[value];
   }
 
   toggleExpand() {
