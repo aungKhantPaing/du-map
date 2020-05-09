@@ -26,10 +26,12 @@ let kPlaceToTheme: Record<place_types, Theme> = {
   activity: { icon: 'mdi-run', color: 'grey' },
   'herbarium house': { icon: 'mdi-leaf', color: 'green darken-1' },
   atm: { icon: 'mdi-cash-usd', color: 'grey' },
-  threatre: { icon: 'mdi-domain', color: 'grey' },
+  theatre: { icon: 'mdi-domain', color: 'grey' },
   stadium: { icon: 'mdi-domain', color: 'grey' },
   rc: { icon: 'mdi-domain', color: 'grey' },
   clinic: { icon: 'mdi-hospital', color: 'red' },
+  parking: { icon: 'mdi-domain', color: 'grey' },
+  'mail-box': { icon: 'mdi-email', color: colors.libraryBrown },
 };
 
 export default kPlaceToTheme;

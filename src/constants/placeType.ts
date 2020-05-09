@@ -7,7 +7,7 @@ enum place_types {
   canteen = 'canteen',
   copier = 'copier',
   hostel = 'hostel',
-  threatre = 'threatre',
+  theatre = 'theatre',
   // transport
   bus_stop = 'bus stop',
   station = 'station',
@@ -18,8 +18,11 @@ enum place_types {
   herbarium_house = 'herbarium house',
   rc = 'rc',
   atm = 'atm',
+  // others
   other = 'other',
   clinic = 'clinic',
+  parking = 'parking',
+  mailbox = 'mail-box',
 }
 
 export default place_types;
