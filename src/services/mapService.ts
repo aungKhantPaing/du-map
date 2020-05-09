@@ -29,7 +29,7 @@ export default class MapService {
     // query dirty list data from map
     let places = this.mapbox
       .querySourceFeatures('composite', {
-        sourceLayer: 'DU_Places_New', // require if sourceLayer is a vector_tileset
+        sourceLayer: 'places.du', // require if sourceLayer is a vector_tileset
       })
       .map((f) => Place.parse(f))
       .filter((p) => p.properties.type != place_types.canteen);
@@ -118,8 +118,8 @@ export default class MapService {
       zoom: 18,
     });
 
-    let buildingIDs = place.properties.note;
-    console.log(buildingIDs);
+    console.log(place.properties);
+    let buildingIDs = place.properties.buildings;
 
     // highlight the 3d structure by filtering with equal id
     this.mapbox.setFilter('building-3d-highlighted', [

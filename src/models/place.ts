@@ -63,7 +63,8 @@ export class Properties {
   open_hours: { from: string | null; to: string | null } | null;
   population: Population | null;
   phones: string[] | null;
-  note: string[];
+  note: string;
+  buildings: string[];
 
   constructor(
     id: string = '',
@@ -73,7 +74,8 @@ export class Properties {
     open_hours: OpenHours | null = new OpenHours(),
     phones: string[] | null = [],
     population: Population | null = new Population(),
-    note: string[] = [],
+    note: string = '',
+    building: string[] = [''],
   ) {
     this.id = id;
     this.type = type;
@@ -83,6 +85,7 @@ export class Properties {
     this.phones = phones;
     this.population = population;
     this.note = note;
+    this.buildings = building;
   }
 
   static parse(dynamic: any): Properties {
@@ -94,7 +97,10 @@ export class Properties {
       dynamic.open_hours ? OpenHours.parse(JSON.parse(dynamic.open_hours)) : null,
       dynamic.phones ? dynamic.phones : null,
       dynamic.population ? Population.parse(JSON.parse(dynamic.population)) : null,
-      dynamic.note ? dynamic.note.toString().split(', ') : [],
+      dynamic.note || '',
+      dynamic.buildings
+        ? (dynamic.buildings.toString() as string).split(',').map((s) => s.trim())
+        : [''],
     );
   }
 }
