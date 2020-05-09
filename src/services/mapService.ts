@@ -118,8 +118,17 @@ export default class MapService {
       zoom: 18,
     });
 
+    let buildingIDs = place.properties.note;
+    console.log(buildingIDs);
+
     // highlight the 3d structure by filtering with equal id
-    this.mapbox.setFilter('building-3d-highlighted', ['in', 'id', place.properties.id]);
+    this.mapbox.setFilter('building-3d-highlighted', [
+      'match',
+      ['get', 'id'],
+      buildingIDs,
+      true,
+      false,
+    ]);
   }
 
   _getUniqueListBy(arr: Place[], key: String) {

@@ -63,7 +63,7 @@ export class Properties {
   open_hours: { from: string | null; to: string | null } | null;
   population: Population | null;
   phones: string[] | null;
-  note: string | null;
+  note: string[];
 
   constructor(
     id: string = '',
@@ -73,7 +73,7 @@ export class Properties {
     open_hours: OpenHours | null = new OpenHours(),
     phones: string[] | null = [],
     population: Population | null = new Population(),
-    note: string | null = null,
+    note: string[] = [],
   ) {
     this.id = id;
     this.type = type;
@@ -86,7 +86,7 @@ export class Properties {
   }
 
   static parse(dynamic: any): Properties {
-    let prop = new Properties(
+    return new Properties(
       dynamic.id.toString(),
       dynamic.type.toString(),
       dynamic.name.toString(),
@@ -94,9 +94,8 @@ export class Properties {
       dynamic.open_hours ? OpenHours.parse(JSON.parse(dynamic.open_hours)) : null,
       dynamic.phones ? dynamic.phones : null,
       dynamic.population ? Population.parse(JSON.parse(dynamic.population)) : null,
-      dynamic.note ? dynamic.note.toString() : null,
+      dynamic.note ? dynamic.note.toString().split(', ') : [],
     );
-    return prop;
   }
 }
 
