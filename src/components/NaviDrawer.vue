@@ -27,6 +27,11 @@
         </template>
       </v-list-group>
     </v-list>
+    <template v-slot:append>
+      <div class="pa-2 text-center" style="font-size: 0.8em;">
+        {{ versionNo }}
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -38,9 +43,12 @@ import eventBus from '@/eventBus';
 import store from '@/store';
 import { Place } from '@/models/place';
 import kPlaceToTheme from '@/constants/placeToTheme';
+import { version_number } from '@/constants/version';
 
 @Component
 export default class NaviDrawer extends Vue {
+  versionNo = version_number;
+
   // as v-model do both getting and setting the value...
   // ...computed setter is a handy way to link v-model with vuex
   set drawer(value: boolean) {
