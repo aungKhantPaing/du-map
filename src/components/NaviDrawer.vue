@@ -75,7 +75,7 @@ export default class NaviDrawer extends Vue {
       place_types.library,
       place_types.stadium,
     ]),
-    new PlaceGroup('Copier', 'mdi-content-copy', [place_types.copier]),
+    // new PlaceGroup('Copier', 'mdi-content-copy', [place_types.copier]),
     new PlaceGroup('Hostel', 'mdi-bed', [place_types.hostel]),
     new PlaceGroup('Other', 'mdi-domain'),
   ];
