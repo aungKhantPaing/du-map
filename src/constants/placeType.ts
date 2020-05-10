@@ -23,6 +23,8 @@ enum place_types {
   clinic = 'clinic',
   parking = 'parking',
   mailbox = 'mail-box',
+  convenience_store = 'Convenience Store',
+  photo = 'photo',
 }
 
 export default place_types;

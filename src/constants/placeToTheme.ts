@@ -32,6 +32,8 @@ let kPlaceToTheme: Record<place_types, Theme> = {
   clinic: { icon: 'mdi-hospital', color: 'red' },
   parking: { icon: 'mdi-domain', color: 'grey' },
   'mail-box': { icon: 'mdi-email', color: colors.libraryBrown },
+  'Convenience Store': { icon: 'mdi-store', color: 'orange' },
+  photo: { icon: 'mdi-camera', color: 'purple' },
 };
 
 export default kPlaceToTheme;
