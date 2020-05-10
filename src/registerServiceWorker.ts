@@ -10,8 +10,12 @@ if (process.env.NODE_ENV === 'production') {
           'For more details, visit https://goo.gl/AFskqB',
       );
     },
-    registered() {
+    registered(registration) {
       console.log('Service worker has been registered.');
+      // 🕒 Routinely check for app updates by testing for a new service worker.
+      setInterval(() => {
+        registration.update();
+      }, 1000 * 60 * 60); // hourly checks
     },
     cached() {
       console.log('Content has been cached for offline use.');
@@ -19,13 +23,9 @@ if (process.env.NODE_ENV === 'production') {
     updatefound() {
       console.log('New content is downloading.');
     },
-    updated() {
+    updated(registration) {
       console.log('New content is available; please refresh.');
-      window.addEventListener('load', () => {
-        if (window.confirm('New content is available. Please refresh.')) {
-          console.log('Refresh Confirmed');
-        }
-      });
+      window.location.reload();
     },
     offline() {
       console.log('No internet connection found. App is running in offline mode.');

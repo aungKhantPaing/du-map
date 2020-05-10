@@ -5,6 +5,9 @@ module.exports = {
     devtool: 'source-map',
   },
   pwa: {
+    workboxOptions: {
+      skipWaiting: true,
+    },
     manifestOptions: {
       name: 'DU Map',
       short_name: 'DU Map',
