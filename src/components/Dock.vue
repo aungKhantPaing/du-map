@@ -5,14 +5,24 @@
         <div v-ripple @click="toggleExpand" class="place-label-container">
           <v-row align="center" justify="space-between" no-gutters>
             <!-- 📝'no-gutters' remove🔪gutter between v-cols. -->
-            <v-col class="pa-0">
-              <p class="headline">{{ place.properties.name }}</p>
-              <chip-label
-                class="ml-2"
-                :value="place.properties.type"
-                :theme="getThemeOf(place.properties.type)"
-              ></chip-label>
+            <v-col>
+              <p class="headline mb-2">{{ place.properties.name }}</p>
+              <v-row no-gutters>
+                <chip-label
+                  :value="place.properties.type"
+                  :theme="getThemeOf(place.properties.type)"
+                  style="margin: 0px 4px 4px 0px;"
+                ></chip-label>
+                <v-chip
+                  v-if="place.properties.type == 'department'"
+                  color="teal"
+                  text-color="white"
+                >
+                  {{ placeBuildings }}
+                </v-chip>
+              </v-row>
             </v-col>
+            <!-- <v-spacer></v-spacer> -->
 
             <v-chip
               @touchstart.stop
@@ -21,7 +31,6 @@
               outlined
               large
               color="black"
-              class="mr-2"
             >
               <v-avatar left>
                 <v-icon>mdi-share-variant</v-icon>
@@ -32,9 +41,6 @@
         </div>
 
         <div v-if="expanded">
-          <v-list-item>
-            <v-list-item-title>{{ openHours }}</v-list-item-title>
-          </v-list-item>
           <v-list-item>
             <v-list-item-title>{{ note }}</v-list-item-title>
           </v-list-item>
@@ -68,10 +74,6 @@ export default class Dock extends Vue {
   place: Place = (this.$attrs.place as unknown) as Place;
   expanded: Boolean = false;
 
-  get openHours() {
-    return this.place.properties.open_hours;
-  }
-
   get lngLat() {
     return this.place.geometry.coordinates;
   }
@@ -80,12 +82,12 @@ export default class Dock extends Vue {
     return this.place.properties.phones;
   }
 
-  get population() {
-    return this.place.properties.population;
-  }
-
   get note() {
     return this.place.properties.note;
+  }
+
+  get placeBuildings() {
+    return this.place.properties.buildings.reduce((prev, curr) => `${prev}, ${curr}`);
   }
 
   getThemeOf(value: place_types) {
@@ -126,12 +128,12 @@ export default class Dock extends Vue {
 
   .place-label-container {
     cursor: pointer;
-    padding: 10px 0px 10px 0px !important;
+    padding: 10px !important;
     margin: 0 !important;
     .headline {
       display: flex !important;
+
       align-items: center;
-      margin: 8px !important;
       user-select: none;
     }
     .subtitle {
