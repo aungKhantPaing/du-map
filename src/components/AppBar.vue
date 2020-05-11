@@ -52,9 +52,21 @@
           v-for="{ item } in filteredPlaces"
           @click="onClick(item)"
           :key="item.properties.id"
-          class=""
-          ><place-icon class="mr-2" :place-type="item.properties.type"></place-icon>
+        >
+          <place-icon class="mr-2" :place-type="item.properties.type"></place-icon>
           {{ item.properties.name }}
+          <v-chip
+            small
+            v-if="item.properties.type == 'department'"
+            class="ml-1"
+            color="teal"
+            text-color="white"
+          >
+            {{ item.properties.buildingsString }}
+          </v-chip>
+          <span v-if="item.properties.note" style="color:grey;">{{
+            ` (${item.properties.note})`
+          }}</span>
         </v-list-item>
       </v-list>
     </v-card>
@@ -92,7 +104,7 @@ export default class AppBar extends Vue {
     maxPatternLength: 32,
     minMatchCharLength: 1,
 
-    keys: ['properties.name', 'properties.type', 'properties.note'],
+    keys: ['properties.name', 'properties.type', 'properties.buildingsString'],
   });
   searchText = '';
 

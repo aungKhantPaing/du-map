@@ -1,25 +1,25 @@
 import place_types from '@/constants/placeType';
 
 export class Place implements Feature {
-  id: string;
+  // id: string;
   type: string = 'Feature';
   properties: Properties;
   geometry: Geometry;
 
   constructor({
-    id = '',
+    // id = '',
     geometry = new Geometry(),
     properties = new Properties(),
     generateID = false,
   }) {
-    this.id = generateID ? this.generateID() : id;
+    // this.id = generateID ? this.generateID() : id;
     this.properties = properties;
     this.geometry = geometry;
   }
 
   static parse(dynamic: any): Place {
     return new Place({
-      id: dynamic.id.toString(),
+      // id: dynamic.id.toString(),
       geometry: Geometry.parse(dynamic.geometry),
       properties: Properties.parse(dynamic.properties),
     });
@@ -60,8 +60,6 @@ export class Properties {
   type: place_types;
   name: string;
   name_zg: string;
-  open_hours: { from: string | null; to: string | null } | null;
-  population: Population | null;
   phones: string[] | null;
   note: string;
   buildings: string[];
@@ -71,21 +69,21 @@ export class Properties {
     type: place_types = place_types.other,
     name: string = '',
     name_zg: string = '',
-    open_hours: OpenHours | null = new OpenHours(),
     phones: string[] | null = [],
-    population: Population | null = new Population(),
     note: string = '',
-    building: string[] = [''],
+    buildings: string[] = [''],
   ) {
     this.id = id;
     this.type = type;
     this.name = name;
     this.name_zg = name_zg;
-    this.open_hours = open_hours;
     this.phones = phones;
-    this.population = population;
     this.note = note;
-    this.buildings = building;
+    this.buildings = buildings;
+  }
+
+  get buildingsString() {
+    return this.buildings.reduce((prev, curr) => `${prev}, ${curr}`);
   }
 
   static parse(dynamic: any): Properties {
@@ -94,9 +92,7 @@ export class Properties {
       dynamic.type.toString(),
       dynamic.name.toString(),
       dynamic.name_zg.toString(),
-      dynamic.open_hours ? OpenHours.parse(JSON.parse(dynamic.open_hours)) : null,
       dynamic.phones ? dynamic.phones : null,
-      dynamic.population ? Population.parse(JSON.parse(dynamic.population)) : null,
       dynamic.note || '',
       dynamic.buildings
         ? (dynamic.buildings.toString() as string).split(',').map((s) => s.trim())
@@ -141,7 +137,7 @@ export class OpenHours {
 
 // Generics
 export interface Feature {
-  id: string;
+  // id: string;
   type: string;
   properties: Object;
   geometry: Object;

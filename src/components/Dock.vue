@@ -18,7 +18,7 @@
                   color="teal"
                   text-color="white"
                 >
-                  {{ placeBuildings }}
+                  {{ place.properties.buildingsString }}
                 </v-chip>
               </v-row>
             </v-col>
@@ -86,10 +86,6 @@ export default class Dock extends Vue {
     return this.place.properties.note;
   }
 
-  get placeBuildings() {
-    return this.place.properties.buildings.reduce((prev, curr) => `${prev}, ${curr}`);
-  }
-
   getThemeOf(value: place_types) {
     return kPlaceToTheme[value];
   }
@@ -103,7 +99,7 @@ export default class Dock extends Vue {
   mounted() {
     // dispatch after mounted. need to wait for the mapbox to complete loading.
     store.dispatch('highLightPlace', store.getters.placeById(this.place.properties.id));
-    console.log(this.place);
+    // console.log(this.place);
   }
 
   // @Watch('$route')
