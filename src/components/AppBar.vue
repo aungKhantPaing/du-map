@@ -9,8 +9,11 @@
       app
       dark
     >
-      <v-btn text icon @click="openDrawer()">
+      <v-btn v-if="!isSearching" class="animated faster fadeInLeft" text icon @click="openDrawer()">
         <v-icon>mdi-menu</v-icon>
+      </v-btn>
+      <v-btn v-else class="animated faster fadeInRight" text icon @click="closeSearch()">
+        <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
 
       <v-btn v-if="installable && !isSearching" text @click="installPWA()">
@@ -89,7 +92,7 @@ import Fuse from 'fuse.js';
     ...mapGetters(['isSearching']),
   },
   methods: {
-    ...mapActions(['openDrawer', 'installPWA']),
+    ...mapActions(['openDrawer', 'installPWA', 'closeSearch']),
   },
   components: { PlaceIcon, TextField },
 })
