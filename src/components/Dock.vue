@@ -114,15 +114,15 @@ export default class Dock extends Vue {
         ),
     },
     {
-      name: 'S.M.S',
-      icon: 'mdi-android-messages',
-      onClick: () => this.sharePlace(`sms:+1234?body={{ ${this.currentLink} }}`),
-    },
-    {
       name: 'Copy to Clipboard',
       icon: 'mdi-clipboard-multiple-outline',
       onClick: () => this.copyToClipboard(this.currentLink),
     },
+    // {
+    //   name: 'S.M.S',
+    //   icon: 'mdi-android-messages',
+    //   onClick: () => (window.location.href = `sms:;body=${this.currentLink}`),
+    // },
     // {
     //   name: 'Messenger',
     //   icon: 'mdi-facebook-messenger',
