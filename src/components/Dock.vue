@@ -1,6 +1,9 @@
 <template>
-  <v-row class="dock">
-    <v-col class="pa-0" sm="6" offset-sm="6">
+  <div class="dock">
+    <v-col class="pa-0" sm="6" lg="3" offset-sm="6">
+      <v-snackbar style="bottom:113px;" v-model="copiedSnackbar" :timeout="2000">
+        Copied to clipboard!
+      </v-snackbar>
       <v-card class="dock-header">
         <div v-ripple @click="toggleExpand" class="place-label-container">
           <v-row align="center" justify="space-between" no-gutters>
@@ -27,7 +30,7 @@
             <v-chip
               @touchstart.stop
               @mousedown.stop
-              @click.stop="share()"
+              @click.stop="openShareMenu()"
               outlined
               large
               color="black"
@@ -47,7 +50,24 @@
         </div>
       </v-card>
     </v-col>
-  </v-row>
+    <v-bottom-sheet max-width="1000px" v-model="shareMenu">
+      <v-list>
+        <v-subheader>Share Place</v-subheader>
+        <v-list-item
+          v-for="{ name, icon, onShare } in shareMenuItems"
+          :key="name"
+          @click="onShare()"
+        >
+          <v-list-item-avatar>
+            <v-avatar size="32px" tile>
+              <v-icon>{{ icon }}</v-icon>
+            </v-avatar>
+          </v-list-item-avatar>
+          <v-list-item-title>{{ name }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-bottom-sheet>
+  </div>
 </template>
 
 <script lang="ts">
@@ -73,6 +93,54 @@ import kPlaceToTheme from '@/constants/placeToTheme';
 export default class Dock extends Vue {
   place: Place = (this.$attrs.place as unknown) as Place;
   expanded: Boolean = false;
+  shareMenu = false;
+  copiedSnackbar = false;
+  shareMenuItems = [
+    {
+      name: 'Facebook',
+      icon: 'mdi-facebook',
+      onShare: () => {
+        let link = `https://www.facebook.com/dialog/share?app_id=${this.facebookAppId}&display=popup&href=${this.currentLink}&redirect_uri=${this.currentLink}`;
+        this.sharePlace(link);
+      },
+    },
+    {
+      name: 'Messenger',
+      icon: 'mdi-facebook-messenger',
+      onShare: () => {
+        let link = `http://www.facebook.com/dialog/send?app_id=${this.facebookAppId}&link=${this.currentLink}&redirect_uri=${this.currentLink}`;
+        this.sharePlace(link);
+      },
+    },
+    {
+      name: 'Tweet',
+      icon: 'mdi-twitter',
+      onShare: () => {
+        let link = 'https://twitter.com/intent/tweet';
+        this.sharePlace(link);
+      },
+    },
+    {
+      name: 'Copy to Clipboard',
+      icon: 'mdi-clipboard-multiple-outline',
+      onShare: () => {
+        navigator.permissions.query({ name: 'clipboard-write' as any }).then((result: any) => {
+          if (result.state == 'granted' || result.state == 'prompt') {
+            navigator.clipboard.writeText(this.currentLink).then(
+              () => {
+                this.fireCopiedSnackBar();
+                this.closeShareMenu();
+                console.log('clipboard write succeed');
+              },
+              () => {
+                console.log('clipboard write failed');
+              },
+            );
+          }
+        });
+      },
+    },
+  ];
 
   get lngLat() {
     return this.place.geometry.coordinates;
@@ -86,6 +154,14 @@ export default class Dock extends Vue {
     return this.place.properties.note;
   }
 
+  get currentLink() {
+    return `https://du-map.web.app/place/${this.place.properties.id}`;
+  }
+
+  get facebookAppId() {
+    return 2954507561282991;
+  }
+
   getThemeOf(value: place_types) {
     return kPlaceToTheme[value];
   }
@@ -94,7 +170,32 @@ export default class Dock extends Vue {
     this.expanded = !this.expanded;
   }
 
-  share() {}
+  openShareMenu() {
+    console.log(window.location.href);
+    let nav = navigator as any;
+    if (nav.share) {
+      console.log('share menu available');
+      (nav as any).share({
+        title: 'Share ' + this.place.properties.name,
+        url: window.location.href,
+      });
+    } else {
+      console.log('share menu NOT available');
+      this.shareMenu = true;
+    }
+  }
+
+  closeShareMenu() {
+    this.shareMenu = false;
+  }
+
+  fireCopiedSnackBar() {
+    this.copiedSnackbar = true;
+  }
+
+  sharePlace(link: string) {
+    window.open(link, 'newWin', 'width=500,height=500');
+  }
 
   mounted() {
     // dispatch after mounted. need to wait for the mapbox to complete loading.
@@ -116,7 +217,7 @@ export default class Dock extends Vue {
 .dock {
   margin: 0;
   pointer-events: none;
-
+  width: 100%;
   .dock-header {
     cursor: auto;
     pointer-events: all;
