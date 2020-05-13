@@ -175,15 +175,14 @@ export default class Dock extends Vue {
     copyArea.focus();
     copyArea.style.display = 'inline-block';
     copyArea.select();
-    console.log(copyArea);
-    try {
-      let successful = document.execCommand('copy');
-      copyArea.style.display = 'none';
+    copyArea.blur();
 
-      let msg = successful ? 'successful' : 'unsuccessful';
-      console.log('Copying text command was ' + msg);
-    } catch (err) {
-      console.log('Oops, unable to copy');
+    let copySucceed = document.execCommand('copy');
+    copyArea.style.display = 'none';
+
+    if (copySucceed) {
+      this.closeShareMenu();
+      this.fireCopiedSnackBar();
     }
   }
 
