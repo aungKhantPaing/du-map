@@ -51,12 +51,21 @@
       </v-card>
     </v-col>
     <v-bottom-sheet max-width="1000px" v-model="shareMenu">
+      <!-- setup for copying text -->
+      <textarea
+        v-show="false"
+        name="copyarea"
+        id="copyarea"
+        cols="30"
+        rows="1"
+        autofocus
+      ></textarea>
       <v-list>
         <v-subheader>Share Place</v-subheader>
         <v-list-item
-          v-for="{ name, icon, onShare } in shareMenuItems"
+          v-for="{ name, icon, onClick } in shareMenuItems"
           :key="name"
-          @click="onShare()"
+          @click="onClick()"
         >
           <v-list-item-avatar>
             <v-avatar size="32px" tile>
@@ -83,7 +92,7 @@ import ChipLabel from './ChipLabel.vue';
 import place_types from '@/constants/placeType';
 import kPlaceToTheme from '@/constants/placeToTheme';
 
-@Component({
+@Component<Dock>({
   components: { ChipLabel },
   beforeRouteLeave: (to, from, next) => {
     store.dispatch('removeHighLight');
@@ -99,47 +108,37 @@ export default class Dock extends Vue {
     {
       name: 'Facebook',
       icon: 'mdi-facebook',
-      onShare: () => {
-        let link = `https://www.facebook.com/dialog/share?app_id=${this.facebookAppId}&display=popup&href=${this.currentLink}&redirect_uri=${this.currentLink}`;
-        this.sharePlace(link);
-      },
+      onClick: () =>
+        this.sharePlace(
+          `https://www.facebook.com/dialog/share?app_id=${this.facebookAppId}&display=popup&href=${this.currentLink}&redirect_uri=${this.currentLink}`,
+        ),
     },
     {
-      name: 'Messenger',
-      icon: 'mdi-facebook-messenger',
-      onShare: () => {
-        let link = `http://www.facebook.com/dialog/send?app_id=${this.facebookAppId}&link=${this.currentLink}&redirect_uri=${this.currentLink}`;
-        this.sharePlace(link);
-      },
-    },
-    {
-      name: 'Tweet',
-      icon: 'mdi-twitter',
-      onShare: () => {
-        let link = 'https://twitter.com/intent/tweet';
-        this.sharePlace(link);
-      },
+      name: 'S.M.S',
+      icon: 'mdi-android-messages',
+      onClick: () => this.sharePlace(`sms:+1234?body={{ ${this.currentLink} }}`),
     },
     {
       name: 'Copy to Clipboard',
       icon: 'mdi-clipboard-multiple-outline',
-      onShare: () => {
-        navigator.permissions.query({ name: 'clipboard-write' as any }).then((result: any) => {
-          if (result.state == 'granted' || result.state == 'prompt') {
-            navigator.clipboard.writeText(this.currentLink).then(
-              () => {
-                this.fireCopiedSnackBar();
-                this.closeShareMenu();
-                console.log('clipboard write succeed');
-              },
-              () => {
-                console.log('clipboard write failed');
-              },
-            );
-          }
-        });
-      },
+      onClick: () => this.copyToClipboard(this.currentLink),
     },
+    // {
+    //   name: 'Messenger',
+    //   icon: 'mdi-facebook-messenger',
+    //   onClick: () => {
+    //     let link = `http://www.facebook.com/dialog/send?app_id=${this.facebookAppId}&link=${this.currentLink}&redirect_uri=${this.currentLink}`;
+    //     this.sharePlace(link);
+    //   },
+    // },
+    // {
+    //   name: 'Tweet',
+    //   icon: 'mdi-twitter',
+    //   onClick: () => {
+    //     let link = 'https://twitter.com/intent/tweet';
+    //     this.sharePlace(link);
+    //   },
+    // },
   ];
 
   get lngLat() {
@@ -168,6 +167,24 @@ export default class Dock extends Vue {
 
   toggleExpand() {
     this.expanded = !this.expanded;
+  }
+
+  copyToClipboard(text: string) {
+    let copyArea = document.getElementById('copyarea') as any;
+    copyArea.value = text;
+    copyArea.focus();
+    copyArea.style.display = 'inline-block';
+    copyArea.select();
+    console.log(copyArea);
+    try {
+      let successful = document.execCommand('copy');
+      copyArea.style.display = 'none';
+
+      let msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copying text command was ' + msg);
+    } catch (err) {
+      console.log('Oops, unable to copy');
+    }
   }
 
   openShareMenu() {
