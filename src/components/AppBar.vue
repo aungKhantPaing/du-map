@@ -21,33 +21,23 @@
       </v-btn>
 
       <!-- 📝 @input/:value is more sutiable than v-model for mobile ux -->
-      <!-- 👨‍🏫 Even You explained why: https://github.com/vuejs/vue/issues/9777#issuecomment-478831263 -->
-
-      <!-- <v-text-field
+      <!-- 👨‍🏫 Even You explained: https://github.com/vuejs/vue/issues/9777#issuecomment-478831263 -->
+      <v-text-field
+        v-if="isSearching"
         :value="searchText"
         @input="(value) => onInput(value)"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
         @click:clear="clearSearch()"
+        placeholder="Search"
         clearable
         autofocus
-        v-if="isSearching"
-        placeholder="Search"
-        class="mt-6"
         solo
         dense
-        light
         full-width
-      ></v-text-field> -->
-
-      <text-field
-        :show="isSearching"
-        :value="searchText"
-        place-holder="Search"
-        @input.passive="onInput"
-        @blur="onBlur"
-        autofocus
-      ></text-field>
+        light
+        class="mt-6"
+      ></v-text-field>
     </v-app-bar>
 
     <!-- search result -->
@@ -85,7 +75,6 @@ import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 import eventBus from '@/eventBus';
 import { Place } from '@/models/place';
 import PlaceIcon from '@/components/PlaceIcon.vue';
-import TextField from '@/components/TextField.vue';
 import Fuse from 'fuse.js';
 // import gsap from 'gsap';
 
@@ -97,10 +86,10 @@ import Fuse from 'fuse.js';
   methods: {
     ...mapActions(['openDrawer', 'installPWA', 'closeSearch']),
   },
-  components: { PlaceIcon, TextField },
+  components: { PlaceIcon },
 })
 export default class AppBar extends Vue {
-  fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(Array.from(this.$store.state.places), {
+  fuse = new Fuse<Place, Fuse.FuseOptions<Place>>(Array.from(this.$store.state.map.places), {
     shouldSort: true,
     includeScore: false,
     includeMatches: true,
