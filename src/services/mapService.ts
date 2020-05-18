@@ -76,26 +76,26 @@ export default class MapService {
 
     //* 📡 set cursor events
     // change the cursor to pointer 👆 when the it enters a feature in the 'symbols' layer.
-    this.mapbox.on('mouseenter', 'poi-label-places', () => {
-      this.mapbox.getCanvas().style.cursor = 'pointer';
-    });
-    // change it back to a cursor when it leaves.
-    this.mapbox.on('mouseleave', 'poi-label-places', () => {
-      this.mapbox.getCanvas().style.cursor = '';
-    });
-
-    //* 📡 set on-click events
-    this.mapbox.on('click', (_) => {
-      this.removeHighlight();
-      if (router.currentRoute.name != 'home') router.replace('/');
-    });
-    // highlight when user specifically click/tap place icon
-    this.mapbox.on('click', 'poi-label-places', (e) => {
-      if (e.features) {
-        let place = Place.parse(e.features[0]);
-        router.push(`/place/${place.properties.id}`);
-      }
-    });
+    this.mapbox
+      .on('mouseenter', 'poi-label-places', () => {
+        this.mapbox.getCanvas().style.cursor = 'pointer';
+      })
+      // change it back to a cursor when it leaves.
+      .on('mouseleave', 'poi-label-places', () => {
+        this.mapbox.getCanvas().style.cursor = '';
+      })
+      //* 📡 set on-click events
+      .on('click', (_) => {
+        this.removeHighlight();
+        if (router.currentRoute.name != 'home') router.replace('/');
+      })
+      // highlight when user specifically click/tap place icon
+      .on('click', 'poi-label-places', (e) => {
+        if (e.features) {
+          let place = Place.parse(e.features[0]);
+          router.push(`/place/${place.properties.id}`);
+        }
+      });
 
     this.mapbox.touchZoomRotate.enableRotation();
     this._marker.setLngLat([0, 0]).addTo(this.mapbox);
