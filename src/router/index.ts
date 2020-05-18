@@ -22,13 +22,6 @@ const routes: RouteConfig[] = [
           return { place: store.getters.placeById(route.params.id) };
         },
       },
-      {
-        path: '/offline',
-        name: 'offline',
-        components: {
-          offline: OfflineDialog,
-        },
-      },
     ],
   },
 
@@ -46,6 +39,15 @@ const routes: RouteConfig[] = [
 const router = new VueRouter({
   mode: 'history',
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (store.getters.isSearching) {
+    store.dispatch('closeSearch');
+    next(false);
+  } else {
+    next();
+  }
 });
 
 export default router;

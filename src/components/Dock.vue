@@ -95,10 +95,6 @@ import kPlaceToTheme from '@/constants/placeToTheme';
 
 @Component<Dock>({
   components: { ChipLabel },
-  beforeRouteLeave: (to, from, next) => {
-    store.dispatch('removeHighLight');
-    next();
-  },
 })
 export default class Dock extends Vue {
   place: Place = (this.$attrs.place as unknown) as Place;
@@ -218,6 +214,10 @@ export default class Dock extends Vue {
     // dispatch after mounted. need to wait for the mapbox to complete loading.
     store.dispatch('highLightPlace', store.getters.placeById(this.place.properties.id));
     // console.log(this.place);
+  }
+
+  destroyed() {
+    store.dispatch('removeHighLight');
   }
 
   // @Watch('$route')
