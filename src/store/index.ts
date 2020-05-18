@@ -18,6 +18,7 @@ export default new Vuex.Store({
     deferredPrompt: null,
     installable: false,
     offline: false,
+    searchText: '',
   },
 
   getters: {
@@ -67,6 +68,10 @@ export default new Vuex.Store({
     SET_OFFLINE(state, value: boolean) {
       state.offline = value;
     },
+
+    SET_SEARCH_TEXT(state, value: string) {
+      state.searchText = value;
+    },
   },
   actions: {
     configMapbox(context, mapService: MapService) {
@@ -108,6 +113,10 @@ export default new Vuex.Store({
 
     showInstall(context) {
       context.commit('SET_INSTALLABLE', true);
+    },
+
+    setSearch({ commit }, value: string) {
+      commit('SET_SEARCH_TEXT', value);
     },
 
     installPWA({ state, commit }) {

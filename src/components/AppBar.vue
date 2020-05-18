@@ -24,10 +24,11 @@
       <!-- 👨‍🏫 Even You explained why: https://github.com/vuejs/vue/issues/9777#issuecomment-478831263 -->
 
       <!-- <v-text-field
-        v-model="searchText"
+        :value="searchText"
+        @input="(value) => onInput(value)"
         @blur="onBlur()"
         @keydown.esc="collapseBar()"
-        @click:clear="clearText()"
+        @click:clear="clearSearch()"
         clearable
         autofocus
         v-if="isSearching"
@@ -42,8 +43,10 @@
       <text-field
         :show="isSearching"
         :value="searchText"
+        place-holder="Search"
         @input.passive="onInput"
-        focus
+        @blur="onBlur"
+        autofocus
       ></text-field>
     </v-app-bar>
 
@@ -88,7 +91,7 @@ import Fuse from 'fuse.js';
 
 @Component({
   computed: {
-    ...mapState(['drawer', 'searchClosed', 'installable']),
+    ...mapState(['drawer', 'searchClosed', 'installable', 'searchText']),
     ...mapGetters(['isSearching']),
   },
   methods: {
@@ -109,15 +112,14 @@ export default class AppBar extends Vue {
 
     keys: ['properties.name', 'properties.type', 'properties.buildingsString'],
   });
-  searchText = '';
 
-  clearText() {
-    this.searchText = '';
+  clearSearch() {
+    this.$store.dispatch('setSearch', '');
   }
 
   collapseBar() {
     this.$store.dispatch('closeSearch');
-    this.clearText();
+    this.clearSearch();
   }
 
   expandBar() {
@@ -125,7 +127,11 @@ export default class AppBar extends Vue {
   }
 
   onBlur() {
-    if (!this.searchIsBusy) this.collapseBar();
+    if (!this.searchIsBusy) {
+      this.collapseBar();
+      // eslint-disable-next-line no-console
+      console.log('BLURED');
+    }
   }
 
   onClick(place: Place) {
@@ -134,15 +140,19 @@ export default class AppBar extends Vue {
   }
 
   onInput(value: any) {
-    this.searchText = value;
+    this.$store.dispatch('setSearch', value);
   }
 
   get searchIsBusy() {
-    return this.searchText && this.searchText.length && this.filteredPlaces.length;
+    return (
+      this.$store.state.searchText &&
+      this.$store.state.searchText.length &&
+      this.filteredPlaces.length
+    );
   }
 
   get filteredPlaces() {
-    return this.fuse.search<Array<Place>>(this.searchText || '');
+    return this.fuse.search<Array<Place>>(this.$store.state.searchText || '');
   }
 
   get appBarWidth() {

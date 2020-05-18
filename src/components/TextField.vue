@@ -1,12 +1,12 @@
 <template>
   <input
     v-show="show"
-    @input="({ target }) => onInput(target.value)"
+    @input="({ target }) => $emit('input', target.value)"
+    @blur="$emit('blur')"
     :value.sync="value"
+    :placeholder="placeHolder"
     type="text"
     id="input"
-    name="search"
-    placeholder="Search"
   />
 </template>
 
@@ -17,7 +17,7 @@ export default {
       type: String,
       default: '',
     },
-    focus: {
+    autofocus: {
       type: Boolean,
       default: false,
     },
@@ -30,14 +30,9 @@ export default {
       default: true,
     },
   },
-  methods: {
-    onInput(value) {
-      this.$emit('input', value);
-    },
-  },
   watch: {
-    show: () => {
-      setTimeout(() => document.getElementById('input').focus(), 0);
+    show: function() {
+      if (this.autofocus) setTimeout(() => document.getElementById('input').focus(), 0);
     },
   },
 };
