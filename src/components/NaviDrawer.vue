@@ -81,7 +81,7 @@ export default class NaviDrawer extends Vue {
   ];
 
   mounted() {
-    this.$store.state.places.forEach((place: Place) => {
+    this.$store.state.map.places.forEach((place: Place) => {
       for (const placeGroup of this.placeGroups) {
         if (placeGroup.types.includes(place.properties.type) || placeGroup.types.length == 0) {
           placeGroup.placeList.push(place);
