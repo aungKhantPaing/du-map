@@ -5,7 +5,8 @@
         Copied to clipboard!
       </v-snackbar>
       <v-card class="dock-header">
-        <div v-ripple @click="toggleExpand" class="place-label-container">
+        <!-- v-ripple @click="toggleExpand"  -->
+        <div class="place-label-container">
           <v-row align="center" justify="space-between" no-gutters>
             <!-- 📝'no-gutters' remove🔪gutter between v-cols. -->
             <v-col>
