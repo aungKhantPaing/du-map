@@ -2,7 +2,7 @@
   <v-app>
     <Map :map-options="mapOptions" location-control />
 
-    <div v-if="isLoaded || isSearching">
+    <div v-if="isLoaded">
       <app-bar class="animated fadeInDown faster appbar" />
       <navi-drawer />
 
@@ -10,13 +10,13 @@
         <v-row no-gutters>
           <v-container class="d-flex justify-end pa-0">
             <div class="fab-container">
-              <Fab v-show="!isSearching" @click="openSearch()">
+              <Fab @click="openSearch()">
                 <v-icon>mdi-magnify</v-icon>
               </Fab>
 
-              <Fab v-show="isSearching" @click="closeSearch()" color="warning">
+              <!-- <Fab v-show="isSearching" @click="closeSearch()" color="warning">
                 <v-icon>mdi-close</v-icon>
-              </Fab>
+              </Fab> -->
             </div>
           </v-container>
 
@@ -27,9 +27,9 @@
       </v-container>
     </div>
 
-    <progress-indicator v-if="isLoading" />
+    <offline-dialog v-else-if="isOffline" @reload="reload()"></offline-dialog>
 
-    <offline-dialog v-if="offline" @reload="reload()"></offline-dialog>
+    <progress-indicator v-else />
   </v-app>
 </template>
 
@@ -58,8 +58,8 @@ import { App } from '../models/appState';
     OfflineDialog,
   },
   computed: {
-    ...mapState(['dataLoaded', 'searchClosed', 'offline']),
-    ...mapGetters(['isLoading', 'isSearching', 'isLoaded']),
+    ...mapState(['dataLoaded', 'searchClosed']),
+    ...mapGetters(['isLoading', 'isLoaded', 'isOffline', 'isSearching']),
   },
   methods: {
     ...mapActions(['openSearch', 'closeSearch']),

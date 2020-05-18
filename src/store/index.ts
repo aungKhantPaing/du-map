@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import { Place } from '@/models/place';
 import { App } from '@/models/appState';
 import mapModule from './mapModule';
+import searchModule from './searchModule';
 
 Vue.use(Vuex);
 
@@ -11,15 +12,14 @@ export default new Vuex.Store({
   state: {
     appState: App.loading,
     drawer: false,
-    deferredPrompt: null,
-    installable: false,
     offline: false,
-    searchText: '',
+    installable: false,
+    deferredPrompt: null,
   },
   getters: {
     isLoading: (state) => state.appState == App.loading,
     isLoaded: (state) => state.appState == App.loaded,
-    isSearching: (state) => state.appState == App.search,
+    isOffline: (state) => state.appState == App.offline,
   },
   mutations: {
     SET_DRAWER(context, value: boolean) {
@@ -37,17 +37,8 @@ export default new Vuex.Store({
     SET_OFFLINE(state, value: boolean) {
       state.offline = value;
     },
-    SET_SEARCH_TEXT(state, value: string) {
-      state.searchText = value;
-    },
   },
   actions: {
-    openSearch(context) {
-      context.commit('SET_APP_STATE', App.search);
-    },
-    closeSearch(context) {
-      context.commit('SET_APP_STATE', App.loaded);
-    },
     openDrawer(context) {
       context.commit('SET_DRAWER', true);
     },
@@ -64,9 +55,6 @@ export default new Vuex.Store({
     },
     showInstall(context) {
       context.commit('SET_INSTALLABLE', true);
-    },
-    setSearch({ commit }, value: string) {
-      commit('SET_SEARCH_TEXT', value);
     },
     installPWA({ state, commit }) {
       if (state.deferredPrompt) {
@@ -85,5 +73,6 @@ export default new Vuex.Store({
   },
   modules: {
     map: mapModule,
+    search: searchModule,
   },
 });

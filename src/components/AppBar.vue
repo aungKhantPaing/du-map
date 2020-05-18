@@ -134,14 +134,14 @@ export default class AppBar extends Vue {
 
   get searchIsBusy() {
     return (
-      this.$store.state.searchText &&
-      this.$store.state.searchText.length &&
+      this.$store.getters.getSearchText &&
+      this.$store.getters.getSearchText.length &&
       this.filteredPlaces.length
     );
   }
 
   get filteredPlaces() {
-    return this.fuse.search<Array<Place>>(this.$store.state.searchText || '');
+    return this.fuse.search<Array<Place>>(this.$store.getters.getSearchText || '');
   }
 
   get appBarWidth() {
