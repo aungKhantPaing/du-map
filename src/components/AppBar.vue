@@ -92,7 +92,7 @@ export default class AppBar extends Vue {
   onClick(place: Place) {
     this.$store.dispatch('closeSearch');
     this.clearSearch();
-    this.$router.push(`/place/${place.properties.id}`);
+    this.$router.replace(`/place/${place.properties.id}`);
   }
 
   onInput(value: any) {

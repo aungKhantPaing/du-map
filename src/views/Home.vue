@@ -10,7 +10,7 @@
         <v-row no-gutters>
           <v-container class="d-flex justify-end pa-0">
             <div class="fab-container">
-              <Fab @click="openSearch">
+              <Fab @click="$router.push('/search')">
                 <v-icon>mdi-magnify</v-icon>
               </Fab>
 
@@ -84,11 +84,6 @@ export default class Home extends Vue {
     this.$emit('loaded');
     // eslint-disable-next-line no-console
     console.log('Home: LOADED');
-  }
-
-  openSearch() {
-    if (this.$route.path == '/') this.$router.push('/search');
-    else this.$router.replace('/search');
   }
 
   closeSearch() {
