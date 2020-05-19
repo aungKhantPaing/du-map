@@ -10,7 +10,7 @@
         <v-row no-gutters>
           <v-container class="d-flex justify-end pa-0">
             <div class="fab-container">
-              <Fab @click="openSearch()">
+              <Fab @click="openSearch">
                 <v-icon>mdi-magnify</v-icon>
               </Fab>
 
@@ -62,7 +62,7 @@ import { App } from '../models/appState';
     ...mapGetters(['isLoading', 'isLoaded', 'isOffline', 'isSearching']),
   },
   methods: {
-    ...mapActions(['openSearch', 'closeSearch']),
+    // ...mapActions(['openSearch', 'closeSearch']),
   },
 })
 export default class Home extends Vue {
@@ -87,7 +87,8 @@ export default class Home extends Vue {
   }
 
   openSearch() {
-    store.dispatch('openSearch');
+    if (this.$route.path == '/') this.$router.push('/search');
+    else this.$router.replace('/search');
   }
 
   closeSearch() {

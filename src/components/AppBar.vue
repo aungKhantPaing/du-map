@@ -12,7 +12,7 @@
       <v-btn v-if="!isSearching" class="animated faster fadeInLeft" text icon @click="openDrawer()">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
-      <v-btn v-else class="animated faster fadeInRight" text icon @click="closeSearch()">
+      <v-btn v-else class="animated faster fadeInRight" text icon @click="$router.back()">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
 
@@ -20,24 +20,7 @@
         Install
       </v-btn>
 
-      <!-- 📝 @input/:value is more sutiable than v-model for mobile ux -->
-      <!-- 👨‍🏫 Even You explained: https://github.com/vuejs/vue/issues/9777#issuecomment-478831263 -->
-      <v-text-field
-        v-if="isSearching"
-        :value="searchText"
-        @input="(value) => onInput(value)"
-        @blur="onBlur()"
-        @keydown.esc="collapseBar()"
-        @click:clear="clearSearch()"
-        placeholder="Search"
-        clearable
-        autofocus
-        solo
-        dense
-        full-width
-        light
-        class="mt-6"
-      ></v-text-field>
+      <router-view name="search"></router-view>
     </v-app-bar>
 
     <!-- search result -->
@@ -106,25 +89,9 @@ export default class AppBar extends Vue {
     this.$store.dispatch('setSearch', '');
   }
 
-  collapseBar() {
+  onClick(place: Place) {
     this.$store.dispatch('closeSearch');
     this.clearSearch();
-  }
-
-  expandBar() {
-    this.$store.dispatch('openSearch');
-  }
-
-  onBlur() {
-    if (!this.searchIsBusy) {
-      this.collapseBar();
-      // eslint-disable-next-line no-console
-      console.log('BLURED');
-    }
-  }
-
-  onClick(place: Place) {
-    this.collapseBar();
     this.$router.push(`/place/${place.properties.id}`);
   }
 

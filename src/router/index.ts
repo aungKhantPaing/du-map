@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Dock from '@/components/Dock.vue';
 import OfflineDialog from '@/components/OfflineDialog.vue';
 import store from '@/store';
+import SearchBox from '@/components/SearchBox.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes: RouteConfig[] = [
         props: (route: Route) => {
           return { place: store.getters.placeById(route.params.id) };
         },
+      },
+      {
+        path: '/search',
+        name: 'search',
+        components: { search: SearchBox },
       },
     ],
   },
@@ -41,13 +47,12 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (store.getters.isSearching) {
-    store.dispatch('closeSearch');
-    next(false);
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (store.getters.isSearching) {
+//     store.dispatch('closeSearch');
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
