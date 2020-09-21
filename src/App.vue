@@ -13,29 +13,37 @@ export default Vue.extend({
     };
   },
   metaInfo() {
+    let title = 'DU Map';
+    let content = 'Find your way in Dagon University';
     return {
       // if no subcomponents specify a metaInfo.title, this title will be used
-      title: 'DU Map',
+
+      title: title,
       // all titles will be injected into this template
       // titleTemplate: '%s | My Awesome Webapp',
       meta: [
+        // Description
+        {
+          name: 'description',
+          content: content,
+        },
         // Twitter Card
         { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:title', content: 'DU Map' },
+        { name: 'twitter:title', content: title },
         {
           name: 'twitter:description',
-          content: 'Find your way in Dagon University.',
+          content: content,
         },
         // image must be an absolute path
         { name: 'twitter:image', content: this.$data.logo },
         // Facebook OpenGraph
-        { property: 'og:title', content: 'DU Map' },
-        { property: 'og:site_name', content: 'DU Map' },
+        { property: 'og:title', content: title },
+        { property: 'og:site_name', content: title },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: this.$data.logo },
         {
           property: 'og:description',
-          content: 'Find your way in Dagon University.',
+          content: content,
         },
       ],
     };
