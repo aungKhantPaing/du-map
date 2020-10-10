@@ -8,7 +8,7 @@
 
       <v-container fluid class="bottom-container">
         <v-row no-gutters>
-          <v-container class="d-flex justify-end pa-0">
+          <v-container v-if="screenIsVertical" class="d-flex justify-end pa-0">
             <div class="fab-container">
               <Fab v-show="!isSearching" @click="openSearch()">
                 <v-icon>mdi-magnify</v-icon>
@@ -77,6 +77,7 @@ export default class Home extends Vue {
     bearing: -27.5, // rotation
     touchZoomRotate: true,
   };
+  screenIsVertical = window.innerHeight > window.innerWidth;
 
   onLoaded(placeList: Array<Place>) {
     this.$store.commit('setPlaceList', placeList);
@@ -100,6 +101,16 @@ export default class Home extends Vue {
 
   closeDialog() {
     this.$router.replace('/');
+  }
+
+  updateViewport() {
+    this.screenIsVertical = window.innerHeight > window.outerWidth;
+  }
+
+  mounted() {
+    window.addEventListener('resize', () => {
+      this.updateViewport();
+    });
   }
 }
 </script>
